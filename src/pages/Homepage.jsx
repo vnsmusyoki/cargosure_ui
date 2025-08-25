@@ -1,7 +1,9 @@
 export default function Homepage() {
   return (
     <div>
-      <h1>Homepage</h1>
+      <div className="bg-amber-400 min-h-full min-w-full flex ">
+        <h1 className="text-4xl">Homepage</h1>
+      </div>
     </div>
   );
 }
