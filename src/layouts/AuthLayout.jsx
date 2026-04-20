@@ -1,15 +1,14 @@
 
-import { Outlet, Link, useNavigate} from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import React, { useState } from "react";
 import {
   MapPin, Menu, X, Sun, Moon
 } from 'lucide-react';
 
 
-export default function DefaultLayout() {
+export default function AuthLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
-  const navigate = useNavigate();
   const theme = {
     text: isDark ? 'text-white' : 'text-slate-900',
     textSecondary: isDark ? 'text-slate-400' : 'text-slate-600',
@@ -64,7 +63,8 @@ export default function DefaultLayout() {
               <a href="#usecases" className={`${theme.textSecondary} py-2`}>Use Cases</a>
               <a href="#pricing" className={`${theme.textSecondary} py-2`}>Pricing</a>
               <a href="#contact" className={`${theme.textSecondary} py-2`}>Contact</a>
-              <button onClick={()=>navigate('/login')} className={`${theme.button} px-6 py-2 rounded-lg font-medium`}>Get Started</button> 
+              <button className={`${theme.button} px-6 py-2 rounded-lg font-medium`}>Get Started</button>
+              <button className={`${theme.button} px-6 py-2 rounded-lg font-medium`}>My Account</button>
             </div>
           </div>
         )}

@@ -92,7 +92,7 @@ const AnalyticsIllustration = () => (
 
 const HomePage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [displayedStats, setDisplayedStats] = useState({ orders: 0, drivers: 0, regions: 0, uptime: 0 });
 
@@ -278,55 +278,9 @@ const HomePage = () => {
     { name: "Shopify", icon: "🛒" }
   ];
 
+
   return (
     <div className={`min-h-screen transition-colors duration-300 ${theme.bg}`}>
-      {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 backdrop-blur-md border-b ${theme.navBg} transition-colors duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <div className={`${isDark ? 'bg-blue-600' : 'bg-blue-500'} rounded-lg p-1.5 transform hover:scale-110 transition-transform`}>
-                <MapPin className="w-5 h-5 text-white" />
-              </div>
-              <span className={`font-bold text-xl ${theme.text}`}>
-                DeliverTrack
-              </span>
-            </div>
-
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className={`${theme.textSecondary} hover:${theme.text} transition`}>Features</a>
-              <a href="#usecases" className={`${theme.textSecondary} hover:${theme.text} transition`}>Use Cases</a>
-              <a href="#pricing" className={`${theme.textSecondary} hover:${theme.text} transition`}>Pricing</a>
-              <a href="#contact" className={`${theme.textSecondary} hover:${theme.text} transition`}>Contact</a>
-              <button
-                onClick={() => setIsDark(!isDark)}
-                className={`p-2 rounded-lg ${theme.bgSecondary} transition-colors`}
-              >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-              <button className={`${theme.button} px-6 py-2 rounded-lg font-medium transition`}>
-                Get Started Free
-              </button>
-            </div>
-
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden">
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {mobileMenuOpen && (
-          <div className={`md:hidden border-t ${theme.border} py-4`}>
-            <div className="flex flex-col gap-3 px-4">
-              <a href="#features" className={`${theme.textSecondary} py-2`}>Features</a>
-              <a href="#usecases" className={`${theme.textSecondary} py-2`}>Use Cases</a>
-              <a href="#pricing" className={`${theme.textSecondary} py-2`}>Pricing</a>
-              <a href="#contact" className={`${theme.textSecondary} py-2`}>Contact</a>
-              <button className={`${theme.button} px-6 py-2 rounded-lg font-medium`}>Get Started</button>
-            </div>
-          </div>
-        )}
-      </nav>
 
       {/* Hero Section */}
       <section className={`pt-32 pb-20 px-4 sm:px-6 lg:px-8 ${theme.bg}`}>
