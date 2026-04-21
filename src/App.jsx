@@ -15,6 +15,8 @@ import DriversManagement from "@/pages/company/drivers/DriversManagement";
 import DriverOnboardPage from "@/pages/company/drivers/DriverOnboardPage";
 import FleetManagement from "@/pages/company/fleet/FleetManagement";
 import LiveTracking from "@/pages/company/tracking/LiveTracking";
+import OrderManagement from "@/pages/company/orders/OrderManagement";
+import OrderManagementCreate from "@/pages/company/orders/OrderManagement";
 
 function App() {
   return (
@@ -37,8 +39,13 @@ function App() {
           <Route path="/drivers-management" element={<DriversManagement />} />
           <Route path="/drivers-management/onboard" element={<DriverOnboardPage />} />
 
+          <Route path="/orders-management" element={<OrderManagement />} />
+          <Route path="/orders-management/create" element={<OrderManagementCreate />} />
+
           <Route path="/fleet-management" element={<FleetManagement />} />
           <Route path="/live-tracking" element={<LiveTracking />} />
+
+          
         </Route>
       </Routes>
     </BrowserRouter>
