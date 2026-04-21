@@ -122,7 +122,7 @@ const roleMenus = {
           { id: 'orders', label: 'Order Management', icon: 'Package', path: '/orders', moduleNumber: 2 },
           { id: 'drivers', label: 'Driver Management', icon: 'Truck', path: '/drivers-management', moduleNumber: 3 },
           { id: 'fleet', label: 'Fleet Management', icon: 'Truck', path: '/fleet-management', moduleNumber: 4 },
-          { id: 'tracking', label: 'Live Tracking', icon: 'MapPin', path: '/tracking', moduleNumber: 5 },
+          { id: 'tracking', label: 'Live Tracking', icon: 'MapPin', path: '/live-tracking', moduleNumber: 5 },
           { id: 'customers', label: 'Customers', icon: 'Users', path: '/customers', moduleNumber: 6 },
         ]
       },

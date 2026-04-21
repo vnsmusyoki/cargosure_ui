@@ -13,6 +13,8 @@ import Dashboard from "./Dashboard";
 
 import DriversManagement from "@/pages/company/drivers/DriversManagement";
 import DriverOnboardPage from "@/pages/company/drivers/DriverOnboardPage";
+import FleetManagement from "@/pages/company/fleet/FleetManagement";
+import LiveTracking from "@/pages/company/tracking/LiveTracking";
 
 function App() {
   return (
@@ -34,7 +36,9 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="/drivers-management" element={<DriversManagement />} />
           <Route path="/drivers-management/onboard" element={<DriverOnboardPage />} />
-          {/* Add more protected routes here, e.g. customers, orders, analytics, etc. */}
+
+          <Route path="/fleet-management" element={<FleetManagement />} />
+          <Route path="/live-tracking" element={<LiveTracking />} />
         </Route>
       </Routes>
     </BrowserRouter>
