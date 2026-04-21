@@ -1,13 +1,74 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Character Encoding & Viewport -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Logistics Management Platform | Real-Time Tracking & Delivery Solutions</title>
+    <meta name="description" content="Professional logistics management platform offering real-time shipment tracking, fleet management, and delivery optimization for businesses." />
+    <meta name="keywords" content="logistics, shipping, tracking, fleet management, delivery, supply chain" />
+    <meta name="author" content="Your Company Name" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yourdomain.com/" />
+    <meta property="og:title" content="Logistics Management Platform | Real-Time Tracking" />
+    <meta property="og:description" content="Professional logistics management platform with real-time tracking and delivery optimization." />
+    <meta property="og:image" content="https://yourdomain.com/og-image.png" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://yourdomain.com/" />
+    <meta name="twitter:title" content="Logistics Management Platform" />
+    <meta name="twitter:description" content="Professional logistics management platform with real-time tracking." />
+    <meta name="twitter:image" content="https://yourdomain.com/twitter-image.png" />
+    
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#1a1a1a" />
+    
+    <!-- Preconnect to External Resources (if needed) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourdomain.com/" />
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/src/index.css" />
+    
+    <!-- Prefetch DNS for external APIs -->
+    <link rel="dns-prefetch" href="https://api.yourdomain.com" />
+    
+    <!-- Performance: Preload critical assets -->
+    <link rel="preload" href="/src/main.jsx" as="script" type="module" />
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only">Skip to main content</a>
+    
+    <!-- Root React App -->
+    <div id="root" role="application" aria-label="Logistics Management Application"></div>
+    
+    <!-- Main content landmark for accessibility -->
+    <main id="main-content" style="display: none;"></main>
+    
+    <!-- React App Script -->
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Fallback message for non-JavaScript users -->
+    <noscript>
+      <div style="padding: 20px; text-align: center; font-family: Arial, sans-serif; background: #f5f5f5; margin: 20px;">
+        <h1>JavaScript Required</h1>
+        <p>This application requires JavaScript to be enabled. Please enable JavaScript in your browser settings to continue.</p>
+      </div>
+    </noscript>
   </body>
 </html>

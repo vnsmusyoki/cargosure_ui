@@ -46,7 +46,7 @@ export default function DefaultLayout() {
                 {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
              
-              <button className={`${theme.button} px-6 py-2 rounded-lg font-medium transition`}>
+              <button onClick={()=> navigate('login')} className={`${theme.button} px-6 py-2 rounded-lg font-medium transition`}>
                 My Account
               </button>
             </div>

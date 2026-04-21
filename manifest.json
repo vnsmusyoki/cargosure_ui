@@ -1,0 +1,78 @@
+{
+  "name": "Logistics Management Platform",
+  "short_name": "Logistics",
+  "description": "Professional logistics management platform with real-time tracking and delivery optimization",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/screenshot-540x720.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshots/screenshot-1280x720.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": ["logistics", "business", "productivity"],
+  "shortcuts": [
+    {
+      "name": "View Shipments",
+      "short_name": "Shipments",
+      "description": "View all active shipments",
+      "url": "/shipments",
+      "icons": [
+        {
+          "src": "/icons/shipments-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Track Delivery",
+      "short_name": "Track",
+      "description": "Track a specific delivery",
+      "url": "/track",
+      "icons": [
+        {
+          "src": "/icons/track-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
