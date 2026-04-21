@@ -9,7 +9,10 @@ import ForgotPassword from "@/auth/ForgotPassword";
 import SetNewPassword from "@/auth/SetNewPassword";
 import Register from "./auth/Register";
 import Dashboard from "./Dashboard";
+
+
 import DriversManagement from "@/pages/company/drivers/DriversManagement";
+import DriverOnboardPage from "@/pages/company/drivers/DriverOnboardPage";
 
 function App() {
   return (
@@ -29,7 +32,8 @@ function App() {
         {/* Protected routes with AppLayout */}
         <Route path="/" element={<AppLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="drivers" element={<DriversManagement />} />
+          <Route path="/drivers-management" element={<DriversManagement />} />
+          <Route path="/drivers-management/onboard" element={<DriverOnboardPage />} />
           {/* Add more protected routes here, e.g. customers, orders, analytics, etc. */}
         </Route>
       </Routes>

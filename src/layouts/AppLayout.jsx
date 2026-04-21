@@ -120,22 +120,23 @@ const roleMenus = {
         items: [
           { id: 'dashboard', label: 'Dashboard', icon: 'LayoutDashboard', path: '/dashboard', moduleNumber: 1 },
           { id: 'orders', label: 'Order Management', icon: 'Package', path: '/orders', moduleNumber: 2 },
-          { id: 'drivers', label: 'Driver & Fleet', icon: 'Truck', path: '/drivers', moduleNumber: 3 },
-          { id: 'tracking', label: 'Live Tracking', icon: 'MapPin', path: '/tracking', moduleNumber: 4 },
-          { id: 'customers', label: 'Customers', icon: 'Users', path: '/customers', moduleNumber: 5 },
+          { id: 'drivers', label: 'Driver Management', icon: 'Truck', path: '/drivers-management', moduleNumber: 3 },
+          { id: 'fleet', label: 'Fleet Management', icon: 'Truck', path: '/fleet-management', moduleNumber: 4 },
+          { id: 'tracking', label: 'Live Tracking', icon: 'MapPin', path: '/tracking', moduleNumber: 5 },
+          { id: 'customers', label: 'Customers', icon: 'Users', path: '/customers', moduleNumber: 6 },
         ]
       },
       {
         category: 'Analytics',
         items: [
-          { id: 'analytics', label: 'Analytics & Reports', icon: 'BarChart3', path: '/analytics', moduleNumber: 6 },
-          { id: 'notifications', label: 'Notifications', icon: 'Bell', path: '/notifications', moduleNumber: 7 },
+          { id: 'analytics', label: 'Analytics & Reports', icon: 'BarChart3', path: '/analytics', moduleNumber: 7 },
+          { id: 'notifications', label: 'Notifications', icon: 'Bell', path: '/notifications', moduleNumber: 8 },
         ]
       },
       {
         category: 'Finance',
         items: [
-          { id: 'billing', label: 'Billing & Invoicing', icon: 'CreditCard', path: '/billing', moduleNumber: 8 },
+          { id: 'billing', label: 'Billing & Invoicing', icon: 'CreditCard', path: '/billing', moduleNumber: 9 },
         ]
       }
     ]
