@@ -58,7 +58,7 @@ const OrderManagementCreate = () => {
     setTimeout(() => {
       setIsSubmitting(false);
       toast.success('Order created successfully!');
-      navigate('/order-management');
+      navigate('/orders-management');
     }, 1500);
   };
 
@@ -68,7 +68,7 @@ const OrderManagementCreate = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button
-            onClick={() => navigate('/order-management')}
+            onClick={() => navigate('/orders-management')}
             className="p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 transition"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -80,7 +80,7 @@ const OrderManagementCreate = () => {
         </div>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => navigate('/order-management')}
+            onClick={() => navigate('/orders-management')}
             className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 transition"
           >
             Cancel

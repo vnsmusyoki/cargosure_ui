@@ -16,7 +16,10 @@ import DriverOnboardPage from "@/pages/company/drivers/DriverOnboardPage";
 import FleetManagement from "@/pages/company/fleet/FleetManagement";
 import LiveTracking from "@/pages/company/tracking/LiveTracking";
 import OrderManagement from "@/pages/company/orders/OrderManagement";
-import OrderManagementCreate from "@/pages/company/orders/OrderManagement";
+import OrderManagementCreate from "@/pages/company/orders/OrderManagementCreate";
+import WarehousesManagement from "./pages/company/inventory/warehouses/WareHousesManagement";
+import CreateWareHouse from "./pages/company/inventory/warehouses/CreateWareHouse";
+import WareHouseView from "./pages/company/inventory/warehouses/WarehouseView";
 
 function App() {
   return (
@@ -44,6 +47,10 @@ function App() {
 
           <Route path="/fleet-management" element={<FleetManagement />} />
           <Route path="/live-tracking" element={<LiveTracking />} />
+
+          <Route path="/inventory/warehouses" element={<WarehousesManagement />} />
+          <Route path="/inventory/warehouses/create" element={<CreateWareHouse />} />
+          <Route path="/inventory/warehouses/view/:id" element={<WareHouseView />} />
 
           
         </Route>
