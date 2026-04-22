@@ -338,7 +338,7 @@ const WareHousesManagement = () => {
   const [regionFilter, setRegionFilter] = useState('all');
   const [capacityFilter, setCapacityFilter] = useState('all');
   const [viewMode, setViewMode] = useState('table'); // 'table' or 'grid'
-  const [selectedWarehouse, setSelectedWarehouse] = useState(null);
+  // Removed selectedWarehouse state and modal logic
   const [showDeleteModal, setShowDeleteModal] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -693,7 +693,7 @@ const WareHousesManagement = () => {
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {paginatedWarehouses.map((warehouse) => (
-                  <tr key={warehouse.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onClick={() => setSelectedWarehouse(warehouse)}>
+                  <tr key={warehouse.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onClick={() => navigate(`/inventory/warehouses/view/${warehouse.id}`)}>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <div className="p-1.5 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
@@ -726,7 +726,7 @@ const WareHousesManagement = () => {
                     <td className="px-4 py-3 text-right" onClick={(e) => e.stopPropagation()}>
                       <div className="flex items-center justify-end gap-1">
                         <button
-                          onClick={() => setSelectedWarehouse(warehouse)}
+                          onClick={() => navigate(`/inventory/warehouses/view/${warehouse.id}`)}
                           className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
                           title="View Details"
                         >
@@ -814,168 +814,7 @@ const WareHousesManagement = () => {
         </div>
       )}
 
-      {/* Warehouse Details Modal */}
-      {selectedWarehouse && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setSelectedWarehouse(null)}>
-          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 bg-white dark:bg-gray-800 p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-              <div>
-                <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{selectedWarehouse.name}</h3>
-                <p className="text-sm text-gray-500">{selectedWarehouse.code}</p>
-              </div>
-              <button onClick={() => setSelectedWarehouse(null)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-5 space-y-5">
-              {/* Status and Basic Info */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
-                    <Warehouse className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-500">Warehouse ID</div>
-                    <div className="font-mono text-gray-900 dark:text-white">{selectedWarehouse.id}</div>
-                  </div>
-                </div>
-                {getStatusBadge(selectedWarehouse.status)}
-              </div>
-
-              {/* Location Information */}
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
-                  Location Details
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                  <div><span className="text-gray-500">Address:</span> {selectedWarehouse.location.address}</div>
-                  <div><span className="text-gray-500">City:</span> {selectedWarehouse.location.city}</div>
-                  <div><span className="text-gray-500">Region:</span> {selectedWarehouse.location.region}</div>
-                  <div><span className="text-gray-500">Country:</span> {selectedWarehouse.location.country}</div>
-                </div>
-              </div>
-
-              {/* Capacity & Inventory */}
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                  <Layers className="w-4 h-4" />
-                  Capacity & Inventory
-                </h4>
-                <div className="space-y-3">
-                  {getCapacityBar(selectedWarehouse.capacity.used, selectedWarehouse.capacity.total)}
-                  <div className="grid grid-cols-2 gap-3 pt-3">
-                    <div><span className="text-gray-500">Total Items:</span> {selectedWarehouse.inventory.totalItems.toLocaleString()}</div>
-                    <div><span className="text-gray-500">Total Orders:</span> {selectedWarehouse.inventory.totalOrders.toLocaleString()}</div>
-                    <div className="col-span-2">
-                      <span className="text-gray-500">Categories:</span> {selectedWarehouse.inventory.categories.join(', ')}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Staff Information */}
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  Staff Information
-                </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                  <div><span className="text-gray-500">Total:</span> {selectedWarehouse.staff.total}</div>
-                  <div><span className="text-gray-500">Managers:</span> {selectedWarehouse.staff.managers}</div>
-                  <div><span className="text-gray-500">Supervisors:</span> {selectedWarehouse.staff.supervisors}</div>
-                  <div><span className="text-gray-500">Workers:</span> {selectedWarehouse.staff.workers}</div>
-                </div>
-              </div>
-
-              {/* Performance Metrics */}
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                  <Activity className="w-4 h-4" />
-                  Performance Metrics
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg">
-                    <div className="text-2xl font-bold text-indigo-600">{selectedWarehouse.performance.efficiency}%</div>
-                    <div className="text-xs text-gray-500">Efficiency</div>
-                  </div>
-                  <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">{selectedWarehouse.performance.accuracy}%</div>
-                    <div className="text-xs text-gray-500">Accuracy</div>
-                  </div>
-                  <div className="text-center p-3 bg-white dark:bg-gray-800 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">{selectedWarehouse.performance.onTimeDispatch}%</div>
-                    <div className="text-xs text-gray-500">On-Time Dispatch</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Facilities */}
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  Facilities & Security
-                </h4>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    {selectedWarehouse.facilities.hasColdStorage ? <Snowflake className="w-4 h-4 text-blue-500" /> : <Flame className="w-4 h-4 text-gray-400" />}
-                    <span>Cold Storage: {selectedWarehouse.facilities.hasColdStorage ? 'Yes' : 'No'}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {selectedWarehouse.facilities.hasAutomation ? <Zap className="w-4 h-4 text-yellow-500" /> : <Power className="w-4 h-4 text-gray-400" />}
-                    <span>Automation: {selectedWarehouse.facilities.hasAutomation ? 'Yes' : 'No'}</span>
-                  </div>
-                  <div><span className="text-gray-500">Security Level:</span> {selectedWarehouse.facilities.securityLevel}</div>
-                  <div><span className="text-gray-500">Loading Docks:</span> {selectedWarehouse.facilities.loadingDocks}</div>
-                  <div><span className="text-gray-500">Parking Spaces:</span> {selectedWarehouse.facilities.parkingSpaces}</div>
-                </div>
-              </div>
-
-              {/* Contact Information */}
-              <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  Contact Information
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                  <div><span className="text-gray-500">Phone:</span> {selectedWarehouse.contact.phone}</div>
-                  <div><span className="text-gray-500">Email:</span> {selectedWarehouse.contact.email}</div>
-                  <div><span className="text-gray-500">Manager:</span> {selectedWarehouse.contact.manager}</div>
-                </div>
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-3 pt-2">
-                <button
-                  onClick={() => {
-                    toast.success(`Inventory report for ${selectedWarehouse.name} generated`);
-                  }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
-                >
-                  Generate Report
-                </button>
-                <button
-                  onClick={() => {
-                    toast.success(`Maintenance scheduled for ${selectedWarehouse.name}`);
-                  }}
-                  className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition"
-                >
-                  Schedule Maintenance
-                </button>
-                <button
-                  onClick={() => {
-                    navigate(`/warehouses-management/edit/${selectedWarehouse.id}`);
-                    setSelectedWarehouse(null);
-                  }}
-                  className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition"
-                >
-                  Edit Warehouse
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Warehouse Details Modal removed. Viewing is now handled by navigation. */}
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (

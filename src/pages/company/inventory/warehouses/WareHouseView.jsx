@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Edit, Trash2, MoreVertical, Download, Printer,
@@ -8,7 +8,7 @@ import {
   TrendingUp, TrendingDown, BarChart3, PieChart, Calendar,
   DollarSign, Box, Grid, List, Eye, Navigation, Globe,
   RefreshCw, Send, FileText, Copy, Settings, Star,
-  ChevronLeft, ChevronRight, Plus, X
+  ChevronLeft, ChevronRight, ChevronDown, Plus, X
 } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart as RePieChart, Pie, Cell } from 'recharts';
 import toast from 'react-hot-toast';
@@ -19,6 +19,9 @@ const WareHouseView = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [newOrderSearch, setNewOrderSearch] = useState('');
+  const [currentNewOrderPage, setCurrentNewOrderPage] = useState(1);
+  const [expandedOrderId, setExpandedOrderId] = useState(null);
 
   // Mock warehouse data (in real app, fetch based on id)
   const warehouse = {
@@ -170,6 +173,91 @@ const WareHouseView = () => {
     toast.success('Warehouse report exported successfully');
   };
 
+  const handleDownloadOrder = (order) => {
+    toast.success(`Order ${order.orderId} downloaded`);
+  };
+
+  const handleMarkDispatched = (order) => {
+    toast.success(`Order ${order.orderId} marked as dispatched`);
+  };
+
+  const handleViewOrderItems = (order) => {
+    toast.success(`Viewing items for ${order.orderId}`);
+  };
+
+  // Mock new orders data
+  const newOrders = [
+    {
+      orderId: 'ORD-1001',
+      customer: 'TechZone Solutions',
+      date: '2026-04-20',
+      status: 'Pending',
+      items: 12,
+      value: 250000,
+      priority: 'High',
+      assignedTo: 'Peter Otieno',
+      notes: 'Urgent delivery required'
+    },
+    {
+      orderId: 'ORD-1002',
+      customer: 'Fresh Grocers Ltd',
+      date: '2026-04-21',
+      status: 'Pending',
+      items: 8,
+      value: 120000,
+      priority: 'Medium',
+      assignedTo: 'Grace Muthoni',
+      notes: ''
+    },
+    {
+      orderId: 'ORD-1003',
+      customer: 'Electronics Plus',
+      date: '2026-04-21',
+      status: 'Pending',
+      items: 20,
+      value: 400000,
+      priority: 'High',
+      assignedTo: 'John Kimani',
+      notes: 'Handle with care'
+    },
+    {
+      orderId: 'ORD-1004',
+      customer: 'Book Haven',
+      date: '2026-04-22',
+      status: 'Pending',
+      items: 5,
+      value: 35000,
+      priority: 'Low',
+      assignedTo: 'Fatima Hassan',
+      notes: ''
+    }
+  ];
+
+  const newOrdersPerPage = 4;
+
+  const filteredNewOrders = newOrders.filter((order) => {
+    const search = newOrderSearch.toLowerCase();
+    return (
+      order.orderId.toLowerCase().includes(search) ||
+      order.customer.toLowerCase().includes(search) ||
+      order.assignedTo.toLowerCase().includes(search) ||
+      order.status.toLowerCase().includes(search)
+    );
+  });
+
+  const totalNewOrderPages = Math.max(1, Math.ceil(filteredNewOrders.length / newOrdersPerPage));
+  const currentNewOrderPageIndex = Math.min(currentNewOrderPage, totalNewOrderPages);
+  const paginatedNewOrders = filteredNewOrders.slice(
+    (currentNewOrderPageIndex - 1) * newOrdersPerPage,
+    currentNewOrderPageIndex * newOrdersPerPage
+  );
+
+  useEffect(() => {
+    if (currentNewOrderPage > totalNewOrderPages) {
+      setCurrentNewOrderPage(totalNewOrderPages);
+    }
+  }, [currentNewOrderPage, totalNewOrderPages]);
+
   const getStatusBadge = (status) => {
     const config = {
       active: { icon: CheckCircle, text: 'Active', className: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' },
@@ -189,6 +277,7 @@ const WareHouseView = () => {
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Warehouse },
+    { id: 'newOrders', label: 'New Orders', icon: List },
     { id: 'inventory', label: 'Inventory', icon: Package },
     { id: 'performance', label: 'Performance', icon: Activity },
     { id: 'facilities', label: 'Facilities', icon: Building },
@@ -248,7 +337,20 @@ const WareHouseView = () => {
       </div>
 
       {/* Key Metrics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {/* New Orders Summary Card */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 shadow-sm">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">New Orders (Pending)</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-white">{newOrders.length}</p>
+            </div>
+            <div className="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-xl">
+              <List className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+            </div>
+          </div>
+          <p className="text-xs text-gray-500 mt-2">Total Value: KES {newOrders.reduce((sum, o) => sum + o.value, 0).toLocaleString()}</p>
+        </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
@@ -331,6 +433,156 @@ const WareHouseView = () => {
         </div>
 
         <div className="p-6">
+          {/* New Orders Tab */}
+          {activeTab === 'newOrders' && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-4 mb-4">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-2">
+                    <List className="w-5 h-5 text-yellow-600" />
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">New Orders Waiting to be Processed</h2>
+                  </div>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400">
+                      {filteredNewOrders.length} Matched
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                      KES {filteredNewOrders.reduce((sum, o) => sum + o.value, 0).toLocaleString()} Total Value
+                    </span>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-end gap-3">
+                  <div className="relative w-full sm:w-72">
+                    <input
+                      type="text"
+                      placeholder="Search orders..."
+                      value={newOrderSearch}
+                      onChange={(e) => {
+                        setNewOrderSearch(e.target.value);
+                        setCurrentNewOrderPage(1);
+                      }}
+                      className="w-full pl-3 pr-3 py-2 text-sm border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+                    <span>Page</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">{currentNewOrderPageIndex}</span>
+                    <span>of</span>
+                    <span className="font-semibold text-gray-900 dark:text-white">{totalNewOrderPages}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
+                <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead className="bg-gray-50 dark:bg-gray-700/50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Details</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Order ID</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Customer</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Items</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Value</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Status</th>
+                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+                    {paginatedNewOrders.map((order) => (
+                      <React.Fragment key={order.orderId}>
+                        <tr className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <button
+                              onClick={() => setExpandedOrderId(expandedOrderId === order.orderId ? null : order.orderId)}
+                              className="inline-flex items-center justify-center p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                              aria-label="Toggle order details"
+                            >
+                              <ChevronDown className={`w-4 h-4 transition-transform ${expandedOrderId === order.orderId ? 'rotate-180' : ''}`} />
+                            </button>
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap text-xs font-semibold text-indigo-600 dark:text-indigo-400">{order.orderId}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white truncate max-w-[160px]">{order.customer}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{order.date}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-right text-sm text-gray-600 dark:text-gray-300">{order.items}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-semibold text-gray-900 dark:text-white">KES {order.value.toLocaleString()}</td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <span className={`inline-flex px-2 py-1 rounded-full text-[11px] font-semibold ${order.priority === 'High' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : order.priority === 'Medium' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'}`}>
+                              {order.priority}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap text-right text-sm space-x-1">
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleDownloadOrder(order); }}
+                              className="inline-flex items-center justify-center p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition"
+                              title="Download"
+                            >
+                              <Download className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleMarkDispatched(order); }}
+                              className="inline-flex items-center justify-center p-2 rounded-lg bg-green-50 text-green-600 hover:bg-green-100 transition"
+                              title="Mark as Dispatched"
+                            >
+                              <Send className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleViewOrderItems(order); }}
+                              className="inline-flex items-center justify-center p-2 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100 transition"
+                              title="View Items"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
+                          </td>
+                        </tr>
+                        {expandedOrderId === order.orderId && (
+                          <tr className="bg-gray-50 dark:bg-gray-800">
+                            <td colSpan={8} className="px-4 py-3 border-t border-gray-200 dark:border-gray-700">
+                              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 dark:text-gray-300">
+                                <div className="space-y-2">
+                                  <div className="font-semibold text-gray-900 dark:text-white">Assigned To</div>
+                                  <div>{order.assignedTo}</div>
+                                </div>
+                                <div className="space-y-2">
+                                  <div className="font-semibold text-gray-900 dark:text-white">Order Notes</div>
+                                  <div>{order.notes || 'No notes available'}</div>
+                                </div>
+                                <div className="space-y-2">
+                                  <div className="font-semibold text-gray-900 dark:text-white">Status</div>
+                                  <div>{order.status}</div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-gray-600 dark:text-gray-300">
+                <div>
+                  Showing {Math.min((currentNewOrderPageIndex - 1) * newOrdersPerPage + 1, filteredNewOrders.length)} to {Math.min(currentNewOrderPageIndex * newOrdersPerPage, filteredNewOrders.length)} of {filteredNewOrders.length} orders
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setCurrentNewOrderPage((page) => Math.max(1, page - 1))}
+                    disabled={currentNewOrderPageIndex === 1}
+                    className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    Previous
+                  </button>
+                  <button
+                    onClick={() => setCurrentNewOrderPage((page) => Math.min(totalNewOrderPages, page + 1))}
+                    disabled={currentNewOrderPageIndex === totalNewOrderPages}
+                    className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100 dark:hover:bg-gray-800"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Overview Tab */}
           {activeTab === 'overview' && (
             <div className="space-y-6">

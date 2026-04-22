@@ -267,11 +267,11 @@ const CreateWareHouse = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6">
+    <div className="w-full  mx-auto px-4 py-2">
       {/* Header */}
       <div className="mb-6">
         <button
-          onClick={() => navigate('/warehouses-management')}
+          onClick={() => navigate(-1)}
           className="mb-4 flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition"
         >
           <ArrowLeft className="w-4 h-4" />
