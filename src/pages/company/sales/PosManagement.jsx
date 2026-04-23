@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Search, ShoppingCart, Trash2, Plus, Minus, X, CreditCard,
   Smartphone, Printer, Receipt, User, Users, Tag, Percent,
@@ -9,9 +9,9 @@ import {
   Gift, Ticket, Truck, Calendar, MessageCircle, Phone,
   Mail, MapPin, Save, FileText, Download, ExternalLink,
   Eye, Edit, Trash, Copy, Archive, Globe, Smartphone as MobileIcon,
-  Laptop, Watch, Headphones, Shirt, Shoe, Bag, Camera
+  Laptop, Watch, Headphones, Shirt, Camera
 } from 'lucide-react';
-import toast from 'react-hot-toast';
+import toast from 'react-hot-toast'; 
 
 // Mock products data for POS
 const mockPOSProducts = [
@@ -38,22 +38,11 @@ const mockCustomers = [
   { id: 5, name: 'Grace Wanjiku', email: 'grace@example.com', phone: '+254 745 678 901', loyaltyPoints: 2100 },
 ];
 
-// Cart item interface
-interface CartItem {
-  id: number;
-  name: string;
-  sku: string;
-  price: number;
-  quantity: number;
-  stock: number;
-  discount: number;
-  discountType: 'percentage' | 'fixed';
-  subtotal: number;
-}
+// Cart item shape (JSX) — no TypeScript interface in this file
 
 const PosManagement = () => {
   // State
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [products, setProducts] = useState(mockPOSProducts);
@@ -64,7 +53,7 @@ const PosManagement = () => {
   const [paymentMethod, setPaymentMethod] = useState('cash');
   const [amountReceived, setAmountReceived] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [discountType, setDiscountType] = useState<'percentage' | 'fixed'>('percentage');
+  const [discountType, setDiscountType] = useState('percentage');
   const [cartDiscount, setCartDiscount] = useState(0);
   const [cartDiscountValue, setCartDiscountValue] = useState(0);
   const [note, setNote] = useState('');
@@ -72,8 +61,8 @@ const PosManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8);
   const [barcodeInput, setBarcodeInput] = useState('');
-  const barcodeRef = useRef<HTMLInputElement>(null);
-  const [suggestions, setSuggestions] = useState<typeof mockPOSProducts>([]);
+  const barcodeRef = useRef(null);
+  const [suggestions, setSuggestions] = useState([]);
 
   // Filter products
   const filteredProducts = products.filter(product => {
@@ -113,7 +102,7 @@ const PosManagement = () => {
   const loyaltyPointsEarned = Math.floor(total / 100);
 
   // Add to cart
-  const addToCart = (product: typeof mockPOSProducts[0]) => {
+  const addToCart = (product) => {
     const existingItem = cart.find(item => item.id === product.id);
     
     if (existingItem) {
@@ -143,7 +132,7 @@ const PosManagement = () => {
   };
 
   // Update cart item quantity
-  const updateQuantity = (id: number, newQuantity: number) => {
+  const updateQuantity = (id, newQuantity) => {
     const product = products.find(p => p.id === id);
     if (product && newQuantity > product.stock) {
       toast.error(`Only ${product.stock} units available`);
@@ -161,13 +150,13 @@ const PosManagement = () => {
   };
 
   // Remove from cart
-  const removeFromCart = (id: number) => {
+  const removeFromCart = (id) => {
     setCart(cart.filter(item => item.id !== id));
     toast.success('Item removed from cart');
   };
 
   // Update item discount
-  const updateItemDiscount = (id: number, discount: number, type: 'percentage' | 'fixed') => {
+  const updateItemDiscount = (id, discount, type) => {
     setCart(cart.map(item =>
       item.id === id
         ? { ...item, discount, discountType: type }
@@ -262,12 +251,12 @@ const PosManagement = () => {
   };
 
   // Format currency
-  const formatCurrency = (amount: number) => {
+  const formatCurrency = (amount) => {
     return `KES ${amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
   };
 
   // Handle barcode scanner input
-  const handleBarcodeScan = (e: React.KeyboardEvent) => {
+  const handleBarcodeScan = (e) => {
     if (e.key === 'Enter' && barcodeInput) {
       const product = products.find(p => p.barcode === barcodeInput);
       if (product && product.stock > 0) {
@@ -569,7 +558,7 @@ const PosManagement = () => {
                   <div className="flex-1 flex gap-2">
                     <select
                       value={discountType}
-                      onChange={(e) => setDiscountType(e.target.value as 'percentage' | 'fixed')}
+                      onChange={(e) => setDiscountType(e.target.value)}
                       className="text-xs border border-gray-200 dark:border-gray-700 rounded-lg px-2 py-1.5 bg-white dark:bg-gray-800"
                     >
                       <option value="percentage">%</option>
@@ -824,7 +813,7 @@ const PosManagement = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
   );
 };
 

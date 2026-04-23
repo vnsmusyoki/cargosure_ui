@@ -27,6 +27,7 @@ import CategoriesManagement from "./pages/company/categories/CategoriesManagemen
 import CustomersManagement from "./pages/company/customers/CustomersManagement";
 import SuppliersManagement from "./pages/company/suppliers/SuppliersManagement"; 
 import PosManagement from "@/pages/company/sales/PosManagement";
+import PosLayout from "./layouts/PosLayout";
 
 function App() {
   return (
@@ -69,11 +70,10 @@ function App() {
 
           <Route path="/suppliers-management" element={<SuppliersManagement />} />
 
-          <Route path="/sales/pos" element={<PosManagement />} />
-
-
-
-          
+               
+        </Route>
+        <Route path="/" element={<PosLayout />}>
+          <Route path="/sales/pos" element={<PosManagement />} />     
         </Route>
       </Routes>
     </BrowserRouter>
