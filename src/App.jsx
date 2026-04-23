@@ -17,9 +17,15 @@ import FleetManagement from "@/pages/company/fleet/FleetManagement";
 import LiveTracking from "@/pages/company/tracking/LiveTracking";
 import OrderManagement from "@/pages/company/orders/OrderManagement";
 import OrderManagementCreate from "@/pages/company/orders/OrderManagementCreate";
-import WarehousesManagement from "./pages/company/inventory/warehouses/WareHousesManagement";
-import CreateWareHouse from "./pages/company/inventory/warehouses/CreateWareHouse";
-import WareHouseView from "./pages/company/inventory/warehouses/WarehouseView";
+import WarehousesManagement from "@/pages/company/inventory/warehouses/WareHousesManagement";
+import CreateWareHouse from "@/pages/company/inventory/warehouses/CreateWareHouse";
+import WareHouseView from "@/pages/company/inventory/warehouses/WarehouseView";
+import StockManagement from "@/pages/company/inventory/stock/StockManagement";
+import ProductsManagement from "@/pages/company/products/ProductsManagement"; 
+import CreateProduct from "@/pages/company/products/CreateProduct";
+import CategoriesManagement from "./pages/company/categories/CategoriesManagement";
+import CustomersManagement from "./pages/company/customers/CustomersManagement";
+import SuppliersManagement from "./pages/company/suppliers/SuppliersManagement";
 
 function App() {
   return (
@@ -51,6 +57,16 @@ function App() {
           <Route path="/inventory/warehouses" element={<WarehousesManagement />} />
           <Route path="/inventory/warehouses/create" element={<CreateWareHouse />} />
           <Route path="/inventory/warehouses/view/:id" element={<WareHouseView />} />
+          <Route path="/inventory/stock" element={<StockManagement />} />
+
+          <Route path="/products" element={<ProductsManagement />} />
+          <Route path="/products/create" element={<CreateProduct />} />
+
+          <Route path="/products/categories" element={<CategoriesManagement />} />
+
+          <Route path="/customers-management" element={<CustomersManagement />} />
+
+          <Route path="/suppliers-management" element={<SuppliersManagement />} />
 
           
         </Route>

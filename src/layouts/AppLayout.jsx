@@ -203,432 +203,172 @@ const roleMenus = {
     ],
   },
   company: {
-    name: "Company Admin",
-    modules: [
-      {
-        category: "Main",
-        items: [
-          {
-            id: "dashboard",
-            label: "Dashboard",
-            icon: "LayoutDashboard",
-            path: "/dashboard",
-            moduleNumber: 1,
-          },
-          {
-            id: "orders",
-            label: "Order Management",
-            icon: "Package",
-            path: "/orders-management",
-            moduleNumber: 2,
-          },
-          {
-            id: "drivers",
-            label: "Driver Management",
-            icon: "Truck",
-            path: "/drivers-management",
-            moduleNumber: 3,
-          },
-          {
-            id: "fleet",
-            label: "Fleet Management",
-            icon: "Truck",
-            path: "/fleet-management",
-            moduleNumber: 4,
-          },
-          {
-            id: "tracking",
-            label: "Live Tracking",
-            icon: "MapPin",
-            path: "/live-tracking",
-            moduleNumber: 5,
-          },
-          {
-            id: "customers",
-            label: "Customers",
-            icon: "Users",
-            path: "/customers",
-            moduleNumber: 6,
-          },
-        ],
-      },
-      {
-        category: "Inventory",
-        items: [
-          {
-            id: "inventory-overview",
-            label: "Inventory Overview",
-            icon: "Package",
-            path: "/inventory",
-            moduleNumber: 9,
-          },
-          {
-            id: "stock-levels",
-            label: "Stock Levels",
-            icon: "Boxes",
-            path: "/inventory/stock",
-            moduleNumber: 10,
-          },
-          {
-            id: "stock-movements",
-            label: "Stock Movements",
-            icon: "ArrowLeftRight",
-            path: "/inventory/movements",
-            moduleNumber: 11,
-          },
-          {
-            id: "warehouses",
-            label: "Warehouses",
-            icon: "Warehouse",
-            path: "/inventory/warehouses",
-            moduleNumber: 12,
-          },
-          {
-            id: "low-stock-alerts",
-            label: "Low Stock Alerts",
-            icon: "AlertTriangle",
-            path: "/inventory/alerts",
-            moduleNumber: 13,
-          },
-        ],
-      },
-      {
-        category: "Analytics",
-        items: [
-          {
-            id: "analytics",
-            label: "Analytics & Reports",
-            icon: "BarChart3",
-            path: "/analytics",
-            moduleNumber: 7,
-          },
-          {
-            id: "notifications",
-            label: "Notifications",
-            icon: "Bell",
-            path: "/notifications",
-            moduleNumber: 8,
-          },
-        ],
-      },
-      {
-        category: "Finance",
-        items: [
-          {
-            id: "billing",
-            label: "Billing & Invoicing",
-            icon: "CreditCard",
-            path: "/billing",
-            moduleNumber: 9,
-          },
-        ],
-      },
-    ],
-  },
-  distributor: {
-    name: "Distributor",
-    modules: [
-      {
-        category: "Main",
-        items: [
-          {
-            id: "dashboard",
-            label: "Dashboard",
-            icon: "LayoutDashboard",
-            path: "/dashboard",
-            moduleNumber: 1,
-          },
-          {
-            id: "orders",
-            label: "Orders",
-            icon: "Package",
-            path: "/orders",
-            moduleNumber: 2,
-          },
-          {
-            id: "drivers",
-            label: "Drivers",
-            icon: "Truck",
-            path: "/drivers",
-            moduleNumber: 3,
-          },
-          {
-            id: "tracking",
-            label: "Live Tracking",
-            icon: "MapPin",
-            path: "/tracking",
-            moduleNumber: 4,
-          },
-          {
-            id: "customers",
-            label: "Customers",
-            icon: "Users",
-            path: "/customers",
-            moduleNumber: 5,
-          },
-        ],
-      },
-      {
-        category: "Reports",
-        items: [
-          {
-            id: "reports",
-            label: "Reports",
-            icon: "FileText",
-            path: "/reports",
-            moduleNumber: 6,
-          },
-        ],
-      },
-    ],
-  },
-  dispatcher: {
-    name: "Dispatcher",
-    modules: [
-      {
-        category: "Operations",
-        items: [
-          {
-            id: "dashboard",
-            label: "Dashboard",
-            icon: "LayoutDashboard",
-            path: "/dashboard",
-            moduleNumber: 1,
-          },
-          {
-            id: "orders",
-            label: "Orders",
-            icon: "Package",
-            path: "/orders",
-            moduleNumber: 2,
-          },
-          {
-            id: "drivers",
-            label: "Drivers",
-            icon: "Truck",
-            path: "/drivers",
-            moduleNumber: 3,
-          },
-          {
-            id: "tracking",
-            label: "Live Tracking",
-            icon: "MapPin",
-            path: "/tracking",
-            moduleNumber: 4,
-          },
-          {
-            id: "notifications",
-            label: "Notifications",
-            icon: "Bell",
-            path: "/notifications",
-            moduleNumber: 5,
-          },
-        ],
-      },
-    ],
-  },
-  driver: {
-    name: "Driver",
-    modules: [
-      {
-        category: "My Work",
-        items: [
-          {
-            id: "driver-dashboard",
-            label: "My Dashboard",
-            icon: "LayoutDashboard",
-            path: "/driver-dashboard",
-            moduleNumber: 1,
-          },
-          {
-            id: "my-orders",
-            label: "My Orders",
-            icon: "Package",
-            path: "/my-orders",
-            moduleNumber: 2,
-          },
-          {
-            id: "navigation",
-            label: "Navigate",
-            icon: "Navigation",
-            path: "/navigate",
-            moduleNumber: 3,
-          },
-          {
-            id: "proof-delivery",
-            label: "Proof of Delivery",
-            icon: "Camera",
-            path: "/proof-delivery",
-            moduleNumber: 4,
-          },
-        ],
-      },
-      {
-        category: "Earnings",
-        items: [
-          {
-            id: "earnings",
-            label: "My Earnings",
-            icon: "DollarSign",
-            path: "/earnings",
-            moduleNumber: 5,
-          },
-        ],
-      },
-    ],
-  },
-  customer: {
-    name: "Customer",
-    modules: [
-      {
-        category: "Delivery",
-        items: [
-          {
-            id: "track-order",
-            label: "Track Order",
-            icon: "MapPin",
-            path: "/track-order",
-            moduleNumber: 1,
-          },
-          {
-            id: "my-deliveries",
-            label: "My Deliveries",
-            icon: "Package",
-            path: "/my-deliveries",
-            moduleNumber: 2,
-          },
-        ],
-      },
-      {
-        category: "Support",
-        items: [
-          {
-            id: "support",
-            label: "Support",
-            icon: "HelpCircle",
-            path: "/support",
-            moduleNumber: 3,
-          },
-        ],
-      },
-    ],
-  },
+  name: "Company Admin",
+  modules: [
+    {
+      category: "Main",
+      items: [
+        { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/dashboard", moduleNumber: 1 },
+        { id: "orders", label: "Order Management", icon: "Package", path: "/orders-management", moduleNumber: 2 },
+        { id: "drivers", label: "Driver Management", icon: "Truck", path: "/drivers-management", moduleNumber: 3 },
+        { id: "fleet", label: "Fleet Management", icon: "Truck", path: "/fleet-management", moduleNumber: 4 },
+        { id: "tracking", label: "Live Tracking", icon: "MapPin", path: "/live-tracking", moduleNumber: 5 }, 
+      ],
+    },
+    {
+  category: "Customers",
+  items: [
+    { id: "customers", label: "Customers Management", icon: "Users", path: "/customers-management", moduleNumber: 7 },
+    { id: "customer-orders", label: "Orders", icon: "ShoppingCart", path: "/customers/orders", moduleNumber: 8 },
+    { id: "customer-billing", label: "Billing", icon: "CreditCard", path: "/customers/billing", moduleNumber: 9 },
+  ],
+},
+{
+  category: "Suppliers",
+  items: [
+    { id: "suppliers", label: "Suppliers Management", icon: "Truck", path: "/suppliers-management", moduleNumber: 10 },
+    { id: "supplier-shipments", label: "Shipments", icon: "Package", path: "/suppliers/shipments", moduleNumber: 11 },
+    { id: "supplier-procurement", label: "Procurement", icon: "ClipboardList", path: "/suppliers/procurement", moduleNumber: 12 },
+  ],
+},
+    {
+      category: "Products",
+      items: [
+        { id: "products", label: "Products", icon: "Package", path: "/products", moduleNumber: 7 },
+        { id: "product-categories", label: "Categories", icon: "Tag", path: "/products/categories", moduleNumber: 8 },
+      ],
+    },
+    {
+      category: "Inventory",
+      items: [
+        { id: "inventory-overview", label: "Inventory Overview", icon: "Package", path: "/inventory", moduleNumber: 9 },
+        { id: "stock-levels", label: "Stock Levels", icon: "Boxes", path: "/inventory/stock", moduleNumber: 10 },
+        { id: "stock-movements", label: "Stock Movements", icon: "ArrowLeftRight", path: "/inventory/movements", moduleNumber: 11 },
+        { id: "warehouses", label: "Warehouses", icon: "Warehouse", path: "/inventory/warehouses", moduleNumber: 12 },
+        { id: "low-stock-alerts", label: "Low Stock Alerts", icon: "AlertTriangle", path: "/inventory/alerts", moduleNumber: 13 },
+      ],
+    },
+    {
+      category: "Analytics",
+      items: [
+        { id: "analytics", label: "Analytics & Reports", icon: "BarChart3", path: "/analytics", moduleNumber: 14 },
+        { id: "notifications", label: "Notifications", icon: "Bell", path: "/notifications", moduleNumber: 15 },
+      ],
+    },
+    {
+      category: "Finance",
+      items: [
+        { id: "billing", label: "Billing & Invoicing", icon: "CreditCard", path: "/billing", moduleNumber: 16 },
+      ],
+    },
+  ],
+},
+ distributor: {
+  name: "Distributor",
+  modules: [
+    {
+      category: "Main",
+      items: [
+        { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/dashboard", moduleNumber: 1 },
+        { id: "orders", label: "Orders", icon: "Package", path: "/orders", moduleNumber: 2 },
+        { id: "drivers", label: "Drivers", icon: "Truck", path: "/drivers", moduleNumber: 3 },
+        { id: "tracking", label: "Live Tracking", icon: "MapPin", path: "/tracking", moduleNumber: 4 },
+        { id: "customers", label: "Customers", icon: "Users", path: "/customers", moduleNumber: 5 },
+      ],
+    },
+    {
+      category: "Reports",
+      items: [
+        { id: "reports", label: "Reports", icon: "FileText", path: "/reports", moduleNumber: 6 },
+      ],
+    },
+  ],
+},
+   dispatcher: {
+  name: "Dispatcher",
+  modules: [
+    {
+      category: "Operations",
+      items: [
+        { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/dashboard", moduleNumber: 1 },
+        { id: "orders", label: "Orders", icon: "Package", path: "/orders", moduleNumber: 2 },
+        { id: "drivers", label: "Drivers", icon: "Truck", path: "/drivers", moduleNumber: 3 },
+        { id: "tracking", label: "Live Tracking", icon: "MapPin", path: "/tracking", moduleNumber: 4 },
+        { id: "notifications", label: "Notifications", icon: "Bell", path: "/notifications", moduleNumber: 5 },
+      ],
+    },
+  ],
+},
+driver: {
+  name: "Driver",
+  modules: [
+    {
+      category: "My Work",
+      items: [
+        { id: "driver-dashboard", label: "My Dashboard", icon: "LayoutDashboard", path: "/driver-dashboard", moduleNumber: 1 },
+        { id: "my-orders", label: "My Orders", icon: "Package", path: "/my-orders", moduleNumber: 2 },
+        { id: "navigation", label: "Navigate", icon: "Navigation", path: "/navigate", moduleNumber: 3 },
+        { id: "proof-delivery", label: "Proof of Delivery", icon: "Camera", path: "/proof-delivery", moduleNumber: 4 },
+      ],
+    },
+    {
+      category: "Earnings",
+      items: [
+        { id: "earnings", label: "My Earnings", icon: "DollarSign", path: "/earnings", moduleNumber: 5 },
+      ],
+    },
+  ],
+},
+customer: {
+  name: "Customer",
+  modules: [
+    {
+      category: "Delivery",
+      items: [
+        { id: "track-order", label: "Track Order", icon: "MapPin", path: "/track-order", moduleNumber: 1 },
+        { id: "my-deliveries", label: "My Deliveries", icon: "Package", path: "/my-deliveries", moduleNumber: 2 },
+      ],
+    },
+    {
+      category: "Support",
+      items: [
+        { id: "support", label: "Support", icon: "HelpCircle", path: "/support", moduleNumber: 3 },
+      ],
+    },
+  ],
+},
 };
 
 // Quick actions based on role
 const getQuickActions = (role, navigate) => {
   const actions = {
-    admin: [
-      {
-        id: "new-order",
-        label: "New Order",
-        icon: "PlusCircle",
-        color: "blue",
-        path: "/orders/new",
-      },
-      {
-        id: "add-driver",
-        label: "Add Driver",
-        icon: "UserPlus",
-        color: "green",
-        path: "/drivers/new",
-      },
-      {
-        id: "system-settings",
-        label: "Settings",
-        icon: "Settings",
-        color: "gray",
-        path: "/settings",
-      },
-    ],
-    company: [
-      {
-        id: "new-order",
-        label: "New Order",
-        icon: "PlusCircle",
-        color: "blue",
-        path: "/orders/new",
-      },
-      {
-        id: "add-driver",
-        label: "Add Driver",
-        icon: "UserPlus",
-        color: "green",
-        path: "/drivers/new",
-      },
-      {
-        id: "generate-report",
-        label: "Report",
-        icon: "FileText",
-        color: "purple",
-        path: "/reports",
-      },
-    ],
-    distributor: [
-      {
-        id: "new-order",
-        label: "New Order",
-        icon: "PlusCircle",
-        color: "blue",
-        path: "/orders/new",
-      },
-      {
-        id: "view-orders",
-        label: "View Orders",
-        icon: "Package",
-        color: "green",
-        path: "/orders",
-      },
-    ],
-    dispatcher: [
-      {
-        id: "assign-order",
-        label: "Assign Order",
-        icon: "ClipboardList",
-        color: "blue",
-        path: "/orders/assign",
-      },
-      {
-        id: "view-drivers",
-        label: "View Drivers",
-        icon: "Truck",
-        color: "green",
-        path: "/drivers",
-      },
-    ],
-    driver: [
-      {
-        id: "start-delivery",
-        label: "Start Delivery",
-        icon: "Navigation",
-        color: "blue",
-        path: "/navigation",
-      },
-      {
-        id: "my-tasks",
-        label: "My Tasks",
-        icon: "ClipboardList",
-        color: "green",
-        path: "/my-orders",
-      },
-    ],
-    customer: [
-      {
-        id: "track-order",
-        label: "Track Order",
-        icon: "MapPin",
-        color: "blue",
-        path: "/track-order",
-      },
-      {
-        id: "contact-support",
-        label: "Support",
-        icon: "MessageSquare",
-        color: "gray",
-        path: "/support",
-      },
-    ],
-  };
+  admin: [
+    { id: "new-order", label: "New Order", icon: "PlusCircle", color: "blue", path: "/orders/new" },
+    { id: "add-driver", label: "Add Driver", icon: "UserPlus", color: "green", path: "/drivers/new" },
+    { id: "system-settings", label: "Settings", icon: "Settings", color: "gray", path: "/settings" },
+  ],
+  company: [
+    { id: "new-order", label: "New Order", icon: "PlusCircle", color: "blue", path: "/orders/new" },
+    { id: "add-driver", label: "Add Driver", icon: "UserPlus", color: "green", path: "/drivers/new" },
+    { id: "generate-report", label: "Report", icon: "FileText", color: "purple", path: "/reports" },
+  ],
+  distributor: [
+    { id: "new-order", label: "New Order", icon: "PlusCircle", color: "blue", path: "/orders/new" },
+    { id: "view-orders", label: "View Orders", icon: "Package", color: "green", path: "/orders" },
+  ],
+  dispatcher: [
+    { id: "assign-order", label: "Assign Order", icon: "ClipboardList", color: "blue", path: "/orders/assign" },
+    { id: "view-drivers", label: "View Drivers", icon: "Truck", color: "green", path: "/drivers" },
+  ],
+  driver: [
+    { id: "start-delivery", label: "Start Delivery", icon: "Navigation", color: "blue", path: "/navigation" },
+    { id: "my-tasks", label: "My Tasks", icon: "ClipboardList", color: "green", path: "/my-orders" },
+  ],
+  customer: [
+    { id: "track-order", label: "Track Order", icon: "MapPin", color: "blue", path: "/track-order" },
+    { id: "contact-support", label: "Support", icon: "MessageSquare", color: "gray", path: "/support" },
+  ],
+};
 
   return (actions[role] || []).map((action) => ({
     ...action,
@@ -641,7 +381,7 @@ const AppLayout = () => {
   const location = useLocation();
 
   // Mock auth - replace with your actual auth store
-  const [user, setUser] = useState({
+  const [user] = useState({
     id: "1",
     name: "John Kamau",
     email: "john.kamau@deliver.com",
@@ -734,26 +474,36 @@ const AppLayout = () => {
     if (typeof window === "undefined") return;
 
     const root = window.document.documentElement;
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const body = window.document.body;
+    const mediaQuery = window.matchMedia?.("(prefers-color-scheme: dark)");
+
+    const getResolvedTheme = (themePreference) => {
+      if (themePreference === "system") {
+        return mediaQuery?.matches ? "dark" : "light";
+      }
+      return VALID_THEMES.includes(themePreference) ? themePreference : "light";
+    };
 
     const applyTheme = (themePreference) => {
-      const resolvedTheme =
-        themePreference === "system"
-          ? mediaQuery.matches
-            ? "dark"
-            : "light"
-          : themePreference;
-
-      root.classList.toggle("dark", resolvedTheme === "dark");
+      const resolvedTheme = getResolvedTheme(themePreference);
+      const toggleDark = resolvedTheme === "dark";
+      root.classList.toggle("dark", toggleDark);
+      body.classList.toggle("dark", toggleDark);
     };
 
     applyTheme(theme);
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
 
-    if (theme === "system") {
+    if (theme === "system" && mediaQuery) {
       const handleChange = () => applyTheme("system");
-      mediaQuery.addEventListener("change", handleChange);
-      return () => mediaQuery.removeEventListener("change", handleChange);
+      if (typeof mediaQuery.addEventListener === "function") {
+        mediaQuery.addEventListener("change", handleChange);
+        return () => mediaQuery.removeEventListener("change", handleChange);
+      }
+      if (typeof mediaQuery.addListener === "function") {
+        mediaQuery.addListener(handleChange);
+        return () => mediaQuery.removeListener(handleChange);
+      }
     }
   }, [theme]);
 
@@ -866,25 +616,6 @@ const AppLayout = () => {
         return "🔔";
     }
   };
-
-  // Render loading skeleton
-  const renderLoadingSkeleton = () => (
-    <div className="space-y-6 px-4">
-      {[1, 2, 3].map((idx) => (
-        <div key={idx} className="animate-pulse">
-          <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-24 mb-3"></div>
-          <div className="space-y-2 pl-2">
-            {[1, 2, 3].map((itemIdx) => (
-              <div key={itemIdx} className="flex items-center space-x-3">
-                <div className="w-5 h-5 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-32"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
 
   // Render modules
   const renderModules = () => {
