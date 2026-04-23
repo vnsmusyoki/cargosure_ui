@@ -62,6 +62,8 @@ const PosManagement = () => {
   const [discountValue, setDiscountValue] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [viewMode, setViewMode] = useState('grid');
+  const [showCalculatorModal, setShowCalculatorModal] = useState(false);
+  const [calcInput, setCalcInput] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
   const searchInputRef = useRef(null);
@@ -231,6 +233,78 @@ const PosManagement = () => {
     
     // Print receipt (simulated)
     toast.success('Receipt ready for printing');
+  };
+
+  // Save current cart as draft (localStorage mock)
+  const saveDraft = () => {
+    if (cart.length === 0) {
+      toast.error('Cart is empty');
+      return;
+    }
+    const draft = {
+      id: `draft-${Date.now()}`,
+      customer: selectedCustomer,
+      items: cart,
+      subtotal,
+      tax: totalTax,
+      discount: discountAmount,
+      total,
+      date: new Date().toISOString()
+    };
+    const drafts = JSON.parse(localStorage.getItem('pos_drafts') || '[]');
+    drafts.push(draft);
+    localStorage.setItem('pos_drafts', JSON.stringify(drafts));
+    toast.success('Order saved as draft');
+    // clear for a new sale
+    setCart([]);
+    setDiscountValue(0);
+  };
+
+  // Record a sale on credit (no immediate payment)
+  const sellOnCredit = () => {
+    if (cart.length === 0) {
+      toast.error('Cart is empty');
+      return;
+    }
+    if (selectedCustomer.id === 1) {
+      toast.error('Select a customer before selling on credit');
+      setShowCustomerModal(true);
+      return;
+    }
+    const order = {
+      id: `credit-${Date.now()}`,
+      customer: selectedCustomer,
+      items: cart,
+      subtotal,
+      tax: totalTax,
+      discount: discountAmount,
+      total,
+      paymentMethod: 'credit',
+      paymentAmount: 0,
+      status: 'credit',
+      date: new Date().toISOString()
+    };
+    // In a real app, save to backend. Using localStorage for demo.
+    const credits = JSON.parse(localStorage.getItem('pos_credits') || '[]');
+    credits.push(order);
+    localStorage.setItem('pos_credits', JSON.stringify(credits));
+    toast.success('Order recorded on credit');
+    setCart([]);
+    setDiscountValue(0);
+  };
+
+  // Calculator handlers
+  const handleCalcPress = (val) => setCalcInput(prev => `${prev}${val}`);
+  const handleCalcClear = () => setCalcInput('');
+  const handleCalcEval = () => {
+    try {
+      // evaluate simple arithmetic expression
+      // eslint-disable-next-line no-new-func
+      const result = Function('return (' + calcInput + ')')();
+      setCalcInput(String(result));
+    } catch (e) {
+      toast.error('Invalid expression');
+    }
   };
 
   // Keyboard shortcuts
@@ -444,6 +518,38 @@ const PosManagement = () => {
                 <h2 className="font-semibold text-gray-900 dark:text-white">Current Sale</h2>
               </div>
               <span className="text-xs text-gray-500">{cart.length} items</span>
+            </div>
+            {/* Quick actions: Back, Draft, Credit, Calculator (responsive wrap) */}
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => window.history.back()}
+                className="flex-shrink-0 whitespace-nowrap px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition text-sm flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </button>
+              <button
+                onClick={saveDraft}
+                className="flex-shrink-0 whitespace-nowrap px-3 py-1.5 bg-yellow-50 dark:bg-yellow-900/10 text-yellow-700 dark:text-yellow-300 rounded-lg hover:bg-yellow-100 transition text-sm flex items-center gap-2"
+              >
+                <Save className="w-4 h-4" />
+                Save Draft
+              </button>
+              <button
+                onClick={sellOnCredit}
+                disabled={cart.length === 0}
+                className="flex-shrink-0 whitespace-nowrap px-3 py-1.5 bg-amber-50 dark:bg-amber-900/10 text-amber-700 dark:text-amber-300 rounded-lg hover:bg-amber-100 transition text-sm flex items-center gap-2 disabled:opacity-50"
+              >
+                <Send className="w-4 h-4" />
+                Sell on Credit
+              </button>
+              <button
+                onClick={() => setShowCalculatorModal(true)}
+                className="md:ml-auto ml-0 flex-shrink-0 whitespace-nowrap px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition text-sm flex items-center gap-2"
+              >
+                <Calculator className="w-4 h-4" />
+                Calculator
+              </button>
             </div>
             
             {/* Customer Selection */}
@@ -751,6 +857,40 @@ const PosManagement = () => {
                 >
                   Cancel
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Calculator Modal */}
+      {showCalculatorModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowCalculatorModal(false)}>
+          <div className="bg-white dark:bg-gray-800 rounded-xl w-80 shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <div className="p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+              <h3 className="font-semibold text-lg text-gray-900 dark:text-white">Calculator</h3>
+              <button onClick={() => setShowCalculatorModal(false)} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
+            </div>
+            <div className="p-4">
+              <div className="mb-3">
+                <input type="text" value={calcInput} readOnly className="w-full px-3 py-2 text-right text-2xl rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700" />
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+','C'].map((b) => (
+                  <button
+                    key={b}
+                    onClick={() => {
+                      if (b === 'C') return handleCalcClear();
+                      if (b === '=') return handleCalcEval();
+                      handleCalcPress(b);
+                    }}
+                    className="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition text-lg"
+                  >
+                    {b}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-3">
+                <button onClick={() => { navigator.clipboard?.writeText(calcInput); toast.success('Copied'); }} className="w-full py-2 bg-indigo-600 text-white rounded-lg">Copy</button>
               </div>
             </div>
           </div>

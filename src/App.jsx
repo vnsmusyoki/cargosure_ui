@@ -27,7 +27,8 @@ import CategoriesManagement from "./pages/company/categories/CategoriesManagemen
 import CustomersManagement from "./pages/company/customers/CustomersManagement";
 import SuppliersManagement from "./pages/company/suppliers/SuppliersManagement"; 
 import PosManagement from "@/pages/company/sales/PosManagement";
-import PosLayout from "./layouts/PosLayout";
+import PosLayout from "@/layouts/PosLayout";
+import BusinessSettings from "@/pages/company/settings/BusinessSettings";
 
 function App() {
   return (
@@ -69,6 +70,8 @@ function App() {
           <Route path="/customers-management" element={<CustomersManagement />} />
 
           <Route path="/suppliers-management" element={<SuppliersManagement />} />
+
+          <Route path="/settings/business" element={<BusinessSettings />} />
 
                
         </Route>
