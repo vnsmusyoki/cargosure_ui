@@ -25,7 +25,8 @@ import ProductsManagement from "@/pages/company/products/ProductsManagement";
 import CreateProduct from "@/pages/company/products/CreateProduct";
 import CategoriesManagement from "./pages/company/categories/CategoriesManagement";
 import CustomersManagement from "./pages/company/customers/CustomersManagement";
-import SuppliersManagement from "./pages/company/suppliers/SuppliersManagement";
+import SuppliersManagement from "./pages/company/suppliers/SuppliersManagement"; 
+import PosManagement from "@/pages/company/sales/PosManagement";
 
 function App() {
   return (
@@ -67,6 +68,10 @@ function App() {
           <Route path="/customers-management" element={<CustomersManagement />} />
 
           <Route path="/suppliers-management" element={<SuppliersManagement />} />
+
+          <Route path="/sales/pos" element={<PosManagement />} />
+
+
 
           
         </Route>
