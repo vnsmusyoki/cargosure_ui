@@ -29,6 +29,9 @@ import SuppliersManagement from "./pages/company/suppliers/SuppliersManagement";
 import PosManagement from "@/pages/company/sales/PosManagement";
 import PosLayout from "@/layouts/PosLayout";
 import BusinessSettings from "@/pages/company/settings/BusinessSettings";
+import FuelManagement from "./pages/company/fleet/FuelManagement";
+import VehicleDetails from "./pages/company/fleet/VehicleDetails";
+import RoutesManagement from "./pages/company/fleet/RoutesManagement";
 
 function App() {
   return (
@@ -55,7 +58,10 @@ function App() {
           <Route path="/orders-management/create" element={<OrderManagementCreate />} />
 
           <Route path="/fleet-management" element={<FleetManagement />} />
+          <Route path="/fleet/fuel-management" element={<FuelManagement />} />
           <Route path="/live-tracking" element={<LiveTracking />} />
+          <Route path="/fleet/vehicle-details/:id" element={<VehicleDetails />} />
+          <Route path="/fleet/routes-management" element={<RoutesManagement />} />
 
           <Route path="/inventory/warehouses" element={<WarehousesManagement />} />
           <Route path="/inventory/warehouses/create" element={<CreateWareHouse />} />

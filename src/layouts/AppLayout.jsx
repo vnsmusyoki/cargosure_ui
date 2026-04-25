@@ -214,12 +214,10 @@ const roleMenus = {
   {
   category: "Fleet",
   items: [
-    { id: "fleet", label: "Fleet Management", icon: "Truck", path: "/fleet-management", moduleNumber: 4 },
-    { id: "vehicles", label: "Vehicles", icon: "Car", path: "/fleet/vehicles", moduleNumber: 5 },
-    { id: "maintenance", label: "Maintenance", icon: "Wrench", path: "/fleet/maintenance", moduleNumber: 6 },
-    { id: "fuel", label: "Fuel Logs", icon: "Fuel", path: "/fleet/fuel", moduleNumber: 7 },
+    { id: "fleet", label: "Fleet Management", icon: "Truck", path: "/fleet-management", moduleNumber: 4 },  
+    { id: "fuel", label: "Fuel Logs", icon: "Fuel", path: "/fleet/fuel-management", moduleNumber: 7 },
     { id: "tracking", label: "Live Tracking", icon: "MapPin", path: "/live-tracking", moduleNumber: 8 },
-    { id: "routes", label: "Routes", icon: "Route", path: "/fleet/routes", moduleNumber: 9 },
+    { id: "routes", label: "Routes", icon: "Route", path: "/fleet/routes-management", moduleNumber: 9 },
   ],
 },
 {

@@ -387,7 +387,7 @@ export default function Dashboard() {
                         className="w-full bg-indigo-500 rounded-t transition-all hover:bg-indigo-600 cursor-pointer"
                         style={{ height: `${(value / 70) * 120}px` }}
                       >
-                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+                        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
                           {value} deliveries
                         </div>
                       </div>
@@ -566,7 +566,7 @@ export default function Dashboard() {
                 <div className="relative group cursor-pointer">
                   <div className="w-3 h-3 bg-green-500 rounded-full animate-ping absolute"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full relative"></div>
-                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition">
+                  <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition">
                     {driver.name} - ETA {driver.eta}
                   </div>
                 </div>
