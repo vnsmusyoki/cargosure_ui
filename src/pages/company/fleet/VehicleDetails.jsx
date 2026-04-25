@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ArrowLeft, Car, User, MapPin, Navigation, Clock, Battery,
   Gauge, Thermometer, Wifi, WifiOff, AlertTriangle, CheckCircle,
   Calendar, Phone, Mail, Star, Route, Activity, Zap, Shield,
   Fuel, TrendingUp, TrendingDown, BarChart3, Download,
   RefreshCw, Share2, Bell, Edit, Trash2, MoreVertical,
-  Truck, Bike, Smartphone, Signal, Volume2, VolumeX
-} from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import dynamic from 'next/dynamic';
+  Truck, Bike, Smartphone, Signal, Volume2, VolumeX, Wrench
+} from 'lucide-react';  
 import toast from 'react-hot-toast';
-
-// Dynamic import for OpenStreetMap components to avoid SSR issues
-const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false });
-const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false });
-const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false });
-const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false });
-const Polyline = dynamic(() => import('react-leaflet').then(mod => mod.Polyline), { ssr: false });
-const Circle = dynamic(() => import('react-leaflet').then(mod => mod.Circle), { ssr: false });
+import { Link } from 'react-router-dom';
 
 // Mock vehicle data (would come from API in real app)
 const mockVehicleData = {
@@ -95,7 +85,7 @@ const mockVehicleData = {
       status: 'active',
       startTime: '08:00 AM',
       endTime: '12:00 PM',
-      waypoints: []
+    
     },
     {
       id: 2,
@@ -179,8 +169,7 @@ const mockVehicleData = {
   ]
 };
 
-export default function VehicleDetails({ params }: { params: { id: string } }) {
-  const router = useRouter();
+export default function VehicleDetails() {
   const [vehicle, setVehicle] = useState(mockVehicleData);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedTab, setSelectedTab] = useState('tracking');
@@ -189,6 +178,70 @@ export default function VehicleDetails({ params }: { params: { id: string } }) {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [showAlertModal, setShowAlertModal] = useState(false);
   const [selectedAlert, setSelectedAlert] = useState(null);
+
+  // Leaflet map refs (DOM-based map similar to LiveTracking)
+  const mapContainerRef = useRef(null);
+  const mapRef = useRef(null);
+  const markersRef = useRef({});
+  const polylineRef = useRef(null);
+  const geofenceRefs = useRef([]);
+
+  const updateMap = () => {
+    if (!mapRef.current || !window.L) return;
+    const L = window.L;
+
+    // Clear existing markers
+    Object.values(markersRef.current).forEach((m) => m.remove());
+    markersRef.current = {};
+
+    const v = vehicle;
+    // Marker HTML
+    const iconHtml = `
+      <div class="relative">
+        <div class="w-8 h-8 rounded-full ${v.status === 'active' ? 'bg-green-500' : 'bg-gray-400'} flex items-center justify-center shadow-lg border-2 border-white">
+          ${v.type === 'Motorcycle' ? '🏍️' : v.type === 'Van' ? '🚐' : '🚚'}
+        </div>
+      </div>
+    `;
+
+    const customIcon = L.divIcon({ html: iconHtml, className: 'custom-marker', iconSize: [32, 32], popupAnchor: [0, -16] });
+
+    const marker = L.marker([v.currentLocation.lat, v.currentLocation.lng], { icon: customIcon })
+      .addTo(mapRef.current)
+      .bindPopup(`<div class="p-2"><div class="font-bold">${v.registration}</div><div class="text-sm">Speed: ${v.currentLocation.speed} km/h</div><div class="text-sm">${v.currentLocation.address}</div></div>`);
+
+    markersRef.current[v.id] = marker;
+
+    // Polyline (route)
+    if (polylineRef.current) {
+      polylineRef.current.remove();
+      polylineRef.current = null;
+    }
+    if (v.currentRoute && v.currentRoute.polyline && v.currentRoute.polyline.length) {
+      polylineRef.current = L.polyline(v.currentRoute.polyline, { color: '#4F46E5', weight: 4, opacity: 0.8 }).addTo(mapRef.current);
+      try {
+        mapRef.current.fitBounds(polylineRef.current.getBounds(), { padding: [50, 50] });
+      } catch (err) {
+        mapRef.current.setView([v.currentLocation.lat, v.currentLocation.lng], 14);
+      }
+    } else {
+      mapRef.current.setView([v.currentLocation.lat, v.currentLocation.lng], 14);
+    }
+
+    // Geofences
+    geofenceRefs.current.forEach((g) => g.remove());
+    geofenceRefs.current = [];
+    (v.geofences || []).forEach((g) => {
+      const circle = L.circle([v.currentLocation.lat - 0.002, v.currentLocation.lng - 0.001], {
+        radius: 200,
+        color: g.type === 'restricted' ? '#EF4444' : '#10B981',
+        fillColor: g.type === 'restricted' ? '#EF4444' : '#10B981',
+        fillOpacity: 0.1,
+      }).addTo(mapRef.current);
+      circle.bindPopup(g.name);
+      geofenceRefs.current.push(circle);
+    });
+  };
 
   // Simulate real-time location updates
   useEffect(() => {
@@ -199,6 +252,42 @@ export default function VehicleDetails({ params }: { params: { id: string } }) {
     
     return () => clearInterval(interval);
   }, []);
+
+  // Initialize Leaflet map (DOM based) once
+  useEffect(() => {
+    if (!mapContainerRef.current || mapRef.current) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = () => {
+      const L = window.L;
+      mapRef.current = L.map(mapContainerRef.current).setView([vehicle.currentLocation.lat, vehicle.currentLocation.lng], 14);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+      }).addTo(mapRef.current);
+
+      updateMap();
+    };
+    document.head.appendChild(script);
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(link);
+
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
+  }, []);
+
+  // Update map whenever vehicle changes
+  useEffect(() => {
+    updateMap();
+  }, [vehicle]);
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -213,11 +302,11 @@ export default function VehicleDetails({ params }: { params: { id: string } }) {
     toast.success('Location shared successfully');
   };
 
-  const sendCommand = (command: string) => {
+  const sendCommand = (command) => {
     toast.success(`Command sent: ${command}`);
   };
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status) => {
     switch(status) {
       case 'active': return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
       case 'pending': return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400';
@@ -235,8 +324,8 @@ export default function VehicleDetails({ params }: { params: { id: string } }) {
     }
   };
 
-  const formatSpeed = (speed: number) => `${speed} km/h`;
-  const formatDistance = (distance: number) => `${distance.toLocaleString()} km`;
+  const formatSpeed = (speed) => `${speed} km/h`;
+  const formatDistance = (distance) => `${distance.toLocaleString()} km`;
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -457,51 +546,7 @@ export default function VehicleDetails({ params }: { params: { id: string } }) {
                 <p className="text-xs text-gray-500 mt-1">Last updated: {vehicle.tracker.lastUpdate}</p>
               </div>
               <div className="h-[400px] w-full">
-                <MapContainer
-                  center={[vehicle.currentLocation.lat, vehicle.currentLocation.lng]}
-                  zoom={14}
-                  style={{ height: '100%', width: '100%' }}
-                  whenReady={() => setIsMapReady(true)}
-                >
-                  <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
-                  {/* Vehicle Marker */}
-                  <Marker position={[vehicle.currentLocation.lat, vehicle.currentLocation.lng]}>
-                    <Popup>
-                      <div className="text-sm">
-                        <strong>{vehicle.registration}</strong><br />
-                        Speed: {vehicle.currentLocation.speed} km/h<br />
-                        Address: {vehicle.currentLocation.address}
-                      </div>
-                    </Popup>
-                  </Marker>
-                  {/* Current Route Polyline */}
-                  {vehicle.currentRoute && (
-                    <Polyline
-                      positions={vehicle.currentRoute.polyline}
-                      color="#4F46E5"
-                      weight={4}
-                      opacity={0.8}
-                    />
-                  )}
-                  {/* Geofence Circles */}
-                  {vehicle.geofences.map(geofence => (
-                    <Circle
-                      key={geofence.id}
-                      center={[vehicle.currentLocation.lat - 0.002, vehicle.currentLocation.lng - 0.001]}
-                      radius={200}
-                      pathOptions={{
-                        color: geofence.type === 'restricted' ? '#EF4444' : '#10B981',
-                        fillColor: geofence.type === 'restricted' ? '#EF4444' : '#10B981',
-                        fillOpacity: 0.1
-                      }}
-                    >
-                      <Popup>{geofence.name}</Popup>
-                    </Circle>
-                  ))}
-                </MapContainer>
+                <div id="map-container" ref={mapContainerRef} className="h-full w-full rounded-b" />
               </div>
             </div>
 

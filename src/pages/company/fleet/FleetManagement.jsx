@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Plus, Search, Filter, Download, Printer, MoreVertical, 
   Eye, Edit, Trash2, Car, Truck, Bike, AlertCircle, 
@@ -605,13 +606,13 @@ const FleetManagement = () => {
                       </td>
                       <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-2">
-                          <button 
-                            onClick={() => setSelectedVehicle(vehicle)}
+                          <Link
+                            to={`/fleet/vehicle-details/${vehicle.id}`}
                             className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
                             title="View Details"
                           >
                             <Eye className="w-4 h-4" />
-                          </button>
+                          </Link>
                           <button className="p-1.5 text-gray-400 hover:text-blue-600 transition" title="Edit">
                             <Edit className="w-4 h-4" />
                           </button>
