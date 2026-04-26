@@ -1,14 +1,14 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
+import HomePage from "../pages/HomePage";
 import DefaultLayout from "@/layouts/DefaultLayout";
-import AuthLayout from "@/layouts/AuthLayout";
+import AuthLayout from "@/layouts/authLayout";
 import AppLayout from "@/layouts/AppLayout";
-import Login from "@/auth/Login";
-import ForgotPassword from "@/auth/ForgotPassword";
-import SetNewPassword from "@/auth/SetNewPassword";
-import Register from "./auth/Register";
-import Dashboard from "./Dashboard";
+import Login from "@/features/auth/Login";
+import ForgotPassword from "@/features/auth/ForgotPassword";
+import SetNewPassword from "@/features/auth/SetNewPassword";
+import Register from "../features/auth/Register";
+import Dashboard from "../features/dashboard/Dashboard";
 
 
 import DriversManagement from "@/pages/company/drivers/DriversManagement";
@@ -23,21 +23,21 @@ import WareHouseView from "@/pages/company/inventory/warehouses/WarehouseView";
 import StockManagement from "@/pages/company/inventory/stock/StockManagement";
 import ProductsManagement from "@/pages/company/products/ProductsManagement"; 
 import CreateProduct from "@/pages/company/products/CreateProduct";
-import CategoriesManagement from "./pages/company/categories/CategoriesManagement";
-import CustomersManagement from "./pages/company/customers/CustomersManagement";
-import SuppliersManagement from "./pages/company/suppliers/SuppliersManagement"; 
+import CategoriesManagement from "../pages/company/categories/CategoriesManagement";
+import CustomersManagement from "../pages/company/customers/CustomersManagement";
+import SuppliersManagement from "../pages/company/suppliers/SuppliersManagement"; 
 import PosManagement from "@/pages/company/sales/PosManagement";
 import PosLayout from "@/layouts/PosLayout";
 import BusinessSettings from "@/pages/company/settings/BusinessSettings";
-import FuelManagement from "./pages/company/fleet/FuelManagement";
-import VehicleDetails from "./pages/company/fleet/VehicleDetails";
-import RoutesManagement from "./pages/company/fleet/RoutesManagement";
+import FuelManagement from "../pages/company/fleet/FuelManagement";
+import VehicleDetails from "../pages/company/fleet/VehicleDetails";
+import RoutesManagement from "../pages/company/fleet/RoutesManagement";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public/Auth routes */}
+        {/* Public/features/auth routes */}
         <Route path="/" element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
