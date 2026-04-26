@@ -1,14 +1,14 @@
 
 import { Outlet, Link } from "react-router-dom";
 import React, { useState } from "react";
-import {
-  MapPin, Menu, X, Sun, Moon
-} from 'lucide-react';
-
+import { MapPin, Menu, X, Sun, Moon } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function AuthLayout() {
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, toggleDark } = useTheme();
   const theme = {
     text: isDark ? 'text-white' : 'text-slate-900',
     textSecondary: isDark ? 'text-slate-400' : 'text-slate-600',
@@ -24,7 +24,7 @@ export default function AuthLayout() {
       <nav className={`fixed top-0 w-full z-50 backdrop-blur-md border-b ${theme.navBg} transition-colors duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" onClick={()=> navigate('/')}>
               <div className={`${isDark ? 'bg-blue-600' : 'bg-blue-500'} rounded-lg p-1.5 transform hover:scale-110 transition-transform`}>
                 <MapPin className="w-5 h-5 text-white" />
               </div>
@@ -39,10 +39,10 @@ export default function AuthLayout() {
               <a href="#pricing" className={`${theme.textSecondary} hover:${theme.text} transition`}>Pricing</a>
               <a href="#contact" className={`${theme.textSecondary} hover:${theme.text} transition`}>Contact</a>
               <button
-                onClick={() => setIsDark(!isDark)}
+                onClick={toggleDark}
                 className={`p-2 rounded-lg ${theme.bgSecondary} transition-colors`}
               >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                {isDark ? <Sun className="w-5 h-5 text-white" /> : <Moon className="w-5 h-5 text-slate-700" />}
               </button>
              
               <button className={`${theme.button} px-6 py-2 rounded-lg font-medium transition`}>

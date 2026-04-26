@@ -1,5 +1,6 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/context/ThemeContext";
 import HomePage from "../pages/HomePage";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import AuthLayout from "@/layouts/authLayout";
@@ -35,6 +36,7 @@ import RoutesManagement from "../pages/company/fleet/RoutesManagement";
 
 function App() {
   return (
+    <ThemeProvider>
     <BrowserRouter>
       <Routes>
         {/* Public/features/auth routes */}
@@ -86,6 +88,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

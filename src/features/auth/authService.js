@@ -7,13 +7,18 @@ export const login = async ({ email, password }) => {
         Password: password,
     }
   const response = await api.post("/Auth/login", payload);
-
   return response.data;
 };
 
-// REGISTER (optional future use)
-export const register = async (data) => {
-  const response = await api.post("/auth/register", data);
+// COMPANY REGISTRATION
+export const registerCompany = async (payload) => {
+  const response = await api.post("/Auth/register/company", payload);
+  return response.data;
+};
+
+// DISTRIBUTOR REGISTRATION
+export const registerDistributor = async (payload) => {
+  const response = await api.post("/Auth/register/distributor", payload);
   return response.data;
 };
 

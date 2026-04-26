@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+import { useTheme } from "@/context/ThemeContext";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import * as Icons from "lucide-react";
 import {
@@ -45,16 +46,6 @@ import {
   MessageSquare,
 } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
-
-// Theme management
-const THEME_STORAGE_KEY = "theme";
-const VALID_THEMES = ["light", "dark", "system"];
-
-const getStoredThemePreference = () => {
-  if (typeof window === "undefined") return "system";
-  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
-  return VALID_THEMES.includes(storedTheme) ? storedTheme : "system";
-};
 
 // Dynamic icon loader component
 const DynamicIcon = ({ iconName, size = 20, className = "" }) => {
@@ -490,6 +481,8 @@ const AppLayout = () => {
   };
 
   // State
+  const { theme, setTheme } = useTheme();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -498,7 +491,6 @@ const AppLayout = () => {
   const [menuSearch, setMenuSearch] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [loadingNotifications, setLoadingNotifications] = useState(false);
-  const [theme, setTheme] = useState(getStoredThemePreference);
 
   // Refs
   const sidebarRef = useRef(null);
@@ -560,44 +552,6 @@ const AppLayout = () => {
     };
   }, [location.pathname]);
 
-
-  // Theme management
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const root = window.document.documentElement;
-    const body = window.document.body;
-    const mediaQuery = window.matchMedia?.("(prefers-color-scheme: dark)");
-
-    const getResolvedTheme = (themePreference) => {
-      if (themePreference === "system") {
-        return mediaQuery?.matches ? "dark" : "light";
-      }
-      return VALID_THEMES.includes(themePreference) ? themePreference : "light";
-    };
-
-    const applyTheme = (themePreference) => {
-      const resolvedTheme = getResolvedTheme(themePreference);
-      const toggleDark = resolvedTheme === "dark";
-      root.classList.toggle("dark", toggleDark);
-      body.classList.toggle("dark", toggleDark);
-    };
-
-    applyTheme(theme);
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-
-    if (theme === "system" && mediaQuery) {
-      const handleChange = () => applyTheme("system");
-      if (typeof mediaQuery.addEventListener === "function") {
-        mediaQuery.addEventListener("change", handleChange);
-        return () => mediaQuery.removeEventListener("change", handleChange);
-      }
-      if (typeof mediaQuery.addListener === "function") {
-        mediaQuery.addListener(handleChange);
-        return () => mediaQuery.removeListener(handleChange);
-      }
-    }
-  }, [theme]);
 
   // Mock notifications loading
   useEffect(() => {

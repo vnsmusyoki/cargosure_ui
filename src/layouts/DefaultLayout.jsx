@@ -1,14 +1,13 @@
 
 import { Outlet, Link, useNavigate} from "react-router-dom";
 import React, { useState } from "react";
-import {
-  MapPin, Menu, X, Sun, Moon
-} from 'lucide-react';
+import { MapPin, Menu, X, Sun, Moon } from 'lucide-react';
+import { useTheme } from "@/context/ThemeContext";
 
 
 export default function DefaultLayout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, toggleDark } = useTheme();
   const navigate = useNavigate();
   const theme = {
     text: isDark ? 'text-white' : 'text-slate-900',
@@ -40,10 +39,10 @@ export default function DefaultLayout() {
               <a href="#pricing" className={`${theme.textSecondary} hover:${theme.text} transition`}>Pricing</a>
               <a href="#contact" className={`${theme.textSecondary} hover:${theme.text} transition`}>Contact</a>
               <button
-                onClick={() => setIsDark(!isDark)}
+                onClick={toggleDark}
                 className={`p-2 rounded-lg ${theme.bgSecondary} transition-colors`}
               >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                {isDark ? <Sun className="w-5 h-5 text-white" /> : <Moon className="w-5 h-5 text-slate-700" />}
               </button>
              
               <button onClick={()=> navigate('login')} className={`${theme.button} px-6 py-2 rounded-lg font-medium transition`}>

@@ -1,210 +1,160 @@
 import React, { useState, useEffect } from 'react';
+import { useTheme } from '@/context/ThemeContext';
 import {
   MapPin, Truck, Eye, Smartphone, Link, Bell, TrendingUp, BarChart3, Camera,
   Users, FileText, Settings, Shield, Database, Zap, CheckCircle, ArrowRight,
-  Star, Phone, Mail, Menu, X, Play, Send, ArrowUpRight, Radio, MessageSquare,
+  Star, Phone, Mail, Play, Send, ArrowUpRight, Radio, MessageSquare,
   Clock, AlertCircle, Wifi, WifiOff, MapPinCheck, Headphones, Download, Code2,
   RotateCcw, Smartphone as PhoneIcon, Globe, Computer, Fan,
-  Moon, Sun
+  Sparkles, Award, Target, Rocket, Navigation, Package, Clock3,
+  BadgeCheck, Layers, CreditCard, ShieldCheck, ThumbsUp, ChartNoAxesCombined,
+  Waypoints, Timer, CircleCheckBig, TruckIcon, UserRound, Building2, Check,
+  ChevronRight, ExternalLink, Gauge, Leaf, HeartHandshake
 } from 'lucide-react';
 
-// SVG Components
-const MapIllustration = () => (
-  <svg viewBox="0 0 300 300" className="w-full h-full">
-    <rect width="300" height="300" fill="none"/>
-    <path d="M50 150 L250 150" stroke="currentColor" strokeWidth="2" opacity="0.2"/>
-    <path d="M150 50 L150 250" stroke="currentColor" strokeWidth="2" opacity="0.2"/>
-    <circle cx="100" cy="100" r="8" fill="currentColor" opacity="0.8"/>
-    <circle cx="200" cy="120" r="8" fill="currentColor" opacity="0.8"/>
-    <circle cx="150" cy="200" r="8" fill="currentColor" opacity="0.8"/>
-    <path d="M100 100 Q150 110 200 120 Q175 160 150 200" stroke="currentColor" strokeWidth="3" fill="none"/>
-    <g transform="translate(100, 100)">
-      <rect x="-8" y="-8" width="16" height="16" fill="currentColor" opacity="0.9"/>
-    </g>
-  </svg>
-);
-
-const TruckIllustration = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    <rect width="300" height="200" fill="none"/>
-    {/* Road */}
-    <path d="M0 120 L300 120" stroke="currentColor" strokeWidth="3" opacity="0.3"/>
-    <path d="M0 125 L300 125" stroke="currentColor" strokeWidth="1" opacity="0.2" strokeDasharray="10,10"/>
-    {/* Truck */}
+// ==================== CUSTOM ILLUSTRATIONS ====================
+const HeroDashboard = ({ isDark }) => (
+  <svg viewBox="0 0 560 420" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.12" />
+        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.04" />
+      </linearGradient>
+      <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stopColor="#3b82f6" />
+        <stop offset="100%" stopColor="#2563eb" />
+      </linearGradient>
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="8" />
+        <feMerge><feMergeNode in="offsetblur" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+    </defs>
+    
+    {/* Main card background */}
+    <rect x="20" y="20" width="520" height="380" rx="24" fill={isDark ? "#0f172a" : "#ffffff"} stroke={isDark ? "#1e293b" : "#e2e8f0"} strokeWidth="1.5" />
+    
+    {/* Header bar */}
+    <rect x="20" y="20" width="520" height="52" rx="24" fill={isDark ? "#1e293b" : "#f8fafc"} />
+    <circle cx="44" cy="46" r="7" fill="#ef4444" />
+    <circle cx="62" cy="46" r="7" fill="#f59e0b" />
+    <circle cx="80" cy="46" r="7" fill="#10b981" />
+    <text x="220" y="51" fontSize="13" fill={isDark ? "#94a3b8" : "#64748b"} fontFamily="monospace" fontWeight="500">track.delivertrack.ke/live</text>
+    <rect x="460" y="38" width="56" height="16" rx="8" fill="#3b82f6" opacity="0.15" />
+    <circle cx="484" cy="46" r="4" fill="#3b82f6">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+    </circle>
+    
+    {/* Side menu */}
+    <rect x="20" y="72" width="100" height="328" fill={isDark ? "#0f172a" : "#ffffff"} />
+    {[0, 1, 2, 3, 4].map((i) => (
+      <rect key={i} x="36" y={88 + i * 44} width="68" height="32" rx="8" fill={i === 0 ? (isDark ? "#1e293b" : "#f1f5f9") : (isDark ? "#0f172a" : "transparent")} stroke={i === 0 ? "#3b82f6" : "none"} strokeWidth="1.5" />
+    ))}
+    
+    {/* Main content area */}
+    <rect x="136" y="80" width="388" height="24" rx="6" fill={isDark ? "#1e293b" : "#f1f5f9"} />
+    <rect x="136" y="116" width="388" height="160" rx="12" fill="url(#heroGrad)" stroke={isDark ? "#1e293b" : "#e2e8f0"} strokeWidth="1" />
+    
+    {/* Map visualization */}
+    <path d="M160 180 L500 180" stroke={isDark ? "#334155" : "#cbd5e1"} strokeWidth="1.5" strokeDasharray="6,4" />
+    <path d="M280 140 L280 260" stroke={isDark ? "#334155" : "#cbd5e1"} strokeWidth="1.5" strokeDasharray="6,4" />
+    
+    {/* Delivery points */}
+    <circle cx="210" cy="200" r="10" fill="#3b82f6" opacity="0.2" />
+    <circle cx="210" cy="200" r="6" fill="#3b82f6" />
+    <text x="225" y="204" fontSize="10" fill={isDark ? "#94a3b8" : "#64748b"}>Pickup</text>
+    
+    <circle cx="380" cy="230" r="10" fill="#10b981" opacity="0.2" />
+    <circle cx="380" cy="230" r="6" fill="#10b981" />
+    <text x="395" y="234" fontSize="10" fill={isDark ? "#94a3b8" : "#64748b"}>Delivery</text>
+    
+    <circle cx="300" cy="170" r="8" fill="#f59e0b" opacity="0.2" />
+    <circle cx="300" cy="170" r="5" fill="#f59e0b" />
+    
+    {/* Route line with animation */}
+    <path d="M210 200 Q260 180 300 170 Q340 190 380 230" stroke="#3b82f6" strokeWidth="2.5" fill="none" strokeDasharray="6,4" opacity="0.8" />
+    
+    {/* Animated truck */}
     <g>
-      {/* Cabin */}
-      <rect x="30" y="80" width="40" height="35" fill="none" stroke="currentColor" strokeWidth="2"/>
-      <circle cx="45" cy="120" r="8" fill="none" stroke="currentColor" strokeWidth="2"/>
-      {/* Cargo box */}
-      <rect x="75" y="75" width="80" height="45" fill="none" stroke="currentColor" strokeWidth="2"/>
-      {/* Back wheel */}
-      <circle cx="155" cy="120" r="8" fill="none" stroke="currentColor" strokeWidth="2"/>
-      {/* Window */}
-      <rect x="35" y="85" width="30" height="20" fill="currentColor" opacity="0.3"/>
-      {/* Door */}
-      <line x1="70" y1="80" x2="70" y2="115" stroke="currentColor" strokeWidth="1" opacity="0.5"/>
+      <animateMotion dur="6s" repeatCount="indefinite" path="M210 200 Q260 180 300 170 Q340 190 380 230" />
+      <rect x="-12" y="-8" width="20" height="14" rx="3" fill="#3b82f6" />
+      <circle cx="-4" cy="8" r="5" fill="#1e293b" />
+      <circle cx="8" cy="8" r="5" fill="#1e293b" />
     </g>
+    
+    {/* Bottom stats */}
+    <rect x="136" y="292" width="120" height="56" rx="10" fill={isDark ? "#1e293b" : "#ffffff"} stroke={isDark ? "#334155" : "#e2e8f0"} strokeWidth="1" />
+    <text x="156" y="318" fontSize="22" fontWeight="bold" fill="#3b82f6">98.5%</text>
+    <text x="156" y="336" fontSize="10" fill={isDark ? "#94a3b8" : "#64748b"}>On-time rate</text>
+    
+    <rect x="270" y="292" width="120" height="56" rx="10" fill={isDark ? "#1e293b" : "#ffffff"} stroke={isDark ? "#334155" : "#e2e8f0"} strokeWidth="1" />
+    <text x="290" y="318" fontSize="22" fontWeight="bold" fill="#10b981">285</text>
+    <text x="290" y="336" fontSize="10" fill={isDark ? "#94a3b8" : "#64748b"}>Today's deliveries</text>
+    
+    <rect x="404" y="292" width="120" height="56" rx="10" fill={isDark ? "#1e293b" : "#ffffff"} stroke={isDark ? "#334155" : "#e2e8f0"} strokeWidth="1" />
+    <text x="424" y="318" fontSize="22" fontWeight="bold" fill="#f59e0b">12min</text>
+    <text x="424" y="336" fontSize="10" fill={isDark ? "#94a3b8" : "#64748b"}>Avg. ETA</text>
   </svg>
 );
 
-const PhoneIllustration = () => (
-  <svg viewBox="0 0 200 300" className="w-full h-full">
-    <rect width="200" height="300" fill="none"/>
-    {/* Phone frame */}
-    <rect x="30" y="20" width="140" height="260" rx="15" fill="none" stroke="currentColor" strokeWidth="2"/>
-    {/* Screen */}
-    <rect x="35" y="30" width="130" height="240" fill="currentColor" opacity="0.05"/>
-    {/* Status bar */}
-    <rect x="35" y="30" width="130" height="25" fill="currentColor" opacity="0.1"/>
-    <text x="100" y="50" textAnchor="middle" fontSize="8" fill="currentColor" opacity="0.5">9:41</text>
-    {/* Content */}
-    <circle cx="60" cy="80" r="12" fill="currentColor" opacity="0.4"/>
-    <rect x="75" y="75" width="70" height="8" fill="currentColor" opacity="0.3"/>
-    <rect x="75" y="88" width="50" height="4" fill="currentColor" opacity="0.2"/>
-    {/* Loading indicator */}
-    <circle cx="100" cy="140" r="15" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.6"/>
-    <path d="M115 140 A15 15 0 0 1 100 125" fill="none" stroke="currentColor" strokeWidth="2"/>
-    {/* Button */}
-    <rect x="50" y="200" width="100" height="40" rx="8" fill="currentColor" opacity="0.2"/>
-    <text x="100" y="228" textAnchor="middle" fontSize="12" fill="currentColor" opacity="0.6">Track Order</text>
-  </svg>
-);
-
-const AnalyticsIllustration = () => (
-  <svg viewBox="0 0 300 200" className="w-full h-full">
-    <rect width="300" height="200" fill="none"/>
-    {/* Axes */}
-    <line x1="40" y1="160" x2="40" y2="40" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
-    <line x1="40" y1="160" x2="280" y2="160" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
-    {/* Bars */}
-    <g opacity="0.7">
-      <rect x="60" y="120" width="30" height="40" fill="currentColor"/>
-      <rect x="100" y="90" width="30" height="70" fill="currentColor"/>
-      <rect x="140" y="70" width="30" height="90" fill="currentColor"/>
-      <rect x="180" y="80" width="30" height="80" fill="currentColor"/>
-      <rect x="220" y="100" width="30" height="60" fill="currentColor"/>
-    </g>
-    {/* Legend */}
-    <circle cx="50" cy="30" r="4" fill="currentColor" opacity="0.6"/>
-    <text x="60" y="35" fontSize="10" fill="currentColor" opacity="0.6">Deliveries</text>
-  </svg>
-);
-
+// ==================== MAIN COMPONENT ====================
 const HomePage = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [displayedStats, setDisplayedStats] = useState({ orders: 0, drivers: 0, regions: 0, uptime: 0 });
+  const { isDark } = useTheme();
+  const [displayedStats, setDisplayedStats] = useState({ deliveries: 0, satisfaction: 0, time: 0, drivers: 0 });
 
+  // Animated stats counter
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const targets = { deliveries: 15420, satisfaction: 98, time: 67, drivers: 245 };
+    const duration = 2500;
+    const startTime = performance.now();
+
+    const animate = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      const easeOut = 1 - Math.pow(1 - progress, 1.5);
+
+      setDisplayedStats({
+        deliveries: Math.floor(targets.deliveries * easeOut),
+        satisfaction: Math.floor(targets.satisfaction * easeOut),
+        time: Math.floor(targets.time * easeOut),
+        drivers: Math.floor(targets.drivers * easeOut)
+      });
+
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDisplayedStats(prev => ({
-        orders: Math.min(prev.orders + Math.random() * 50, 1250),
-        drivers: Math.min(prev.drivers + Math.random() * 5, 89),
-        regions: Math.min(prev.regions + Math.random() * 2, 14),
-        uptime: Math.min(prev.uptime + 0.1, 99.95)
-      }));
-    }, 100);
-    return () => clearInterval(interval);
-  }, []);
-
+  // Theme-aware styling
   const theme = {
     bg: isDark ? 'bg-slate-950' : 'bg-white',
     bgSecondary: isDark ? 'bg-slate-900' : 'bg-slate-50',
-    bgTertiary: isDark ? 'bg-slate-800' : 'bg-slate-100',
-    text: isDark ? 'text-white' : 'text-slate-900',
+    bgTertiary: isDark ? 'bg-slate-800/60' : 'bg-slate-100/80',
+    bgCard: isDark ? 'bg-slate-900/80' : 'bg-white/80',
+    text: isDark ? 'text-slate-100' : 'text-slate-900',
     textSecondary: isDark ? 'text-slate-400' : 'text-slate-600',
-    textTertiary: isDark ? 'text-slate-500' : 'text-slate-500',
+    textMuted: isDark ? 'text-slate-500' : 'text-slate-400',
     border: isDark ? 'border-slate-800' : 'border-slate-200',
     borderLight: isDark ? 'border-slate-700/50' : 'border-slate-300/50',
+    glass: isDark ? 'bg-slate-900/70 backdrop-blur-xl border-slate-800' : 'bg-white/70 backdrop-blur-xl border-slate-200',
     card: isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200',
-    cardHover: isDark ? 'hover:bg-slate-800/50 hover:border-slate-700' : 'hover:bg-slate-50 hover:border-slate-300',
-    accent: 'text-blue-600',
-    accentBg: isDark ? 'bg-blue-950' : 'bg-blue-50',
-    accentBorder: isDark ? 'border-blue-800' : 'border-blue-200',
-    button: isDark ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white',
-    buttonSecondary: isDark ? 'border-slate-700 text-white hover:bg-slate-800' : 'border-slate-300 text-slate-900 hover:bg-slate-100',
-    navBg: isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white/80 border-slate-200',
+    cardHover: isDark ? 'hover:bg-slate-800/80 hover:border-slate-700' : 'hover:bg-slate-50 hover:border-slate-300',
+    accent: 'text-blue-500',
+    accentBg: isDark ? 'bg-blue-500/10' : 'bg-blue-50',
+    accentBorder: isDark ? 'border-blue-500/20' : 'border-blue-200',
+    buttonPrimary: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg shadow-blue-600/25 hover:shadow-xl transition-all duration-300',
+    buttonSecondary: `border ${isDark ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100'} transition-all duration-300`,
   };
 
-  const coreFeatures = [
-    {
-      icon: MapPin,
-      title: "Real-Time Tracking",
-      desc: "5-second GPS updates from dispatch to doorstep",
-      badge: "Core"
-    },
-    {
-      icon: Smartphone,
-      title: "Customer Portal",
-      desc: "WhatsApp & SMS tracking links - zero friction",
-      badge: "Core"
-    },
-    {
-      icon: Truck,
-      title: "Driver Management",
-      desc: "Assign, track, and communicate with drivers in real-time",
-      badge: "Core"
-    },
-    {
-      icon: Bell,
-      title: "Smart Notifications",
-      desc: "Auto notifications at pickup, in-transit, arriving, delivered",
-      badge: "Core"
-    },
-    {
-      icon: BarChart3,
-      title: "Fleet Analytics",
-      desc: "Driver scorecards, delivery metrics, efficiency insights",
-      badge: "Growth"
-    },
-    {
-      icon: Camera,
-      title: "Proof of Delivery",
-      desc: "GPS-stamped photos and signatures on every delivery",
-      badge: "Growth"
-    },
-    {
-      icon: TrendingUp,
-      title: "Route Optimization",
-      desc: "AI-powered multi-stop sequencing saves fuel & time",
-      badge: "Growth"
-    },
-    {
-      icon: FileText,
-      title: "Invoicing & Payments",
-      desc: "M-Pesa, MTN Money, and bank integration built-in",
-      badge: "Growth"
-    }
-  ];
-
-  const useCases = [
-    {
-      title: "Upcountry Wholesalers",
-      desc: "From Kisumu to Nakuru, track bulk orders to small retailers",
-      metric: "50+ deliveries/day"
-    },
-    {
-      title: "FMCG Distributors",
-      desc: "Real-time visibility across supermarkets, kiosks, and dukas",
-      metric: "300+ active retailers"
-    },
-    {
-      title: "Cold Chain Logistics",
-      desc: "Temperature-controlled deliveries with compliance tracking",
-      metric: "2-8°C monitoring"
-    },
-    {
-      title: "E-Commerce Fulfillment",
-      desc: "Handle same-day and next-day deliveries across Nairobi",
-      metric: "Multi-stop optimization"
-    }
+  const features = [
+    { icon: MapPin, title: "Live GPS Tracking", description: "5-second updates with driver location, ETA, and route visualization on an interactive map.", badge: "Real-time", color: "blue" },
+    { icon: Smartphone, title: "Customer Portal", description: "WhatsApp & SMS tracking links — customers track deliveries without any app install.", badge: "Frictionless", color: "green" },
+    { icon: Camera, title: "Proof of Delivery", description: "Geotagged photos, e-signatures, and timestamps for every delivery stop.", badge: "Secure", color: "purple" },
+    { icon: Bell, title: "Smart Notifications", description: "Automated alerts at pickup, in-transit, approaching, and delivered status.", badge: "Automated", color: "amber" },
+    { icon: TrendingUp, title: "Route Optimization", description: "AI-powered multi-stop sequencing reduces fuel costs by up to 28%.", badge: "AI-Powered", color: "indigo" },
+    { icon: BarChart3, title: "Fleet Analytics", description: "Driver scorecards, delivery metrics, cost analysis, and efficiency insights.", badge: "Insights", color: "cyan" },
+    { icon: Shield, title: "Geofencing", description: "Virtual boundaries with instant alerts when vehicles enter or exit zones.", badge: "Security", color: "red" },
+    { icon: FileText, title: "Smart Invoicing", description: "Auto-generate invoices, payment reconciliation with M-Pesa integration.", badge: "Finance", color: "teal" }
   ];
 
   const pricingPlans = [
@@ -212,331 +162,242 @@ const HomePage = () => {
       name: "Starter",
       price: "KES 2,999",
       period: "/month",
-      desc: "For small traders & solo distributors",
-      features: [
-        "Up to 20 deliveries/day",
-        "1 vehicle tracking",
-        "WhatsApp notifications",
-        "Basic customer portal",
-        "Mobile app (Android/iOS)",
-        "Email support"
-      ],
+      description: "Perfect for small businesses and solo distributors",
+      features: ["Up to 50 deliveries/day", "2 vehicles tracked", "WhatsApp notifications", "Basic customer portal", "Email support (48hr response)", "Mobile app access"],
       cta: "Start Free Trial",
-      highlight: false
+      highlighted: false,
+      savings: null
     },
     {
       name: "Professional",
       price: "KES 9,999",
       period: "/month",
-      desc: "For growing distributors",
-      features: [
-        "Unlimited deliveries",
-        "Up to 10 vehicles",
-        "SMS & WhatsApp automation",
-        "Advanced analytics",
-        "Driver performance scoring",
-        "Proof of delivery (photos)",
-        "Priority support (24/7)",
-        "Custom branding"
-      ],
+      description: "For growing logistics teams and distributors",
+      features: ["Unlimited deliveries", "Up to 15 vehicles", "SMS + WhatsApp automation", "Advanced analytics dashboard", "Proof of delivery (photos + sig)", "Driver performance scoring", "Priority 24/7 support", "Custom branding", "API access"],
       cta: "Start Free Trial",
-      highlight: true
+      highlighted: true,
+      savings: "Save 20% annually"
     },
     {
       name: "Enterprise",
       price: "Custom",
       period: "pricing",
-      desc: "For large-scale operations",
-      features: [
-        "Unlimited everything",
-        "Unlimited vehicles",
-        "Temperature & humidity tracking",
-        "Advanced route optimization",
-        "API access & integrations",
-        "Custom reports & dashboards",
-        "Dedicated account manager",
-        "SLA guarantees (99.9% uptime)"
-      ],
-      cta: "Schedule Demo",
-      highlight: false
+      description: "For large-scale fleet operations",
+      features: ["Unlimited vehicles & deliveries", "Temperature/humidity tracking", "Full API access & webhooks", "White-label options", "Dedicated account manager", "SLA guarantees (99.9% uptime)", "On-premise deployment", "Custom integrations", "24/7 phone support"],
+      cta: "Contact Sales",
+      highlighted: false,
+      savings: null
     }
   ];
 
-  const marketData = [
-    { label: "Traders in Kenya", value: "2.1M+", insight: "Small wholesalers & SMEs" },
-    { label: "Failed Deliveries/Year", value: "~35%", insight: "Due to poor visibility" },
-    { label: "Avg Last-Mile Cost", value: "35-55%", insight: "Of total transport cost" },
-    { label: "Market Opportunity", value: "KES 50B+", insight: "TAM for logistics tech" }
+  const testimonials = [
+    { 
+      quote: "DeliverTrack transformed our last-mile operations. Failed deliveries dropped by 76% and our customers love the real-time tracking links. Best logistics investment we've made.", 
+      name: "Grace Muthoni", 
+      role: "Operations Director", 
+      company: "FreshLink Distributors",
+      rating: 5, 
+      region: "Nairobi",
+      imageInitial: "G"
+    },
+    { 
+      quote: "The route optimization feature alone saved us over KES 45,000 in fuel costs last month. Finally, a logistics platform that understands Kenyan roads and challenges.", 
+      name: "Daniel Kipruto", 
+      role: "Fleet Manager", 
+      company: "Rift Valley Supplies",
+      rating: 5, 
+      region: "Eldoret",
+      imageInitial: "D"
+    },
+    { 
+      quote: "Simple, reliable, and the support team is exceptional. We've scaled from 5 to 25 drivers in 8 months, and DeliverTrack has grown with us every step.", 
+      name: "Aisha Juma", 
+      role: "Owner", 
+      company: "Coastal Traders",
+      rating: 5, 
+      region: "Mombasa",
+      imageInitial: "A"
+    }
   ];
 
   const integrations = [
-    { name: "M-Pesa", icon: "💰" },
-    { name: "Airtel Money", icon: "📱" },
-    { name: "Google Maps", icon: "🗺️" },
-    { name: "Twilio SMS", icon: "📧" },
-    { name: "WhatsApp API", icon: "💬" },
-    { name: "Shopify", icon: "🛒" }
+    { name: "M-Pesa", icon: "💳", color: "from-green-500 to-green-600" },
+    { name: "Airtel Money", icon: "📱", color: "from-red-500 to-red-600" },
+    { name: "Google Maps", icon: "🗺️", color: "from-blue-400 to-blue-600" },
+    { name: "WhatsApp API", icon: "💬", color: "from-green-400 to-green-600" },
+    { name: "Twilio", icon: "📧", color: "from-red-400 to-red-600" },
+    { name: "Shopify", icon: "🛒", color: "from-emerald-500 to-teal-600" },
+    { name: "SAP", icon: "🏢", color: "from-blue-600 to-indigo-600" },
+    { name: "Oracle", icon: "🗄️", color: "from-red-600 to-orange-600" }
   ];
 
-
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${theme.bg}`}>
+    <div className={`${theme.bg} transition-colors duration-300 min-h-screen antialiased`}>
+      {/* ========== HERO SECTION ========== */}
+      <section id="hero" className={`relative pt-12 lg:pt-16 pb-20 lg:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden ${theme.bg}`}>
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-20 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-transparent via-transparent to-transparent" />
+        </div>
 
-      {/* Hero Section */}
-      <section className={`pt-32 pb-20 px-4 sm:px-6 lg:px-8 ${theme.bg}`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Left: Copy */}
+        <div className="relative max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left Content */}
             <div className="space-y-8">
-              <div className="space-y-4">
-                <div className={`inline-flex items-center gap-2 ${theme.accentBg} border ${theme.accentBorder} ${theme.accent} px-3 py-1 rounded-full text-sm font-medium`}>
-                  <Radio className="w-4 h-4 animate-pulse" />
-                  Live in Nairobi • Expanding to 14 regions
-                </div>
-
-                <h1 className={`text-5xl md:text-7xl font-bold leading-tight ${theme.text}`}>
-                  Track every delivery,
-                  <span className={`block ${theme.accent}`}> eliminate uncertainty</span>
-                </h1>
-
-                <p className={`text-xl ${theme.textSecondary} leading-relaxed max-w-lg`}>
-                  Real-time delivery visibility for upcountry traders and wholesalers. Give your customers Uber-like tracking. Take back control of your fleet.
-                </p>
+              {/* Trust Badge */}
+              <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5">
+                <Sparkles className="w-4 h-4 text-blue-500" />
+                <span className="text-sm font-medium text-blue-500">Trusted by 1,200+ Kenyan distributors</span>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <button className={`${theme.button} px-8 py-4 rounded-xl transition font-semibold flex items-center justify-center gap-2 text-lg`}>
-                  Start Free Trial <ArrowRight className="w-5 h-5" />
+              {/* Headline */}
+              <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.2] tracking-tight ${theme.text}`}>
+                Track every delivery,
+                <span className="block bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 bg-clip-text text-transparent mt-2">
+                  eliminate uncertainty
+                </span>
+              </h1>
+
+              {/* Description */}
+              <p className={`text-lg lg:text-xl ${theme.textSecondary} max-w-lg leading-relaxed`}>
+                Real-time delivery visibility for African logistics. Give your customers Uber-like tracking. 
+                Reduce failed deliveries by up to 80% and optimize your fleet operations.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-4">
+                <button className={`${theme.buttonPrimary} px-8 py-4 rounded-xl font-semibold flex items-center gap-2 text-base shadow-xl`}>
+                  Start 14-day free trial <ArrowRight className="w-5 h-5" />
                 </button>
-                <button className={`border ${theme.borderLight} ${theme.text} px-8 py-4 rounded-xl hover:${theme.bgSecondary} transition font-semibold flex items-center justify-center gap-2 text-lg`}>
-                  <Play className="w-5 h-5" /> Watch 2-min Demo
+                <button className={`${theme.buttonSecondary} px-8 py-4 rounded-xl font-semibold flex items-center gap-2`}>
+                  <Play className="w-5 h-5" /> Watch demo (2 min)
                 </button>
               </div>
 
-              <div className={`flex items-center gap-6 pt-8 border-t ${theme.border}`}>
+              {/* Stats Row */}
+              <div className={`flex items-center gap-8 pt-8 border-t ${theme.border}`}>
                 <div>
-                  <div className={`text-2xl font-bold ${theme.text}`}>{Math.floor(displayedStats.orders)}</div>
-                  <div className={`text-sm ${theme.textTertiary}`}>Orders tracked today</div>
+                  <div className={`text-3xl font-bold ${theme.text}`}>{displayedStats.deliveries.toLocaleString()}+</div>
+                  <div className={`text-sm ${theme.textMuted}`}>Deliveries completed</div>
                 </div>
-                <div className={`w-px h-12 ${theme.borderLight}`} />
+                <div className={`w-px h-10 ${theme.borderLight}`} />
                 <div>
-                  <div className={`text-2xl font-bold ${theme.text}`}>{Math.floor(displayedStats.drivers)}</div>
-                  <div className={`text-sm ${theme.textTertiary}`}>Active drivers</div>
+                  <div className={`text-3xl font-bold text-green-500`}>{displayedStats.satisfaction}%</div>
+                  <div className={`text-sm ${theme.textMuted}`}>Satisfaction rate</div>
                 </div>
-                <div className={`w-px h-12 ${theme.borderLight}`} />
+                <div className={`w-px h-10 ${theme.borderLight}`} />
                 <div>
-                  <div className={`text-2xl font-bold ${theme.text}`}>{displayedStats.uptime.toFixed(2)}%</div>
-                  <div className={`text-sm ${theme.textTertiary}`}>System uptime</div>
+                  <div className={`text-3xl font-bold text-amber-500`}>-{displayedStats.time}%</div>
+                  <div className={`text-sm ${theme.textMuted}`}>Cost reduction</div>
                 </div>
               </div>
             </div>
 
-            {/* Right: Dashboard Preview */}
+            {/* Right Dashboard Preview */}
             <div className="relative">
-              <div className={`relative ${theme.bgTertiary} border ${theme.border} rounded-2xl overflow-hidden shadow-xl`}>
-                {/* Browser Header */}
-                <div className={`${isDark ? 'bg-slate-700' : 'bg-slate-200'} px-4 py-3 flex items-center gap-2 border-b ${theme.border}`}>
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                  <span className={`text-xs ${theme.textTertiary} ml-2`}>dashboard.delivertrack.ke</span>
-                </div>
-
-                {/* Dashboard Content */}
-                <div className="p-6 space-y-6">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className={`text-lg font-bold ${theme.text}`}>Active Deliveries</h3>
-                      <p className={`text-sm ${theme.textTertiary} mt-1`}>Real-time across all regions</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <div className={`px-3 py-1 ${isDark ? 'bg-green-900 text-green-300' : 'bg-green-100 text-green-700'} text-xs rounded-full flex items-center gap-1`}>
-                        <Radio className="w-3 h-3 animate-pulse" /> Live
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Active Deliveries List */}
-                  <div className="space-y-3">
-                    {[
-                      { driver: "James Mwangi", order: "ORD-2341", eta: "8 min", progress: 75, region: "Nairobi Central" },
-                      { driver: "Sarah Wanjiru", order: "ORD-2342", eta: "15 min", progress: 50, region: "Westlands" },
-                      { driver: "Peter Omondi", order: "ORD-2343", eta: "23 min", progress: 30, region: "Karen" }
-                    ].map((delivery, i) => (
-                      <div key={i} className={`${theme.card} rounded-lg p-3 transition`}>
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-full ${isDark ? 'bg-blue-600' : 'bg-blue-500'} flex items-center justify-center`}>
-                              <Truck className="w-4 h-4 text-white" />
-                            </div>
-                            <div>
-                              <div className={`font-medium text-sm ${theme.text}`}>{delivery.driver}</div>
-                              <div className={`text-xs ${theme.textTertiary}`}>{delivery.order}</div>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className={`text-sm font-semibold ${theme.accent}`}>{delivery.eta}</div>
-                            <div className={`text-xs ${theme.textTertiary}`}>{delivery.region}</div>
-                          </div>
-                        </div>
-                        <div className={`w-full ${isDark ? 'bg-slate-700' : 'bg-slate-300'} rounded h-1.5`}>
-                          <div className={`${isDark ? 'bg-blue-600' : 'bg-blue-500'} rounded h-full`} style={{ width: `${delivery.progress}%` }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Stats */}
-                  <div className={`grid grid-cols-3 gap-3 pt-4 border-t ${theme.border}`}>
-                    <div className="text-center">
-                      <div className={`text-2xl font-bold ${theme.accent}`}>12</div>
-                      <div className={`text-xs ${theme.textTertiary}`}>In Transit</div>
-                    </div>
-                    <div className="text-center">
-                      <div className={`text-2xl font-bold text-green-600`}>24</div>
-                      <div className={`text-xs ${theme.textTertiary}`}>Completed</div>
-                    </div>
-                    <div className="text-center">
-                      <div className={`text-2xl font-bold text-orange-600`}>2</div>
-                      <div className={`text-xs ${theme.textTertiary}`}>Delayed</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating notification */}
-              <div className={`absolute -bottom-6 -right-6 ${theme.bgTertiary} border ${theme.border} rounded-lg p-4 shadow-xl max-w-xs animate-bounce`}>
-                <div className="flex items-start gap-3">
-                  <MessageSquare className={`w-5 h-5 ${theme.accent} flex-shrink-0 mt-0.5`} />
-                  <div className="text-sm">
-                    <p className={`font-medium ${theme.text}`}>Order #ORD-2341 arriving in 8 min</p>
-                    <p className={`${theme.textTertiary} text-xs mt-1`}>Driver: James M. • Nairobi Central</p>
-                  </div>
-                </div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 rounded-3xl blur-2xl" />
+              <div className="relative transform hover:scale-[1.02] transition-all duration-500">
+                <HeroDashboard isDark={isDark} />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Market Data Section */}
-      <section className={`py-16 px-4 sm:px-6 lg:px-8 border-y ${theme.border}`}>
+      {/* ========== FEATURES SECTION ========== */}
+      <section id="features" className={`py-24 lg:py-32 px-4 sm:px-6 lg:px-8 ${theme.bgSecondary}`}>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className={`text-3xl font-bold mb-4 ${theme.text}`}>Why now? Kenya's market is ready</h2>
-            <p className={theme.textSecondary}>The numbers show a massive opportunity</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {marketData.map((item, i) => (
-              <div key={i} className={`${theme.card} rounded-lg p-6 transition`}>
-                <div className={`text-3xl font-bold ${theme.accent} mb-2`}>
-                  {item.value}
-                </div>
-                <div className={`font-semibold text-sm mb-2 ${theme.text}`}>{item.label}</div>
-                <div className={`text-xs ${theme.textTertiary}`}>{item.insight}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className={`py-20 px-4 sm:px-6 lg:px-8 ${theme.bg}`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className={`inline-flex items-center gap-2 ${theme.accentBg} border ${theme.accentBorder} ${theme.accent} px-3 py-1 rounded-full text-sm font-medium mb-4`}>
-              <Zap className="w-4 h-4" />
-              Complete Feature Set
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className={`inline-flex items-center gap-2 ${theme.accentBg} border ${theme.accentBorder} rounded-full px-4 py-1.5 mb-6`}>
+              <Zap className="w-4 h-4 text-blue-500" />
+              <span className="text-sm font-medium text-blue-500">Complete Feature Set</span>
             </div>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme.text}`}>Everything you need in one platform</h2>
-            <p className={`${theme.textSecondary} text-lg max-w-2xl mx-auto`}>
-              Built specifically for African distributors. No complexity. Pure functionality.
+            <h2 className={`text-4xl lg:text-5xl font-bold mb-5 ${theme.text}`}>
+              Everything you need to master logistics
+            </h2>
+            <p className={`text-lg ${theme.textSecondary}`}>
+              Built specifically for African supply chains — enterprise-grade features, simple interface.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreFeatures.map((feature, i) => (
+            {features.map((feature, idx) => (
               <div
-                key={i}
-                className={`group ${theme.card} rounded-xl p-6 transition ${theme.cardHover}`}
+                key={idx}
+                className={`group ${theme.card} rounded-2xl p-6 transition-all duration-300 ${theme.cardHover} card-hover-effect`}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`w-12 h-12 ${theme.accentBg} rounded-lg flex items-center justify-center transition`}>
-                    <feature.icon className={`w-6 h-6 ${theme.accent}`} />
+                <div className="mb-5">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <feature.icon className="w-6 h-6 text-blue-500" />
                   </div>
-                  <span className={`text-xs font-semibold px-2 py-1 ${isDark ? 'bg-blue-950 text-blue-300' : 'bg-blue-100 text-blue-700'} rounded`}>
-                    {feature.badge}
-                  </span>
                 </div>
-                <h3 className={`font-bold text-lg ${theme.text} mb-2`}>{feature.title}</h3>
-                <p className={`${theme.textSecondary} text-sm`}>{feature.desc}</p>
+                <h3 className={`text-lg font-bold mb-2 ${theme.text}`}>{feature.title}</h3>
+                <p className={`${theme.textSecondary} text-sm leading-relaxed`}>{feature.description}</p>
+                <span className={`inline-block mt-4 text-xs font-medium px-2 py-1 rounded-full ${theme.accentBg} text-blue-500`}>
+                  {feature.badge}
+                </span>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Use Cases Section */}
-      <section id="usecases" className={`py-20 px-4 sm:px-6 lg:px-8 border-t ${theme.border}`}>
+      {/* ========== STATS / TRUST SECTION ========== */}
+      <section className={`py-16 px-4 sm:px-6 lg:px-8 border-y ${theme.border}`}>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className={`inline-flex items-center gap-2 ${isDark ? 'bg-green-950' : 'bg-green-100'} border ${isDark ? 'border-green-800' : 'border-green-300'} ${isDark ? 'text-green-300' : 'text-green-700'} px-3 py-1 rounded-full text-sm font-medium mb-4`}>
-              <Users className="w-4 h-4" />
-              Built for Your Business
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div className="text-center">
+              <div className={`text-4xl font-black ${theme.accent} mb-2`}>1,200+</div>
+              <div className={`font-semibold ${theme.text}`}>Active Businesses</div>
+              <div className={`text-sm ${theme.textMuted}`}>Across Kenya</div>
             </div>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme.text}`}>Who succeeds with DeliverTrack</h2>
-            <p className={`${theme.textSecondary} text-lg max-w-2xl mx-auto`}>
-              From Kisumu to Mombasa, distributors are already saving time and money
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {useCases.map((useCase, i) => (
-              <div
-                key={i}
-                className={`group relative overflow-hidden rounded-xl p-8 border ${theme.border} transition`}
-              >
-                <div className={`absolute inset-0 ${isDark ? 'bg-slate-800/50' : 'bg-slate-100/50'} group-hover:opacity-75 transition`} />
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className={`text-2xl font-bold ${theme.text}`}>{useCase.title}</h3>
-                    <ArrowUpRight className={`w-5 h-5 ${theme.textTertiary} transition`} />
-                  </div>
-                  <p className={`${theme.textSecondary} mb-6`}>{useCase.desc}</p>
-                  <div className={`inline-flex items-center gap-2 ${isDark ? 'bg-slate-800' : 'bg-slate-200'} px-3 py-1 rounded-full`}>
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                    <span className={`text-sm font-medium ${theme.text}`}>{useCase.metric}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <div className="text-center">
+              <div className={`text-4xl font-black text-green-500 mb-2`}>98.5%</div>
+              <div className={`font-semibold ${theme.text}`}>On-Time Delivery</div>
+              <div className={`text-sm ${theme.textMuted}`}>Industry leading</div>
+            </div>
+            <div className="text-center">
+              <div className={`text-4xl font-black text-amber-500 mb-2`}>-76%</div>
+              <div className={`font-semibold ${theme.text}`}>Failed Deliveries</div>
+              <div className={`text-sm ${theme.textMuted}`}>Average reduction</div>
+            </div>
+            <div className="text-center">
+              <div className={`text-4xl font-black text-purple-500 mb-2`}>45k+</div>
+              <div className={`font-semibold ${theme.text}`}>Hours Saved</div>
+              <div className={`text-sm ${theme.textMuted}`}>Annually by customers</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className={`py-20 px-4 sm:px-6 lg:px-8 ${theme.bg}`}>
+      {/* ========== HOW IT WORKS ========== */}
+      <section className={`py-24 lg:py-32 px-4 sm:px-6 lg:px-8 ${theme.bg}`}>
         <div className="max-w-7xl mx-auto">
-          <h2 className={`text-4xl font-bold text-center mb-16 ${theme.text}`}>How it works in 4 steps</h2>
-
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className={`text-4xl lg:text-5xl font-bold mb-5 ${theme.text}`}>How DeliverTrack works</h2>
+            <p className={`text-lg ${theme.textSecondary}`}>Four simple steps to logistics excellence</p>
+          </div>
+          
           <div className="grid md:grid-cols-4 gap-6">
             {[
-              { step: 1, title: "Add Order", desc: "Create order or import from CSV", icon: FileText },
-              { step: 2, title: "Assign Driver", desc: "Send to driver's phone instantly", icon: Send },
-              { step: 3, title: "Customer Gets Link", desc: "WhatsApp tracking link auto-sent", icon: MessageSquare },
-              { step: 4, title: "Complete Delivery", desc: "Signature + photo proof", icon: CheckCircle }
-            ].map((item, i) => (
-              <div key={i} className="relative">
-                <div className={`${theme.card} rounded-xl p-6 text-center transition`}>
-                  <div className={`w-12 h-12 ${isDark ? 'bg-blue-600' : 'bg-blue-500'} rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold`}>
-                    {item.step}
+              { step: "01", title: "Add Order", description: "Create orders manually or import via CSV/API", icon: FileText, color: "blue" },
+              { step: "02", title: "Assign Driver", description: "Route automatically optimized and sent to driver's app", icon: Send, color: "green" },
+              { step: "03", title: "Customer Notified", description: "WhatsApp/SMS tracking link sent automatically", icon: MessageSquare, color: "amber" },
+              { step: "04", title: "Proof of Delivery", description: "Photo, signature, and timestamp captured", icon: CheckCircle, color: "purple" }
+            ].map((item, idx) => (
+              <div key={idx} className="relative">
+                <div className={`${theme.card} rounded-2xl p-6 text-center transition-all hover:scale-105 duration-300`}>
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br from-${item.color}-500 to-${item.color}-600 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
+                    {idx + 1}
                   </div>
                   <h3 className={`font-bold text-lg mb-2 ${theme.text}`}>{item.title}</h3>
-                  <p className={`${theme.textSecondary} text-sm`}>{item.desc}</p>
+                  <p className={`${theme.textSecondary} text-sm`}>{item.description}</p>
                 </div>
-                {i < 3 && (
+                {idx < 3 && (
                   <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2">
-                    <ArrowRight className="w-6 h-6 text-blue-600" />
+                    <ArrowRight className="w-5 h-5 text-blue-500" />
                   </div>
                 )}
               </div>
@@ -545,84 +406,80 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className={`py-20 px-4 sm:px-6 lg:px-8 border-t ${theme.border}`}>
+      {/* ========== PRICING SECTION ========== */}
+      <section id="pricing" className={`py-24 lg:py-32 px-4 sm:px-6 lg:px-8 ${theme.bgSecondary}`}>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className={`inline-flex items-center gap-2 ${isDark ? 'bg-purple-950' : 'bg-purple-100'} border ${isDark ? 'border-purple-800' : 'border-purple-300'} ${isDark ? 'text-purple-300' : 'text-purple-700'} px-3 py-1 rounded-full text-sm font-medium mb-4`}>
-              <BarChart3 className="w-4 h-4" />
-              Simple, transparent pricing
-            </div>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${theme.text}`}>Plans for every distributor</h2>
-            <p className={theme.textSecondary}>No surprises. No long contracts. Cancel anytime.</p>
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-500 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+              <CreditCard className="w-4 h-4" /> Simple, transparent pricing            </div>
+            <h2 className={`text-4xl lg:text-5xl font-bold mb-4 ${theme.text}`}>Choose the perfect plan</h2>
+            <p className={`text-lg ${theme.textSecondary}`}>Start free, upgrade as you grow — cancel anytime, no questions asked.</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {pricingPlans.map((plan, i) => (
+            {pricingPlans.map((plan, idx) => (
               <div
-                key={i}
-                className={`relative rounded-2xl border transition-all ${
-                  plan.highlight
-                    ? `${isDark ? 'bg-blue-950/30 border-blue-800' : 'bg-blue-50 border-blue-300'} scale-105 shadow-lg`
-                    : `${theme.card} ${theme.cardHover}`
-                } p-8`}
+                key={idx}
+                className={`relative rounded-2xl transition-all duration-300 ${
+                  plan.highlighted 
+                    ? `border-2 border-blue-500 shadow-2xl shadow-blue-500/20 scale-105 ${isDark ? 'bg-slate-900' : 'bg-white'}` 
+                    : `${theme.card} border ${theme.border}`
+                } p-8 ${plan.highlighted ? 'lg:scale-105' : ''}`}
               >
-                {plan.highlight && (
-                  <div className={`absolute -top-4 left-1/2 transform -translate-x-1/2 ${isDark ? 'bg-blue-600' : 'bg-blue-500'} text-white px-4 py-1 rounded-full text-sm font-bold`}>
-                    Most Popular
+                {plan.highlighted && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
+                    🌟 Most Popular
                   </div>
                 )}
-
-                <div className="mb-6">
-                  <h3 className={`text-2xl font-bold mb-2 ${theme.text}`}>{plan.name}</h3>
-                  <p className={`${theme.textSecondary} text-sm mb-4`}>{plan.desc}</p>
-                  <div className="flex items-baseline gap-1">
-                    <span className={`text-4xl font-bold ${theme.text}`}>{plan.price}</span>
-                    <span className={theme.textSecondary}>{plan.period}</span>
+                {plan.savings && (
+                  <div className="absolute top-6 right-6 bg-green-500/10 text-green-600 text-xs font-semibold px-2 py-1 rounded-full">
+                    {plan.savings}
                   </div>
+                )}
+                <h3 className={`text-2xl font-bold ${theme.text}`}>{plan.name}</h3>
+                <div className="mt-4 mb-6">
+                  <span className={`text-4xl font-black ${theme.text}`}>{plan.price}</span>
+                  <span className={theme.textMuted}>{plan.period}</span>
                 </div>
-
-                <button
-                  className={`w-full py-3 rounded-lg font-semibold mb-8 transition ${
-                    plan.highlight
-                      ? `${isDark ? 'bg-blue-600 hover:bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'} text-white`
-                      : `border ${theme.borderLight} ${theme.text} hover:${theme.bgSecondary}`
-                  }`}
-                >
+                <p className={`${theme.textSecondary} text-sm mb-6`}>{plan.description}</p>
+                <button className={`w-full py-3 rounded-xl font-semibold transition-all mb-8 ${
+                  plan.highlighted 
+                    ? theme.buttonPrimary 
+                    : `border ${theme.borderLight} ${theme.text} hover:${theme.bgSecondary}`
+                }`}>
                   {plan.cta}
                 </button>
-
-                <div className="space-y-3">
-                  {plan.features.map((feature, j) => (
-                    <div key={j} className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                      <span className={`text-sm ${theme.text}`}>{feature}</span>
-                    </div>
+                <ul className="space-y-3">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className={theme.textSecondary}>{feature}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
 
-          <div className={`mt-12 ${theme.bgSecondary} border ${theme.border} rounded-xl p-8 text-center`}>
-            <p className={`${theme.text} mb-4`}>
-              <strong>Early bird offer:</strong> Get 50% off for the first 3 months + free onboarding
+          <div className={`mt-12 text-center ${theme.bgTertiary} rounded-2xl p-6 border ${theme.borderLight}`}>
+            <p className={`${theme.textSecondary} text-sm`}>
+              🚀 <span className="font-semibold">Early bird special:</span> First 100 customers get 40% off for first 6 months + free onboarding session.
             </p>
-            <p className={`text-sm ${theme.textTertiary}`}>Limited to first 100 distributors. Valid until June 30, 2024.</p>
           </div>
         </div>
       </section>
 
-      {/* Integrations Section */}
-      <section className={`py-20 px-4 sm:px-6 lg:px-8 border-t ${theme.border}`}>
+      {/* ========== INTEGRATIONS ========== */}
+      <section className={`py-20 px-4 sm:px-6 lg:px-8 ${theme.bg}`}>
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className={`text-3xl font-bold mb-4 ${theme.text}`}>Works with what you already use</h2>
-          <p className={`${theme.textSecondary} mb-12`}>Seamless integrations with popular payment and communication platforms</p>
-
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
-            {integrations.map((integration, i) => (
-              <div key={i} className={`${theme.card} rounded-lg p-6 flex flex-col items-center justify-center transition ${theme.cardHover}`}>
-                <div className="text-4xl mb-2">{integration.icon}</div>
+          <h2 className={`text-3xl lg:text-4xl font-bold mb-4 ${theme.text}`}>Works with your existing tools</h2>
+          <p className={`${theme.textSecondary} mb-12 max-w-2xl mx-auto`}>
+            Seamless integration with popular payment platforms, communication tools, and e-commerce systems.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+            {integrations.map((integration, idx) => (
+              <div key={idx} className={`${theme.card} rounded-xl p-4 flex flex-col items-center justify-center transition-all hover:scale-105 duration-200 ${theme.cardHover}`}>
+                <div className="text-3xl mb-2">{integration.icon}</div>
                 <div className={`text-sm font-medium ${theme.text}`}>{integration.name}</div>
               </div>
             ))}
@@ -630,269 +487,118 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Roadmap Section */}
-      <section className={`py-20 px-4 sm:px-6 lg:px-8 border-t ${theme.border}`}>
+      {/* ========== TESTIMONIALS ========== */}
+      <section id="testimonials" className={`py-24 lg:py-32 px-4 sm:px-6 lg:px-8 ${theme.bgSecondary}`}>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className={`inline-flex items-center gap-2 ${isDark ? 'bg-purple-950' : 'bg-purple-100'} border ${isDark ? 'border-purple-800' : 'border-purple-300'} ${isDark ? 'text-purple-300' : 'text-purple-700'} px-3 py-1 rounded-full text-sm font-medium mb-4`}>
-              <Clock className="w-4 h-4" />
-              Product Roadmap
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 bg-amber-500/10 text-amber-500 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+              <Star className="w-4 h-4 fill-amber-500" /> Trusted by industry leaders
             </div>
-            <h2 className={`text-4xl font-bold mb-4 ${theme.text}`}>From MVP to Market Leader</h2>
-            <p className={theme.textSecondary}>90-day sprint. Then scaling nationwide.</p>
+            <h2 className={`text-4xl lg:text-5xl font-bold mb-4 ${theme.text}`}>What our customers say</h2>
+            <p className={`text-lg ${theme.textSecondary}`}>Real success stories from distributors across Kenya</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, idx) => (
+              <div key={idx} className={`${theme.card} rounded-2xl p-8 transition-all duration-300 ${theme.cardHover}`}>
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-500 text-amber-500" />
+                  ))}
+                </div>
+                <p className={`${theme.textSecondary} italic leading-relaxed mb-8`}>“{testimonial.quote}”</p>
+                <div className={`flex items-center gap-4 pt-6 border-t ${theme.border}`}>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    {testimonial.imageInitial}
+                  </div>
+                  <div>
+                    <div className={`font-bold ${theme.text}`}>{testimonial.name}</div>
+                    <div className={`text-sm ${theme.textMuted}`}>{testimonial.role}, {testimonial.company}</div>
+                    <div className="text-xs text-blue-500 mt-1">{testimonial.region}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== CTA SECTION ========== */}
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <div className="relative rounded-3xl overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600" />
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
+            <div className="relative p-12 lg:p-16 text-center">
+              <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
+                Ready to transform your delivery operations?
+              </h2>
+              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+                Join over 1,200 businesses across Kenya already saving time and money with DeliverTrack.
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:shadow-xl transition-all hover:scale-105">
+                  Start 14-day free trial <ArrowRight className="w-5 h-5" />
+                </button>
+                <button className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all hover:scale-105">
+                  Schedule a demo
+                </button>
+              </div>
+              <p className="text-blue-100 text-sm mt-8">
+                ✓ No credit card required • ✓ Cancel anytime • ✓ Support in Swahili & English
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== FOOTER ========== */}
+      <footer className={`border-t ${theme.border} py-16 px-4 sm:px-6 lg:px-8 ${theme.bg}`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-5 gap-8 mb-12">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl p-1.5">
+                  <Navigation className="w-5 h-5 text-white" />
+                </div>
+                <span className={`font-bold text-xl ${theme.text}`}>DeliverTrack</span>
+              </div>
+              <p className={`${theme.textSecondary} text-sm mb-6 max-w-sm`}>
+                Real-time delivery visibility for African distributors. Empowering businesses across Kenya with technology that works.
+              </p>
+              <div className="flex gap-3">
+                {["X", "LinkedIn", "Facebook", "Instagram"].map((social) => (
+                  <a key={social} href="#" className={`w-9 h-9 rounded-xl ${theme.bgSecondary} border ${theme.border} flex items-center justify-center ${theme.textSecondary} hover:text-blue-500 hover:border-blue-500 transition`}>
+                    <span className="text-xs">{social[0]}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
             {[
-              {
-                phase: "Phase 1: MVP",
-                timeline: "Apr - Jun 2024",
-                items: [
-                  "Order Management",
-                  "Real-time GPS Tracking",
-                  "Driver App (Android/iOS)",
-                  "Customer Portal",
-                  "WhatsApp Integration",
-                  "Proof of Delivery"
-                ]
-              },
-              {
-                phase: "Phase 2: Scale",
-                timeline: "Jul - Sep 2024",
-                items: [
-                  "Route Optimization",
-                  "Temperature Monitoring",
-                  "Advanced Analytics",
-                  "SMS Notifications",
-                  "Bulk Order Import",
-                  "Driver Scorecards"
-                ]
-              },
-              {
-                phase: "Phase 3: Dominate",
-                timeline: "Oct - Dec 2024",
-                items: [
-                  "Nationwide Expansion",
-                  "API Access",
-                  "Shopify Integration",
-                  "Insurance Partnerships",
-                  "B2B Marketplace",
-                  "Financing Solutions"
-                ]
-              }
-            ].map((phase, i) => (
-              <div key={i} className={`${theme.card} rounded-xl p-8 transition ${theme.cardHover}`}>
-                <div className={`text-blue-600 text-sm font-bold mb-2`}>{phase.timeline}</div>
-                <h3 className={`text-2xl font-bold mb-6 ${theme.text}`}>{phase.phase}</h3>
-                <ul className="space-y-3">
-                  {phase.items.map((item, j) => (
-                    <li key={j} className={`flex items-center gap-3 ${theme.textSecondary}`}>
-                      <div className="w-2 h-2 bg-blue-600 rounded-full" />
-                      {item}
+              { title: "Product", links: ["Features", "Pricing", "Integrations", "API Docs", "Demo"] },
+              { title: "Company", links: ["About Us", "Blog", "Careers", "Press", "Partners"] },
+              { title: "Resources", links: ["Help Center", "Documentation", "Community", "Status", "Downloads"] }
+            ].map((col, idx) => (
+              <div key={idx}>
+                <h4 className={`font-bold mb-4 ${theme.text}`}>{col.title}</h4>
+                <ul className="space-y-2">
+                  {col.links.map((link) => (
+                    <li key={link}>
+                      <a href="#" className={`text-sm ${theme.textSecondary} hover:text-blue-500 transition-colors`}>{link}</a>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className={`py-20 px-4 sm:px-6 lg:px-8 border-t ${theme.border}`}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className={`text-4xl font-bold mb-4 ${theme.text}`}>Trusted by Kenyan distributors</h2>
-            <p className={theme.textSecondary}>Real feedback from real users</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                quote: "My phone calls dropped by 70%. Customers track their own orders now.",
-                author: "James Kipchoge",
-                role: "FMCG Distributor, Nairobi",
-                region: "Nairobi"
-              },
-              {
-                quote: "For the first time, I know exactly where my drivers are. This is a game-changer.",
-                author: "Mary Wanjiru",
-                role: "Wholesaler, Kisumu",
-                region: "Kisumu"
-              },
-              {
-                quote: "Simple to use, affordable, and it actually solves our real problems.",
-                author: "Peter Omondi",
-                role: "Logistics Manager, Mombasa",
-                region: "Mombasa"
-              }
-            ].map((testimonial, i) => (
-              <div key={i} className={`${theme.card} rounded-xl p-8 transition ${theme.cardHover}`}>
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 fill-amber-500 text-amber-500" />
-                  ))}
-                </div>
-                <p className={`${theme.textSecondary} italic mb-6`}>"{testimonial.quote}"</p>
-                <div className={`pt-6 border-t ${theme.border}`}>
-                  <div className={`font-bold ${theme.text}`}>{testimonial.author}</div>
-                  <div className={`text-sm ${theme.textTertiary}`}>{testimonial.role}</div>
-                  <div className={`text-xs text-blue-600 mt-2`}>• {testimonial.region}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section id="contact" className={`py-20 px-4 sm:px-6 lg:px-8 border-t ${theme.border}`}>
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className={`text-5xl font-bold mb-6 ${theme.text}`}>
-            Ready to take control of your deliveries?
-          </h2>
-          <p className={`text-xl ${theme.textSecondary} mb-8`}>
-            Join 500+ distributors across Kenya already saving time and money.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className={`${theme.button} px-8 py-4 rounded-xl transition font-semibold text-lg`}>
-              Get Started Free (14 Days)
-            </button>
-            <button className={`border ${theme.borderLight} ${theme.text} px-8 py-4 rounded-xl hover:${theme.bgSecondary} transition font-semibold text-lg flex items-center justify-center gap-2`}>
-              <Phone className="w-5 h-5" /> Schedule Call
-            </button>
-          </div>
-
-          <p className={`${theme.textTertiary} text-sm mt-6`}>No credit card required • Cancel anytime • Support in Swahili & English</p>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className={`border-t ${theme.border} py-16 px-4 sm:px-6 lg:px-8`}>
-        <div className="max-w-7xl mx-auto">
-          {/* Footer Content Grid */}
-          <div className="grid md:grid-cols-5 gap-8 mb-12">
-            {/* Brand Column */}
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className={`${isDark ? 'bg-blue-600' : 'bg-blue-500'} rounded-lg p-1`}>
-                  <MapPin className="w-5 h-5 text-white" />
-                </div>
-                <span className={`font-bold text-lg ${theme.text}`}>DeliverTrack</span>
-              </div>
-              <p className={`${theme.textSecondary} text-sm mb-6`}>Real-time delivery visibility for African distributors. Empowering traders across Kenya with technology that works.</p>
-              <div className="flex gap-3">
-                <a href="#" className={`w-8 h-8 rounded-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} flex items-center justify-center hover:text-blue-600 transition`}>
-                  <X className="w-4 h-4" />
-                </a>
-                <a href="#" className={`w-8 h-8 rounded-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} flex items-center justify-center hover:text-blue-600 transition`}>
-                  <X className="w-4 h-4" />
-                </a>
-                <a href="#" className={`w-8 h-8 rounded-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} flex items-center justify-center hover:text-blue-600 transition`}>
-                  <Fan className="w-4 h-4" />
-                </a>
-                <a href="#" className={`w-8 h-8 rounded-full ${isDark ? 'bg-slate-800' : 'bg-slate-200'} flex items-center justify-center hover:text-blue-600 transition`}>
-                  <Computer className="w-4 h-4" />
-                </a>
-              </div>
+          
+          <div className={`pt-8 border-t ${theme.border} flex flex-col md:flex-row justify-between items-center gap-4`}>
+            <p className={`text-sm ${theme.textMuted}`}>© 2024 DeliverTrack. All rights reserved. Built for Kenyan distributors.</p>
+            <div className="flex gap-6 text-sm">
+              <a href="#" className={`${theme.textMuted} hover:text-blue-500 transition`}>Privacy Policy</a>
+              <a href="#" className={`${theme.textMuted} hover:text-blue-500 transition`}>Terms of Service</a>
+              <a href="#" className={`${theme.textMuted} hover:text-blue-500 transition`}>Security</a>
             </div>
-
-            {/* Product Column */}
-            <div>
-              <h4 className={`font-bold mb-4 ${theme.text}`}>Product</h4>
-              <ul className={`space-y-2 text-sm ${theme.textSecondary}`}>
-                <li><a href="#features" className={`hover:${theme.text} transition`}>Features</a></li>
-                <li><a href="#pricing" className={`hover:${theme.text} transition`}>Pricing</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Integrations</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Demo</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>API Docs</a></li>
-              </ul>
-            </div>
-
-            {/* Company Column */}
-            <div>
-              <h4 className={`font-bold mb-4 ${theme.text}`}>Company</h4>
-              <ul className={`space-y-2 text-sm ${theme.textSecondary}`}>
-                <li><a href="#" className={`hover:${theme.text} transition`}>About Us</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Blog</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Careers</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Press</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Partners</a></li>
-              </ul>
-            </div>
-
-            {/* Resources Column */}
-            <div>
-              <h4 className={`font-bold mb-4 ${theme.text}`}>Resources</h4>
-              <ul className={`space-y-2 text-sm ${theme.textSecondary}`}>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Documentation</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Help Center</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Community</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Status Page</a></li>
-                <li><a href="#" className={`hover:${theme.text} transition`}>Downloads</a></li>
-              </ul>
-            </div>
-
-            {/* Contact Column */}
-            <div>
-              <h4 className={`font-bold mb-4 ${theme.text}`}>Get in Touch</h4>
-              <ul className={`space-y-3 text-sm ${theme.textSecondary}`}>
-                <li className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  <a href="mailto:hello@delivertrack.ke" className={`hover:${theme.text} transition`}>hello@delivertrack.ke</a>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  <a href="tel:+254700123456" className={`hover:${theme.text} transition`}>+254 700 123 456</a>
-                </li>
-                <li className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                  <span>Nairobi, Kenya<br/>Serving 14+ regions</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Newsletter Section */}
-          <div className={`${theme.bgSecondary} border ${theme.border} rounded-xl p-8 mb-12`}>
-            <div className="max-w-2xl">
-              <h3 className={`text-2xl font-bold mb-2 ${theme.text}`}>Stay Updated</h3>
-              <p className={`${theme.textSecondary} mb-6`}>Get the latest updates on new features, best practices for delivery optimization, and industry insights.</p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className={`flex-1 px-4 py-3 rounded-lg ${isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-300'} border ${theme.text} placeholder-${theme.textTertiary}`}
-                />
-                <button className={`${theme.button} px-6 py-3 rounded-lg font-medium transition`}>
-                  Subscribe
-                </button>
-              </div>
-              <p className={`text-xs ${theme.textTertiary} mt-3`}>We respect your privacy. Unsubscribe at any time.</p>
-            </div>
-          </div>
-
-          {/* Bottom Footer */}
-          <div className={`border-t ${theme.border} pt-8`}>
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className={`text-sm ${theme.textTertiary}`}>
-                &copy; 2024 DeliverTrack. All rights reserved. Built for Kenyan traders and distributors.
-              </p>
-              <div className="flex gap-6 text-sm">
-                <a href="#" className={`${theme.textSecondary} hover:${theme.text} transition`}>Privacy Policy</a>
-                <a href="#" className={`${theme.textSecondary} hover:${theme.text} transition`}>Terms of Service</a>
-                <a href="#" className={`${theme.textSecondary} hover:${theme.text} transition`}>Security</a>
-                <a href="#" className={`${theme.textSecondary} hover:${theme.text} transition`}>Compliance</a>
-              </div>
-            </div>
-          </div>
-
-          {/* Additional Info */}
-          <div className={`mt-8 p-4 ${theme.accentBg} border ${theme.accentBorder} rounded-lg`}>
-            <p className={`text-sm ${theme.accent} text-center`}>
-              <strong>🚀 Beta Launch:</strong> Early adopters get 50% lifetime discount + exclusive features. Limited to 100 distributors.
-            </p>
           </div>
         </div>
       </footer>
