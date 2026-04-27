@@ -1,5 +1,6 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@/context/ThemeContext";
 import HomePage from "../pages/HomePage";
 import DefaultLayout from "@/layouts/DefaultLayout";
@@ -37,6 +38,7 @@ import RoutesManagement from "../pages/company/fleet/RoutesManagement";
 function App() {
   return (
     <ThemeProvider>
+    <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
     <BrowserRouter>
       <Routes>
         {/* Public/features/auth routes */}

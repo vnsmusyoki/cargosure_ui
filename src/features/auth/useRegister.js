@@ -12,9 +12,9 @@ function validateCompanyStep(accountType, companyData) {
   if (!emailRegex.test(companyData.email)) return "Please enter a valid email address";
   
   if (!companyData.phone?.trim()) return "Phone number is required";
-  
-  const phoneRegex = /^\+?[0-9\s\-\(\)]{10,}$/;
-  if (!phoneRegex.test(companyData.phone)) return "Please enter a valid phone number";
+
+  const phoneRegex = /^0[0-9]{9}$/;
+  if (!phoneRegex.test(companyData.phone)) return "Phone number must be 10 digits starting with 0";
   
   if (!companyData.address?.trim()) return "Address is required";
   if (!companyData.city?.trim()) return "City is required";
@@ -33,28 +33,25 @@ function validateCompanyStep(accountType, companyData) {
 }
 
 function validateManagerStep(managerData, agreedToTerms) {
-  if (!managerData.fullName?.trim()) return "Manager full name is required";
-  if (!managerData.email?.trim()) return "Manager email address is required";
-  
+  if (!managerData.userName?.trim()) return "Username is required";
+  if (managerData.userName.trim().length < 3) return "Username must be at least 3 characters";
+  if (!/^[a-zA-Z0-9_.-]+$/.test(managerData.userName.trim()))
+    return "Username can only contain letters, numbers, underscores, dots and hyphens";
+
+  if (!managerData.email?.trim()) return "Email address is required";
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(managerData.email)) return "Please enter a valid email address for the manager";
-  
-  if (!managerData.phone?.trim()) return "Manager phone number is required";
-  
-  const phoneRegex = /^\+?[0-9\s\-\(\)]{10,}$/;
-  if (!phoneRegex.test(managerData.phone)) return "Please enter a valid phone number for the manager";
-  
-  if (!managerData.position?.trim()) return "Manager position is required";
+  if (!emailRegex.test(managerData.email)) return "Please enter a valid email address";
+
   if (!managerData.password) return "Password is required";
   if (managerData.password.length < 8) return "Password must be at least 8 characters long";
-  
-  const hasNumber = /\d/.test(managerData.password);
-  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(managerData.password);
-  if (!hasNumber || !hasSpecialChar) return "Password must contain at least 1 number and 1 special character";
-  
+  if (!/[A-Z]/.test(managerData.password)) return "Password must contain at least one uppercase letter";
+  if (!/[a-z]/.test(managerData.password)) return "Password must contain at least one lowercase letter";
+  if (!/[0-9]/.test(managerData.password)) return "Password must contain at least one number";
+  if (!/[^a-zA-Z0-9]/.test(managerData.password)) return "Password must contain at least one special character";
+
   if (managerData.password !== managerData.confirmPassword) return "Passwords do not match";
   if (!agreedToTerms) return "Please agree to the Terms of Service and Privacy Policy";
-  
+
   return null;
 }
 
@@ -90,57 +87,50 @@ export function useRegister() {
     setSuccess(false);
 
     try {
-      // Format data for API (common for both types)
-      const basePayload = {
-        company: {
-          name: registrationData.company.companyName,
-          email: registrationData.company.email,
-          phone: registrationData.company.phone,
-          address: registrationData.company.address,
-          city: registrationData.company.city,
-          country: registrationData.company.country,
-        },
-        manager: {
-          fullName: registrationData.manager.fullName,
-          email: registrationData.manager.email,
-          phone: registrationData.manager.phone,
-          position: registrationData.manager.position,
-          password: registrationData.manager.password,
-        },
-        termsAccepted: registrationData.termsAccepted,
-      };
-
-      // Add type-specific fields
+      const { company, manager } = registrationData;
       let payload;
       let response;
 
       if (registrationData.accountType === "company") {
         payload = {
-          ...basePayload,
-          company: {
-            ...basePayload.company,
-            registrationNumber: registrationData.company.registrationNumber,
-            industry: registrationData.company.industry,
-            employeeCount: registrationData.company.employeeCount,
-            website: registrationData.company.website,
-          }
+          OrganizationName: company.companyName,
+          CompanyEmailAddress: company.email,
+          CompanyPhoneNumber: company.phone,
+          Address: company.address,
+          City: company.city,
+          CountryId: company.country,
+          RegistrationNumber: company.registrationNumber,
+          IndustryId: company.industry,
+          EmployeeCount: company.employeeCount,
+          UserName: manager.userName,
+          Email: manager.email,
+          Password: manager.password,
+          ConfirmPassword: manager.confirmPassword,
+          ...(manager.firstName?.trim() && { FirstName: manager.firstName.trim() }),
+          ...(manager.lastName?.trim() && { LastName: manager.lastName.trim() }),
         };
-        // Call company registration API
         response = await authService.registerCompany(payload);
-      } 
+      }
       else if (registrationData.accountType === "distributor") {
         payload = {
-          ...basePayload,
-          company: {
-            ...basePayload.company,
-            taxId: registrationData.company.taxId,
-            fleetSize: registrationData.company.fleetSize,
-            warehouseLocations: registrationData.company.warehouseLocations,
-          }
+          OrganizationName: company.companyName,
+          CompanyEmailAddress: company.email,
+          CompanyPhoneNumber: company.phone,
+          Address: company.address,
+          City: company.city,
+          CountryId: company.country,
+          TaxId: company.taxId,
+          FleetSize: company.fleetSize,
+          WarehouseLocations: company.warehouseLocations,
+          UserName: manager.userName,
+          Email: manager.email,
+          Password: manager.password,
+          ConfirmPassword: manager.confirmPassword,
+          ...(manager.firstName?.trim() && { FirstName: manager.firstName.trim() }),
+          ...(manager.lastName?.trim() && { LastName: manager.lastName.trim() }),
         };
-        // Call distributor registration API
         response = await authService.registerDistributor(payload);
-      } 
+      }
       else {
         throw new Error("Invalid account type");
       }
@@ -184,12 +174,22 @@ export function useRegister() {
   const clearError = () => setError("");
   const resetSuccess = () => setSuccess(false);
 
-  return { 
-    register, 
-    loading, 
-    error, 
-    success, 
+  return {
+    register,
+    loading,
+    error,
+    success,
     clearError,
-    resetSuccess
+    resetSuccess,
+    validateCompanyStep: (accountType, companyData) => {
+      const err = validateCompanyStep(accountType, companyData);
+      if (err) setError(err);
+      return { isValid: !err };
+    },
+    validateManagerStep: (managerData, agreedToTerms) => {
+      const err = validateManagerStep(managerData, agreedToTerms);
+      if (err) setError(err);
+      return { isValid: !err };
+    },
   };
 }

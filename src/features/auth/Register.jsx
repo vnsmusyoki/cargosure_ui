@@ -5,6 +5,7 @@ import {
   Building2, Phone, BadgeCheck, Loader,
   ChevronRight, ChevronLeft, Briefcase, Users
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useRegister } from './useRegister';
 
 // Static class maps
@@ -20,6 +21,24 @@ const COLOR_CLASSES = {
     label: 'text-purple-700 dark:text-purple-400',
   },
 };
+
+function getPasswordStrength(password) {
+  if (!password) return null;
+  let score = 0;
+  if (password.length >= 8) score++;
+  if (/[A-Z]/.test(password)) score++;
+  if (/[a-z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[^a-zA-Z0-9]/.test(password)) score++;
+  const levels = [
+    { label: 'Very Weak', color: 'bg-red-500',    textColor: 'text-red-500',    width: '20%'  },
+    { label: 'Weak',      color: 'bg-red-400',    textColor: 'text-red-400',    width: '40%'  },
+    { label: 'Fair',      color: 'bg-orange-400', textColor: 'text-orange-400', width: '60%'  },
+    { label: 'Good',      color: 'bg-blue-500',   textColor: 'text-blue-500',   width: '80%'  },
+    { label: 'Strong',    color: 'bg-green-500',  textColor: 'text-green-500',  width: '100%' },
+  ];
+  return levels[Math.min(score, 4)];
+}
 
 // Shared input class strings
 const INPUT_BASE = 'block w-full px-3 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition';
@@ -54,10 +73,10 @@ function Register() {
   });
 
   const [managerData, setManagerData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
     email: '',
-    phone: '',
-    position: '',
     password: '',
     confirmPassword: '',
   });
@@ -84,17 +103,26 @@ function Register() {
     setManagerData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleCompanyPhoneChange = (e) => {
+    const digits = e.target.value.replace(/\D/g, '');
+    if (digits.length > 0 && digits[0] !== '0') return;
+    if (digits.length > 10) return;
+    setCompanyData(prev => ({ ...prev, phone: digits }));
+  };
+
   const handleAccountTypeSelect = (type) => {
     setAccountType(type);
-    setError(null);
     clearError();
   };
 
   const handleNextToManager = () => {
     const validation = validateCompanyStep(accountType, companyData);
-    if (validation.isValid) {
-      setStep(2);
+    if (!validation.isValid) {
+      toast.error('Please correct the following errors');
+      return;
     }
+    clearError();
+    setStep(2);
   };
 
   const handleBackToCompany = () => {
@@ -107,6 +135,7 @@ function Register() {
     
     const validation = validateManagerStep(managerData, agreedToTerms);
     if (!validation.isValid) {
+      toast.error('Please correct the following errors');
       return;
     }
 
@@ -114,10 +143,7 @@ function Register() {
     const registrationData = {
       accountType,
       company: companyData,
-      manager: {
-        ...managerData,
-        password: managerData.password,
-      },
+      manager: managerData,
       termsAccepted: agreedToTerms,
     };
 
@@ -395,11 +421,17 @@ function Register() {
                           type="tel"
                           name="phone"
                           value={companyData.phone}
-                          onChange={handleCompanyChange}
+                          onChange={handleCompanyPhoneChange}
                           className={INPUT_ICON_L}
-                          placeholder="+254 700 123 456"
+                          placeholder="0712345678"
+                          maxLength={10}
                         />
                       </div>
+                      <p className={`text-xs mt-1 ${companyData.phone.length === 10 ? 'text-green-600 dark:text-green-400' : 'text-gray-500 dark:text-slate-400'}`}>
+                        {companyData.phone.length === 10
+                          ? 'Phone number complete'
+                          : `${10 - companyData.phone.length} digit${10 - companyData.phone.length !== 1 ? 's' : ''} remaining`}
+                      </p>
                     </div>
 
                     <div>
@@ -609,25 +641,62 @@ function Register() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                {/* First Name + Last Name */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                      First Name
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <User className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                      </div>
+                      <input
+                        type="text"
+                        name="firstName"
+                        value={managerData.firstName}
+                        onChange={handleManagerChange}
+                        className={INPUT_ICON_L}
+                        placeholder="John"
+                      />
                     </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                      Last Name
+                    </label>
                     <input
                       type="text"
-                      name="fullName"
-                      value={managerData.fullName}
+                      name="lastName"
+                      value={managerData.lastName}
                       onChange={handleManagerChange}
-                      className={INPUT_ICON_L}
-                      placeholder="John Doe"
+                      className={INPUT_BASE}
+                      placeholder="Doe"
                     />
                   </div>
                 </div>
 
+                {/* Username */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                    Username <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <BadgeCheck className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                    </div>
+                    <input
+                      type="text"
+                      name="userName"
+                      value={managerData.userName}
+                      onChange={handleManagerChange}
+                      className={INPUT_ICON_L}
+                      placeholder="john_doe"
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                     Email Address <span className="text-red-500">*</span>
@@ -647,44 +716,7 @@ function Register() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                    Phone Number <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-400 dark:text-slate-500" />
-                    </div>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={managerData.phone}
-                      onChange={handleManagerChange}
-                      className={INPUT_ICON_L}
-                      placeholder="+254 700 123 456"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                    Position <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Briefcase className="h-5 w-5 text-gray-400 dark:text-slate-500" />
-                    </div>
-                    <input
-                      type="text"
-                      name="position"
-                      value={managerData.position}
-                      onChange={handleManagerChange}
-                      className={INPUT_ICON_L}
-                      placeholder="Operations Manager"
-                    />
-                  </div>
-                </div>
-
+                {/* Password */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                     Password <span className="text-red-500">*</span>
@@ -706,17 +738,28 @@ function Register() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     >
-                      {showPassword ? 
-                        <EyeOff className="h-5 w-5 text-gray-400 dark:text-slate-500" /> : 
-                        <Eye className="h-5 w-5 text-gray-400 dark:text-slate-500" />
-                      }
+                      {showPassword
+                        ? <EyeOff className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                        : <Eye className="h-5 w-5 text-gray-400 dark:text-slate-500" />}
                     </button>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
-                    Password must be at least 8 characters with 1 number and 1 special character
-                  </p>
+                  {managerData.password && (() => {
+                    const strength = getPasswordStrength(managerData.password);
+                    return (
+                      <div className="mt-2">
+                        <div className="h-1.5 w-full bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full ${strength.color} transition-all duration-300 rounded-full`}
+                            style={{ width: strength.width }}
+                          />
+                        </div>
+                        <p className={`text-xs mt-1 font-medium ${strength.textColor}`}>{strength.label}</p>
+                      </div>
+                    );
+                  })()}
                 </div>
 
+                {/* Confirm Password */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                     Confirm Password <span className="text-red-500">*</span>
@@ -738,10 +781,9 @@ function Register() {
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       className="absolute inset-y-0 right-0 pr-3 flex items-center"
                     >
-                      {showConfirmPassword ? 
-                        <EyeOff className="h-5 w-5 text-gray-400 dark:text-slate-500" /> : 
-                        <Eye className="h-5 w-5 text-gray-400 dark:text-slate-500" />
-                      }
+                      {showConfirmPassword
+                        ? <EyeOff className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                        : <Eye className="h-5 w-5 text-gray-400 dark:text-slate-500" />}
                     </button>
                   </div>
                 </div>
@@ -776,18 +818,27 @@ function Register() {
                   </label>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${
-                    loading ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
-                >
-                  {loading
-                    ? <><Loader className="w-5 h-5 animate-spin" /> Creating account...</>
-                    : <>Complete Registration <ArrowRight className="w-4 h-4" /></>
-                  }
-                </button>
+                {/* Buttons */}
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={handleBackToCompany}
+                    className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 py-2.5 rounded-lg font-semibold transition duration-200"
+                  >
+                    <ChevronLeft className="w-4 h-4" /> Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className={`flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${
+                      loading ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
+                  >
+                    {loading
+                      ? <><Loader className="w-5 h-5 animate-spin" /> Creating account...</>
+                      : <>Complete Registration <ArrowRight className="w-4 h-4" /></>}
+                  </button>
+                </div>
               </form>
             </div>
           )}
