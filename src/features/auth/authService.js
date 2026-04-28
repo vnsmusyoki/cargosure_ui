@@ -12,13 +12,25 @@ export const login = async ({ email, password }) => {
 
 // COMPANY REGISTRATION
 export const registerCompany = async (payload) => {
-  const response = await api.post("/Auth/register/company", payload);
+  const response = await api.post("/Auth/register-company", payload);
   return response.data;
 };
 
 // DISTRIBUTOR REGISTRATION
 export const registerDistributor = async (payload) => {
-  const response = await api.post("/Auth/register/distributor", payload);
+  const response = await api.post("/Auth/register-distributor", payload);
+  return response.data;
+};
+
+// FETCH COUNTRIES
+export const getCountries = async () => {
+  const response = await api.get("/Countries");
+  return response.data;
+};
+
+// FETCH INDUSTRIES
+export const getIndustries = async () => {
+  const response = await api.get("/Industries");
   return response.data;
 };
 

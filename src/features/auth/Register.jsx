@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Truck, User, Mail, Lock, Eye, EyeOff, ArrowRight,
-  Smartphone, Shield, CheckCircle, AlertCircle,
-  Building2, Phone, BadgeCheck, Loader,
-  ChevronRight, ChevronLeft, Briefcase, Users
+  Phone, Shield, CheckCircle, AlertCircle,
+  Building2, BadgeCheck, Loader,
+  ChevronRight, ChevronLeft, Briefcase, Users, MapPin, Hash
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useRegister } from './useRegister';
+import * as authService from './authService';
 
 // Static class maps
 const COLOR_CLASSES = {
@@ -40,35 +41,34 @@ function getPasswordStrength(password) {
   return levels[Math.min(score, 4)];
 }
 
-// Shared input class strings
 const INPUT_BASE = 'block w-full px-3 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition';
 const INPUT_ICON_L = 'block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition';
 const INPUT_ICON_LR = 'block w-full pl-10 pr-12 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition';
 
 function Register() {
-  const [step, setStep] = useState(1); // Step 1: Account type & company details, Step 2: Manager profile
-  const [accountType, setAccountType] = useState(null); // 'distributor' or 'company'
+  const [step, setStep] = useState(1);
+  const [accountType, setAccountType] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+  const [countries, setCountries] = useState([]);
+  const [industries, setIndustries] = useState([]);
+  const [loadingMeta, setLoadingMeta] = useState(true);
+
   const [companyData, setCompanyData] = useState({
-    // Common fields
+    // Common
     companyName: '',
     email: '',
     phone: '',
     address: '',
     city: '',
-    country: 'Kenya',
-    
-    // Distributor specific
-    taxId: '',
-    fleetSize: '',
-    warehouseLocations: '',
-    
-    // Company specific
+    countryId: '',         // Guid from API
+    // Both account types
     registrationNumber: '',
-    industry: '',
-    employeeCount: '',
+    industryId: '',        // Guid from API
+    employeeCount: '',     // must be a pure number string e.g. "25"
+    // Distributor only
+    warehouseLocations: '',
+    // Company only
     website: '',
   });
 
@@ -77,6 +77,7 @@ function Register() {
     lastName: '',
     userName: '',
     email: '',
+    phone: '',             // Required for distributor managers
     password: '',
     confirmPassword: '',
   });
@@ -90,8 +91,20 @@ function Register() {
     success,
     clearError,
     validateCompanyStep,
-    validateManagerStep
+    validateManagerStep,
   } = useRegister();
+
+  // Fetch countries and industries on mount
+  useEffect(() => {
+    Promise.all([authService.getCountries(), authService.getIndustries()])
+      .then(([c, i]) => {
+        setCountries(c);
+        setIndustries(i);
+        if (c.length > 0) setCompanyData(prev => ({ ...prev, countryId: c[0].id }));
+      })
+      .catch(() => toast.error('Failed to load form data. Please refresh.'))
+      .finally(() => setLoadingMeta(false));
+  }, []);
 
   const handleCompanyChange = (e) => {
     const { name, value } = e.target;
@@ -103,12 +116,20 @@ function Register() {
     setManagerData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCompanyPhoneChange = (e) => {
+  const handlePhoneChange = (setter) => (e) => {
     const digits = e.target.value.replace(/\D/g, '');
     if (digits.length > 0 && digits[0] !== '0') return;
     if (digits.length > 10) return;
-    setCompanyData(prev => ({ ...prev, phone: digits }));
+    setter(digits);
   };
+
+  const handleCompanyPhoneChange = handlePhoneChange(
+    (val) => setCompanyData(prev => ({ ...prev, phone: val }))
+  );
+
+  const handleManagerPhoneChange = handlePhoneChange(
+    (val) => setManagerData(prev => ({ ...prev, phone: val }))
+  );
 
   const handleAccountTypeSelect = (type) => {
     setAccountType(type);
@@ -118,7 +139,7 @@ function Register() {
   const handleNextToManager = () => {
     const validation = validateCompanyStep(accountType, companyData);
     if (!validation.isValid) {
-      toast.error('Please correct the following errors');
+      toast.error('Please correct the errors before continuing');
       return;
     }
     clearError();
@@ -132,27 +153,22 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const validation = validateManagerStep(managerData, agreedToTerms);
+
+    const validation = validateManagerStep(managerData, agreedToTerms, accountType);
     if (!validation.isValid) {
-      toast.error('Please correct the following errors');
+      toast.error('Please correct the errors before submitting');
       return;
     }
 
-    // Prepare registration data
-    const registrationData = {
+    const result = await register({
       accountType,
       company: companyData,
       manager: managerData,
       termsAccepted: agreedToTerms,
-    };
+    });
 
-    const result = await register(registrationData);
-    if (result.success) {
-      // Redirect to login after 2 seconds
-      setTimeout(() => {
-        window.location.href = '/login';
-      }, 2000);
+    if (result?.success) {
+      setTimeout(() => { window.location.href = '/login'; }, 2000);
     }
   };
 
@@ -204,7 +220,7 @@ function Register() {
 
   return (
     <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950">
-      {/* Left Side - Brand/Info Panel */}
+      {/* Left Side — Brand/Info Panel */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-700 to-indigo-800 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 z-10"></div>
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"></div>
@@ -225,29 +241,18 @@ function Register() {
               <span className="block text-blue-200">Delivery Management</span>
             </h2>
             <p className="text-blue-100 mt-4 text-lg leading-relaxed">
-              Create your account and start managing deliveries efficiently. 
+              Create your account and start managing deliveries efficiently.
               Whether you're a distributor or a company, we've got you covered.
             </p>
-
             <div className="mt-8 space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
+              {['Real-time GPS tracking', 'Automated WhatsApp notifications', 'Advanced analytics dashboard'].map(f => (
+                <div key={f} className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-green-400" />
+                  </div>
+                  <span className="text-sm">{f}</span>
                 </div>
-                <span className="text-sm">Real-time GPS tracking</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                </div>
-                <span className="text-sm">Automated WhatsApp notifications</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <CheckCircle className="w-4 h-4 text-green-400" />
-                </div>
-                <span className="text-sm">Advanced analytics dashboard</span>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -257,7 +262,7 @@ function Register() {
         </div>
       </div>
 
-      {/* Right Side - Registration Form */}
+      {/* Right Side — Registration Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-8 bg-slate-50 dark:bg-slate-950">
         <div className="w-full max-w-md">
           {/* Mobile Logo */}
@@ -276,7 +281,7 @@ function Register() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-2">
               <span className={`text-xs font-medium ${step >= 1 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-slate-500'}`}>
-                Company Details
+                Organization Details
               </span>
               <span className={`text-xs font-medium ${step >= 2 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400 dark:text-slate-500'}`}>
                 Manager Profile
@@ -288,19 +293,14 @@ function Register() {
             </div>
           </div>
 
-          {/* Step 1: Account Type & Company Details */}
+          {/* Step 1: Account Type & Organization Details */}
           {step === 1 && (
             <div className="animate-fadeIn">
               {!accountType ? (
-                // Account Type Selection
                 <div>
                   <div className="text-center mb-6">
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                      Create your account
-                    </h1>
-                    <p className="text-gray-500 dark:text-slate-400 mt-2">
-                      Choose how you want to use DeliverTrack
-                    </p>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Create your account</h1>
+                    <p className="text-gray-500 dark:text-slate-400 mt-2">Choose how you want to use DeliverTrack</p>
                   </div>
 
                   {error && (
@@ -313,24 +313,18 @@ function Register() {
                   <div className="space-y-3">
                     {accountTypes.map((type) => {
                       const Icon = type.icon;
-                      const colors = COLOR_CLASSES[type.color];
-
                       return (
                         <button
                           key={type.id}
                           onClick={() => handleAccountTypeSelect(type.id)}
                           className="w-full p-4 rounded-xl border-2 transition-all text-left flex items-center gap-4 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-md"
                         >
-                          <div className={`w-12 h-12 rounded-lg flex items-center justify-center bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400`}>
+                          <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400">
                             <Icon className="w-6 h-6" />
                           </div>
                           <div className="flex-1">
-                            <div className="font-semibold text-gray-900 dark:text-white">
-                              {type.label}
-                            </div>
-                            <div className="text-sm text-gray-500 dark:text-slate-400">
-                              {type.description}
-                            </div>
+                            <div className="font-semibold text-gray-900 dark:text-white">{type.label}</div>
+                            <div className="text-sm text-gray-500 dark:text-slate-400">{type.description}</div>
                           </div>
                           <ChevronRight className="w-5 h-5 text-gray-400" />
                         </button>
@@ -339,14 +333,13 @@ function Register() {
                   </div>
                 </div>
               ) : (
-                // Company Details Form
+                // Organization Details Form
                 <div>
                   <button
                     onClick={() => setAccountType(null)}
                     className="flex items-center gap-1 text-sm text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300 mb-4 transition"
                   >
-                    <ChevronLeft className="w-4 h-4" />
-                    Back to account types
+                    <ChevronLeft className="w-4 h-4" /> Back to account types
                   </button>
 
                   <div className="text-center mb-6">
@@ -371,6 +364,7 @@ function Register() {
                   )}
 
                   <form onSubmit={(e) => { e.preventDefault(); handleNextToManager(); }} className="space-y-4">
+                    {/* Organization Name */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                         {accountType === 'distributor' ? 'Company Name' : 'Organization Name'} <span className="text-red-500">*</span>
@@ -385,11 +379,12 @@ function Register() {
                           value={companyData.companyName}
                           onChange={handleCompanyChange}
                           className={INPUT_ICON_L}
-                          placeholder={accountType === 'distributor' ? "Your Distribution Company" : "Your Organization Name"}
+                          placeholder={accountType === 'distributor' ? 'Your Distribution Company' : 'Your Organization Name'}
                         />
                       </div>
                     </div>
 
+                    {/* Email */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                         Email Address <span className="text-red-500">*</span>
@@ -409,6 +404,7 @@ function Register() {
                       </div>
                     </div>
 
+                    {/* Phone */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                         Phone Number <span className="text-red-500">*</span>
@@ -434,20 +430,27 @@ function Register() {
                       </p>
                     </div>
 
+                    {/* Address */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                         Address <span className="text-red-500">*</span>
                       </label>
-                      <input
-                        type="text"
-                        name="address"
-                        value={companyData.address}
-                        onChange={handleCompanyChange}
-                        className={INPUT_BASE}
-                        placeholder="Street address"
-                      />
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <MapPin className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                        </div>
+                        <input
+                          type="text"
+                          name="address"
+                          value={companyData.address}
+                          onChange={handleCompanyChange}
+                          className={INPUT_ICON_L}
+                          placeholder="Street address"
+                        />
+                      </div>
                     </div>
 
+                    {/* City + Country */}
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
@@ -464,141 +467,122 @@ function Register() {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                          Country
+                          Country <span className="text-red-500">*</span>
                         </label>
                         <select
-                          name="country"
-                          value={companyData.country}
+                          name="countryId"
+                          value={companyData.countryId}
                           onChange={handleCompanyChange}
                           className={INPUT_BASE}
+                          disabled={loadingMeta}
                         >
-                          <option value="Kenya">Kenya</option>
-                          <option value="Uganda">Uganda</option>
-                          <option value="Tanzania">Tanzania</option>
-                          <option value="Rwanda">Rwanda</option>
+                          <option value="">Select country</option>
+                          {countries.map(c => (
+                            <option key={c.id} value={c.id}>{c.name}</option>
+                          ))}
                         </select>
                       </div>
                     </div>
 
+                    {/* Registration Number */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                        Registration Number <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <Hash className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                        </div>
+                        <input
+                          type="text"
+                          name="registrationNumber"
+                          value={companyData.registrationNumber}
+                          onChange={handleCompanyChange}
+                          className={INPUT_ICON_L}
+                          placeholder={accountType === 'distributor' ? 'CP/2024/12345' : 'CP/2024/12345'}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Industry */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                        Industry <span className="text-red-500">*</span>
+                      </label>
+                      <select
+                        name="industryId"
+                        value={companyData.industryId}
+                        onChange={handleCompanyChange}
+                        className={INPUT_BASE}
+                        disabled={loadingMeta}
+                      >
+                        <option value="">Select industry</option>
+                        {industries.map(i => (
+                          <option key={i.id} value={i.id}>{i.industryName}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Employee Count */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                        Number of Employees <span className="text-red-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <Users className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                        </div>
+                        <input
+                          type="number"
+                          name="employeeCount"
+                          value={companyData.employeeCount}
+                          onChange={handleCompanyChange}
+                          className={INPUT_ICON_L}
+                          placeholder="e.g. 25"
+                          min="1"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Distributor only: Warehouse Locations */}
                     {accountType === 'distributor' && (
-                      <>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                            Tax ID / PIN <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            name="taxId"
-                            value={companyData.taxId}
-                            onChange={handleCompanyChange}
-                            className={INPUT_BASE}
-                            placeholder="A123456789Z"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                            Fleet Size <span className="text-red-500">*</span>
-                          </label>
-                          <select
-                            name="fleetSize"
-                            value={companyData.fleetSize}
-                            onChange={handleCompanyChange}
-                            className={INPUT_BASE}
-                          >
-                            <option value="">Select fleet size</option>
-                            <option value="1-5">1-5 vehicles</option>
-                            <option value="6-20">6-20 vehicles</option>
-                            <option value="21-50">21-50 vehicles</option>
-                            <option value="50-100">50-100 vehicles</option>
-                            <option value="100+">100+ vehicles</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                            Warehouse Locations
-                          </label>
-                          <input
-                            type="text"
-                            name="warehouseLocations"
-                            value={companyData.warehouseLocations}
-                            onChange={handleCompanyChange}
-                            className={INPUT_BASE}
-                            placeholder="Nairobi, Mombasa, Kisumu"
-                          />
-                        </div>
-                      </>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                          Warehouse Locations <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name="warehouseLocations"
+                          value={companyData.warehouseLocations}
+                          onChange={handleCompanyChange}
+                          className={INPUT_BASE}
+                          placeholder="Nairobi, Mombasa, Kisumu"
+                        />
+                        <p className="text-xs mt-1 text-gray-500 dark:text-slate-400">Separate multiple locations with commas</p>
+                      </div>
                     )}
 
+                    {/* Company only: Website */}
                     {accountType === 'company' && (
-                      <>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                            Registration Number <span className="text-red-500">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            name="registrationNumber"
-                            value={companyData.registrationNumber}
-                            onChange={handleCompanyChange}
-                            className={INPUT_BASE}
-                            placeholder="CP/2024/12345"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                            Industry <span className="text-red-500">*</span>
-                          </label>
-                          <select
-                            name="industry"
-                            value={companyData.industry}
-                            onChange={handleCompanyChange}
-                            className={INPUT_BASE}
-                          >
-                            <option value="">Select industry</option>
-                            <option value="retail">Retail</option>
-                            <option value="manufacturing">Manufacturing</option>
-                            <option value="wholesale">Wholesale</option>
-                            <option value="ecommerce">E-commerce</option>
-                            <option value="logistics">Logistics</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                            Employee Count
-                          </label>
-                          <select
-                            name="employeeCount"
-                            value={companyData.employeeCount}
-                            onChange={handleCompanyChange}
-                            className={INPUT_BASE}
-                          >
-                            <option value="">Select employee count</option>
-                            <option value="1-10">1-10</option>
-                            <option value="11-50">11-50</option>
-                            <option value="51-200">51-200</option>
-                            <option value="201-500">201-500</option>
-                            <option value="500+">500+</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                            Website
-                          </label>
-                          <input
-                            type="url"
-                            name="website"
-                            value={companyData.website}
-                            onChange={handleCompanyChange}
-                            className={INPUT_BASE}
-                            placeholder="https://www.yourcompany.com"
-                          />
-                        </div>
-                      </>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                          Website
+                        </label>
+                        <input
+                          type="url"
+                          name="website"
+                          value={companyData.website}
+                          onChange={handleCompanyChange}
+                          className={INPUT_BASE}
+                          placeholder="https://www.yourcompany.com"
+                        />
+                      </div>
                     )}
 
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 mt-6"
+                      disabled={loadingMeta}
+                      className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 mt-6 disabled:opacity-60"
                     >
                       Continue to Manager Profile <ArrowRight className="w-4 h-4" />
                     </button>
@@ -615,8 +599,7 @@ function Register() {
                 onClick={handleBackToCompany}
                 className="flex items-center gap-1 text-sm text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-300 mb-4 transition"
               >
-                <ChevronLeft className="w-4 h-4" />
-                Back to company details
+                <ChevronLeft className="w-4 h-4" /> Back to organization details
               </button>
 
               <div className="text-center mb-6">
@@ -625,9 +608,7 @@ function Register() {
                     <Users className="w-8 h-8 text-green-600" />
                   </div>
                 </div>
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
-                  Manager Profile
-                </h1>
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Manager Profile</h1>
                 <p className="text-gray-500 dark:text-slate-400 mt-2">
                   Set up the account manager who will oversee this {accountType}
                 </p>
@@ -641,12 +622,10 @@ function Register() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* First Name + Last Name */}
+                {/* First + Last Name */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                      First Name
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">First Name</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <User className="h-5 w-5 text-gray-400 dark:text-slate-500" />
@@ -662,9 +641,7 @@ function Register() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
-                      Last Name
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">Last Name</label>
                     <input
                       type="text"
                       name="lastName"
@@ -696,7 +673,7 @@ function Register() {
                   </div>
                 </div>
 
-                {/* Email */}
+                {/* Manager Email */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
                     Email Address <span className="text-red-500">*</span>
@@ -715,6 +692,34 @@ function Register() {
                     />
                   </div>
                 </div>
+
+                {/* Manager Phone — distributor only */}
+                {accountType === 'distributor' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1">
+                      Phone Number <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <Phone className="h-5 w-5 text-gray-400 dark:text-slate-500" />
+                      </div>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={managerData.phone}
+                        onChange={handleManagerPhoneChange}
+                        className={INPUT_ICON_L}
+                        placeholder="0712345678"
+                        maxLength={10}
+                      />
+                    </div>
+                    <p className={`text-xs mt-1 ${managerData.phone.length === 10 ? 'text-green-600 dark:text-green-400' : 'text-gray-500 dark:text-slate-400'}`}>
+                      {managerData.phone.length === 10
+                        ? 'Phone number complete'
+                        : `${10 - managerData.phone.length} digit${10 - managerData.phone.length !== 1 ? 's' : ''} remaining`}
+                    </p>
+                  </div>
+                )}
 
                 {/* Password */}
                 <div>
@@ -748,10 +753,7 @@ function Register() {
                     return (
                       <div className="mt-2">
                         <div className="h-1.5 w-full bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${strength.color} transition-all duration-300 rounded-full`}
-                            style={{ width: strength.width }}
-                          />
+                          <div className={`h-full ${strength.color} transition-all duration-300 rounded-full`} style={{ width: strength.width }} />
                         </div>
                         <p className={`text-xs mt-1 font-medium ${strength.textColor}`}>{strength.label}</p>
                       </div>
@@ -788,7 +790,7 @@ function Register() {
                   </div>
                 </div>
 
-                {/* Features Preview */}
+                {/* Features preview */}
                 <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-4">
                   <p className="text-xs font-medium text-slate-900 dark:text-white mb-2">What you'll get:</p>
                   <div className="grid grid-cols-2 gap-2">
@@ -830,9 +832,7 @@ function Register() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className={`flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${
-                      loading ? 'opacity-70 cursor-not-allowed' : ''
-                    }`}
+                    className={`flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
                   >
                     {loading
                       ? <><Loader className="w-5 h-5 animate-spin" /> Creating account...</>
@@ -847,18 +847,10 @@ function Register() {
 
       <style jsx>{`
         @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-        .animate-fadeIn {
-          animation: fadeIn 0.3s ease-out;
-        }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
       `}</style>
     </div>
   );
