@@ -14,11 +14,7 @@ import {
 import { useAuth } from "./useAuth";
 import { ErrorCard } from "@/shared/ErrorCard";
 
-const ROLE_REDIRECT = {
-  distributor: "/distributor/dashboard",
-  driver: "/driver/dashboard",
-  customer: "/customer/dashboard",
-};
+ 
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +39,7 @@ export default function Login() {
     clearError();
     const user = await login({ email, password });
     if (user) {
-      navigate(ROLE_REDIRECT[user.role] ?? "/dashboard");
+      navigate("/dashboard");
     }
   };
 
@@ -222,7 +218,7 @@ export default function Login() {
 
           <p className="text-center text-sm text-gray-500 dark:text-slate-400 mt-6">
             Don't have an account?{" "}
-            <button className="font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300">
+            <button className="font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300" onClick={()=> navigate('/register')}>
               Contact sales
             </button>
           </p>

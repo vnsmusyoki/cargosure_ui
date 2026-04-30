@@ -1,7 +1,10 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "@/context/ThemeContext";
+import ProtectedRoute from "@/shared/ProtectedRoute";
+import RoleGuard from "@/shared/RoleGuard";
+import { ROLES } from "@/constants/roles";
+
 import HomePage from "../pages/HomePage";
 import DefaultLayout from "@/layouts/DefaultLayout";
 import AuthLayout from "@/layouts/authLayout";
@@ -11,7 +14,6 @@ import ForgotPassword from "@/features/auth/ForgotPassword";
 import SetNewPassword from "@/features/auth/SetNewPassword";
 import Register from "../features/auth/Register";
 import Dashboard from "../features/dashboard/Dashboard";
-
 
 import DriversManagement from "@/pages/company/drivers/DriversManagement";
 import DriverOnboardPage from "@/pages/company/drivers/DriverOnboardPage";
@@ -23,11 +25,11 @@ import WarehousesManagement from "@/pages/company/inventory/warehouses/WareHouse
 import CreateWareHouse from "@/pages/company/inventory/warehouses/CreateWareHouse";
 import WareHouseView from "@/pages/company/inventory/warehouses/WarehouseView";
 import StockManagement from "@/pages/company/inventory/stock/StockManagement";
-import ProductsManagement from "@/pages/company/products/ProductsManagement"; 
+import ProductsManagement from "@/pages/company/products/ProductsManagement";
 import CreateProduct from "@/pages/company/products/CreateProduct";
 import CategoriesManagement from "../pages/company/categories/CategoriesManagement";
 import CustomersManagement from "../pages/company/customers/CustomersManagement";
-import SuppliersManagement from "../pages/company/suppliers/SuppliersManagement"; 
+import SuppliersManagement from "../pages/company/suppliers/SuppliersManagement";
 import PosManagement from "@/pages/company/sales/PosManagement";
 import PosLayout from "@/layouts/PosLayout";
 import BusinessSettings from "@/pages/company/settings/BusinessSettings";
@@ -35,61 +37,96 @@ import FuelManagement from "../pages/company/fleet/FuelManagement";
 import VehicleDetails from "../pages/company/fleet/VehicleDetails";
 import RoutesManagement from "../pages/company/fleet/RoutesManagement";
 
+import UnauthenticatedPage from "@/pages/errors/UnauthenticatedPage";
+import UnauthorizedPage from "@/pages/errors/UnauthorizedPage";
+import NotFoundPage from "@/pages/errors/NotFoundPage";
+
 function App() {
   return (
     <ThemeProvider>
-    <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
-    <BrowserRouter>
-      <Routes>
-        {/* Public/features/auth routes */}
-        <Route path="/" element={<AuthLayout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="set-new-password" element={<SetNewPassword />} />
-          <Route path="register" element={<Register />} />
-        </Route>
-        <Route path="/" element={<DefaultLayout />}>
-          <Route index element={<HomePage />} />
-        </Route>
+      <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
+      <BrowserRouter>
+        <Routes>
+          {/* Public auth routes */}
+          <Route path="/" element={<AuthLayout />}>
+            <Route path="login" element={<Login />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="set-new-password" element={<SetNewPassword />} />
+            <Route path="register" element={<Register />} />
+          </Route>
 
-        {/* Protected routes with AppLayout */}
-        <Route path="/" element={<AppLayout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="/drivers-management" element={<DriversManagement />} />
-          <Route path="/drivers-management/onboard" element={<DriverOnboardPage />} />
+          <Route path="/" element={<DefaultLayout />}>
+            <Route index element={<HomePage />} />
+          </Route>
 
-          <Route path="/orders-management" element={<OrderManagement />} />
-          <Route path="/orders-management/create" element={<OrderManagementCreate />} />
+          {/* Error pages — public so the interceptor can land here without auth */}
+          <Route path="/unauthenticated" element={<UnauthenticatedPage />} />
+          <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-          <Route path="/fleet-management" element={<FleetManagement />} />
-          <Route path="/fleet/fuel-management" element={<FuelManagement />} />
-          <Route path="/live-tracking" element={<LiveTracking />} />
-          <Route path="/fleet/vehicle-details/:id" element={<VehicleDetails />} />
-          <Route path="/fleet/routes-management" element={<RoutesManagement />} />
+          {/* Authenticated — any valid user */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AppLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+          </Route>
 
-          <Route path="/inventory/warehouses" element={<WarehousesManagement />} />
-          <Route path="/inventory/warehouses/create" element={<CreateWareHouse />} />
-          <Route path="/inventory/warehouses/view/:id" element={<WareHouseView />} />
-          <Route path="/inventory/stock" element={<StockManagement />} />
+          {/* Authenticated — Company or Distributor */}
+          <Route element={<ProtectedRoute requiredRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
+            <Route element={<AppLayout />}>
 
-          <Route path="/products" element={<ProductsManagement />} />
-          <Route path="/products/create" element={<CreateProduct />} />
+              {/* Fleet & logistics */}
+              <Route element={<RoleGuard allowedRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
+                <Route path="/drivers-management" element={<DriversManagement />} />
+                <Route path="/drivers-management/onboard" element={<DriverOnboardPage />} />
+                <Route path="/orders-management" element={<OrderManagement />} />
+                <Route path="/orders-management/create" element={<OrderManagementCreate />} />
+                <Route path="/fleet-management" element={<FleetManagement />} />
+                <Route path="/fleet/fuel-management" element={<FuelManagement />} />
+                <Route path="/fleet/vehicle-details/:id" element={<VehicleDetails />} />
+                <Route path="/fleet/routes-management" element={<RoutesManagement />} />
+                <Route path="/live-tracking" element={<LiveTracking />} />
+              </Route>
 
-          <Route path="/products/categories" element={<CategoriesManagement />} />
+              {/* Inventory */}
+              <Route element={<RoleGuard allowedRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
+                <Route path="/inventory/warehouses" element={<WarehousesManagement />} />
+                <Route path="/inventory/warehouses/create" element={<CreateWareHouse />} />
+                <Route path="/inventory/warehouses/view/:id" element={<WareHouseView />} />
+                <Route path="/inventory/stock" element={<StockManagement />} />
+              </Route>
 
-          <Route path="/customers-management" element={<CustomersManagement />} />
+              {/* Products & catalogue */}
+              <Route element={<RoleGuard allowedRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
+                <Route path="/products" element={<ProductsManagement />} />
+                <Route path="/products/create" element={<CreateProduct />} />
+                <Route path="/products/categories" element={<CategoriesManagement />} />
+              </Route>
 
-          <Route path="/suppliers-management" element={<SuppliersManagement />} />
+              {/* Customers & suppliers */}
+              <Route element={<RoleGuard allowedRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
+                <Route path="/customers-management" element={<CustomersManagement />} />
+                <Route path="/suppliers-management" element={<SuppliersManagement />} />
+              </Route>
 
-          <Route path="/settings/business" element={<BusinessSettings />} />
+              {/* Settings — Company only */}
+              <Route element={<RoleGuard allowedRoles={[ROLES.COMPANY]} />}>
+                <Route path="/settings/business" element={<BusinessSettings />} />
+              </Route>
 
-               
-        </Route>
-        <Route path="/" element={<PosLayout />}>
-          <Route path="/sales/pos" element={<PosManagement />} />     
-        </Route>
-      </Routes>
-    </BrowserRouter>
+            </Route>
+          </Route>
+
+          {/* POS — Company or Distributor */}
+          <Route element={<ProtectedRoute requiredRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
+            <Route element={<PosLayout />}>
+              <Route path="/sales/pos" element={<PosManagement />} />
+            </Route>
+          </Route>
+
+          {/* 404 catch-all — must be last */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

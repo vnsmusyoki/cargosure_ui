@@ -34,6 +34,13 @@ export const getIndustries = async () => {
   return response.data;
 };
 
+// GET CURRENT SESSION USER
+// Returns { user, employeeData } — employeeData is null for non-employee roles
+export const getMe = async () => {
+  const response = await api.get("/Auth/me");
+  return response.data;
+};
+
 // LOGOUT
 export const logout = async () => {
   const response = await api.post("/auth/logout");
