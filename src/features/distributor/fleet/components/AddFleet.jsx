@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Select from 'react-select';
 import {
   Truck, Car, Bike, Package, Scale, Box, Thermometer, Building,
   User, MapPin, FileText, Shield, Calendar, Gauge, Wrench,
@@ -8,22 +9,92 @@ import {
   Award, IdCard, Fuel, Zap, Droplet, Settings, Image, Download
 } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import useVehicleTypes from '../hooks/useVehicletypes';
 import useFuelTypes from '../hooks/useFuelTypes';
+import { registerVehicle } from '../api/fleetApi';
+
+const buildSelectStyles = (hasError = false) => {
+  const dark = document.documentElement.classList.contains('dark');
+  const border = hasError ? '#EF4444' : dark ? '#4B5563' : '#D1D5DB';
+  return {
+    control: (base, state) => ({
+      ...base,
+      backgroundColor: dark ? '#374151' : 'white',
+      borderColor: hasError ? '#EF4444' : state.isFocused ? '#6366f1' : border,
+      boxShadow: state.isFocused ? '0 0 0 2px rgba(99,102,241,0.2)' : 'none',
+      borderRadius: '0.5rem',
+      fontSize: '0.875rem',
+      minHeight: '38px',
+      '&:hover': { borderColor: hasError ? '#EF4444' : '#6366f1' },
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: dark ? '#374151' : 'white',
+      border: `1px solid ${dark ? '#4B5563' : '#E5E7EB'}`,
+      borderRadius: '0.5rem',
+      boxShadow: '0 4px 6px -1px rgba(0,0,0,0.15)',
+      zIndex: 9999,
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isSelected
+        ? '#6366f1'
+        : state.isFocused
+        ? dark ? '#4B5563' : '#EEF2FF'
+        : 'transparent',
+      color: state.isSelected ? 'white' : dark ? '#D1D5DB' : '#374151',
+      cursor: 'pointer',
+      fontSize: '0.875rem',
+      '&:active': { backgroundColor: '#6366f1' },
+    }),
+    singleValue: (base) => ({ ...base, color: dark ? '#D1D5DB' : '#374151' }),
+    placeholder: (base) => ({ ...base, color: '#9CA3AF' }),
+    input: (base) => ({ ...base, color: dark ? '#D1D5DB' : '#374151' }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: dark ? '#3730A3' : '#EEF2FF',
+      borderRadius: '9999px',
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: dark ? '#C7D2FE' : '#4338CA',
+      fontSize: '0.75rem',
+      paddingLeft: '8px',
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: dark ? '#C7D2FE' : '#4338CA',
+      borderRadius: '0 9999px 9999px 0',
+      '&:hover': { backgroundColor: '#EF4444', color: 'white' },
+    }),
+    indicatorSeparator: (base) => ({
+      ...base,
+      backgroundColor: dark ? '#4B5563' : '#E5E7EB',
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: '#9CA3AF',
+      '&:hover': { color: '#6366f1' },
+    }),
+    clearIndicator: (base) => ({
+      ...base,
+      color: '#9CA3AF',
+      '&:hover': { color: '#EF4444' },
+    }),
+    valueContainer: (base) => ({ ...base, padding: '2px 8px' }),
+  };
+};
 
 export default function AddFleet() {
-  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [stepErrors, setStepErrors] = useState([]);
 
   const { data: vehicleTypes = [], isLoading: vehicleTypesLoading } = useVehicleTypes();
   const { data: fuelTypes = [], isLoading: fuelTypesLoading } = useFuelTypes();
 
-  // Form data state
   const [formData, setFormData] = useState({
-    // Basic Vehicle Information
     registrationNumber: '',
     vehicleType: '',
     make: '',
@@ -33,8 +104,6 @@ export default function AddFleet() {
     chassisNumber: '',
     engineNumber: '',
     fuelType: '',
-    
-    // Capacity & Dimensions
     maxLoadCapacity: '',
     loadCapacityUnit: 'kg',
     volumeCapacity: '',
@@ -43,16 +112,12 @@ export default function AddFleet() {
     refrigerationTempMin: '',
     refrigerationTempMax: '',
     refrigerationTempUnit: 'celsius',
-    
-    // Ownership & Assignment
     ownerType: '',
     assignedDepot: '',
     primaryDriver: '',
     backupDriver: '',
     assignedRoute: '',
     assignedZones: [],
-    
-    // Compliance & Documentation
     insurancePolicyNo: '',
     insuranceExpiry: '',
     roadTaxCertNo: '',
@@ -64,8 +129,6 @@ export default function AddFleet() {
     trackerDeviceId: '',
     policeClearanceNo: '',
     policeClearanceExpiry: '',
-    
-    // Maintenance & Condition
     currentMileage: '',
     mileageUnit: 'km',
     lastServiceDate: '',
@@ -77,105 +140,103 @@ export default function AddFleet() {
     tyreReplacementMileage: '',
     vehicleCondition: '',
     conditionNotes: '',
-    
-    // Operational Settings
     status: 'active',
     availabilitySchedule: [],
     fuelCardNumber: '',
     trackingProvider: '',
-    
-    // Attachments
     vehiclePhotos: [],
     documents: [],
     generalNotes: ''
   });
-  
+
   const [formErrors, setFormErrors] = useState({});
-  const [assignedZonesInput, setAssignedZonesInput] = useState('');
-  const [availabilityScheduleInput, setAvailabilityScheduleInput] = useState({
-    day: '',
-    shift: ''
-  });
-  
-  // Available zones
+  const [availabilityScheduleInput, setAvailabilityScheduleInput] = useState({ day: '', shift: '' });
+
+  // ── Static select options ──────────────────────────────────────────────────
+  const loadCapacityUnitOptions = [{ value: 'kg', label: 'kg' }, { value: 'tonnes', label: 'Tonnes' }];
+  const refrigerationTempUnitOptions = [{ value: 'celsius', label: '°C' }, { value: 'fahrenheit', label: '°F' }];
+  const ownerTypeOptions = [
+    { value: 'company', label: 'Company-Owned' },
+    { value: 'leased', label: 'Leased' },
+    { value: 'owner-driver', label: 'Owner-Driver' },
+  ];
+  const mileageUnitOptions = [{ value: 'km', label: 'km' }, { value: 'miles', label: 'miles' }];
+  const tyreConditionOptions = [
+    { value: 'new', label: 'New' }, { value: 'good', label: 'Good' },
+    { value: 'fair', label: 'Fair' }, { value: 'poor', label: 'Poor' },
+    { value: 'critical', label: 'Critical' },
+  ];
+  const vehicleConditionOptions = [
+    { value: 'excellent', label: 'Excellent' }, { value: 'good', label: 'Good' },
+    { value: 'fair', label: 'Fair' }, { value: 'poor', label: 'Poor' },
+  ];
+  const statusOptions = [
+    { value: 'active', label: 'Active' }, { value: 'inactive', label: 'Inactive' },
+    { value: 'maintenance', label: 'Under Maintenance' }, { value: 'retired', label: 'Retired' },
+  ];
+  const trackingProviderOptions = [
+    { value: 'ctrack', label: 'Ctrack' }, { value: 'mix', label: 'MiX Telematics' },
+    { value: 'cartrack', label: 'Cartrack' }, { value: 'other', label: 'Other' },
+  ];
+  const dayOptions = [
+    { value: 'Monday', label: 'Monday' }, { value: 'Tuesday', label: 'Tuesday' },
+    { value: 'Wednesday', label: 'Wednesday' }, { value: 'Thursday', label: 'Thursday' },
+    { value: 'Friday', label: 'Friday' }, { value: 'Saturday', label: 'Saturday' },
+    { value: 'Sunday', label: 'Sunday' },
+  ];
+  const shiftOptions = [
+    { value: 'Morning (6AM - 2PM)', label: 'Morning (6AM - 2PM)' },
+    { value: 'Afternoon (2PM - 10PM)', label: 'Afternoon (2PM - 10PM)' },
+    { value: 'Night (10PM - 6AM)', label: 'Night (10PM - 6AM)' },
+    { value: 'Full Day', label: 'Full Day' },
+  ];
+
+  // ── Dynamic options from API / local data ─────────────────────────────────
+  const vehicleTypeOptions = vehicleTypes.map(t => ({ value: t.id, label: t.name }));
+  const fuelTypeOptions = fuelTypes.map(t => ({ value: t.id, label: t.name }));
+
   const availableZones = [
-    'Westlands', 'Kilimani', 'CBD', 'Parklands', 'Karen', 
-    'Ngong', 'Upper Hill', 'Industrial Area', 'Eastlands', 
+    'Westlands', 'Kilimani', 'CBD', 'Parklands', 'Karen',
+    'Ngong', 'Upper Hill', 'Industrial Area', 'Eastlands',
     'South B', 'South C', 'Langata'
   ];
-  
-  // Available drivers (mock data - would come from API)
+  const zonesOptions = availableZones.map(z => ({ value: z, label: z }));
+
   const availableDrivers = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' },
-    { id: 3, name: 'Michael Otieno' },
-    { id: 4, name: 'Sarah Wanjiku' }
+    { id: 1, name: 'John Doe' }, { id: 2, name: 'Jane Smith' },
+    { id: 3, name: 'Michael Otieno' }, { id: 4, name: 'Sarah Wanjiku' },
   ];
-  
-  // Available depots (mock data)
-  const availableDepots = [
-    'Nairobi Main Depot', 'Mombasa Depot', 'Kisumu Depot', 
-    'Nakuru Depot', 'Eldoret Depot'
-  ];
-  
-  // Available routes (mock data)
-  const availableRoutes = [
-    'Nairobi - Mombasa', 'Nairobi - Kisumu', 'Nairobi - Nakuru',
-    'Nairobi - Eldoret', 'Mombasa - Nairobi'
-  ];
-  
-  // Shift options
-  const shiftOptions = [
-    'Morning (6AM - 2PM)',
-    'Afternoon (2PM - 10PM)',
-    'Night (10PM - 6AM)',
-    'Full Day'
-  ];
-  
-  // Handle input changes
+  const driverOptions = availableDrivers.map(d => ({ value: d.name, label: d.name }));
+
+  const availableDepots = ['Nairobi Main Depot', 'Mombasa Depot', 'Kisumu Depot', 'Nakuru Depot', 'Eldoret Depot'];
+  const depotOptions = availableDepots.map(d => ({ value: d, label: d }));
+
+  const availableRoutes = ['Nairobi - Mombasa', 'Nairobi - Kisumu', 'Nairobi - Nakuru', 'Nairobi - Eldoret', 'Mombasa - Nairobi'];
+  const routeOptions = availableRoutes.map(r => ({ value: r, label: r }));
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  const sel = (opts, val) => opts.find(o => o.value === val) || null;
+
+  const handleSelectChange = (name) => (selected) => {
+    setFormData(prev => ({ ...prev, [name]: selected ? selected.value : '' }));
+    if (formErrors[name]) setFormErrors(prev => ({ ...prev, [name]: '' }));
+  };
+
+  const handleZonesChange = (selected) => {
+    setFormData(prev => ({ ...prev, assignedZones: selected ? selected.map(s => s.value) : [] }));
+  };
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
-    if (formErrors[name]) {
-      setFormErrors(prev => ({ ...prev, [name]: '' }));
-    }
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+    if (formErrors[name]) setFormErrors(prev => ({ ...prev, [name]: '' }));
   };
-  
-  // Handle array fields
-  const handleArrayChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-  
-  // Add zone to assigned zones
-  const addZone = (zone) => {
-    if (!formData.assignedZones.includes(zone)) {
-      setFormData(prev => ({
-        ...prev,
-        assignedZones: [...prev.assignedZones, zone]
-      }));
-    }
-  };
-  
-  // Remove zone
-  const removeZone = (zone) => {
-    setFormData(prev => ({
-      ...prev,
-      assignedZones: prev.assignedZones.filter(z => z !== zone)
-    }));
-  };
-  
-  // Add availability schedule
+
   const addAvailabilitySchedule = () => {
     if (availabilityScheduleInput.day && availabilityScheduleInput.shift) {
       const schedule = `${availabilityScheduleInput.day} - ${availabilityScheduleInput.shift}`;
       if (!formData.availabilitySchedule.includes(schedule)) {
-        setFormData(prev => ({
-          ...prev,
-          availabilitySchedule: [...prev.availabilitySchedule, schedule]
-        }));
+        setFormData(prev => ({ ...prev, availabilitySchedule: [...prev.availabilitySchedule, schedule] }));
         setAvailabilityScheduleInput({ day: '', shift: '' });
       } else {
         toast.error('This schedule already exists');
@@ -184,54 +245,32 @@ export default function AddFleet() {
       toast.error('Please select both day and shift');
     }
   };
-  
-  // Remove availability schedule
+
   const removeAvailabilitySchedule = (schedule) => {
-    setFormData(prev => ({
-      ...prev,
-      availabilitySchedule: prev.availabilitySchedule.filter(s => s !== schedule)
-    }));
+    setFormData(prev => ({ ...prev, availabilitySchedule: prev.availabilitySchedule.filter(s => s !== schedule) }));
   };
-  
-  // Handle file upload
+
   const handleFileUpload = (e, type) => {
     const files = Array.from(e.target.files);
     const validFiles = [];
-    
     for (const file of files) {
       const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
-      if (!allowedTypes.includes(file.type)) {
-        toast.error(`${file.name} is not a valid file type`);
-        continue;
-      }
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error(`${file.name} is larger than 5MB`);
-        continue;
-      }
+      if (!allowedTypes.includes(file.type)) { toast.error(`${file.name} is not a valid file type`); continue; }
+      if (file.size > 5 * 1024 * 1024) { toast.error(`${file.name} is larger than 5MB`); continue; }
       validFiles.push(file);
     }
-    
     if (validFiles.length > 0) {
-      setFormData(prev => ({
-        ...prev,
-        [type]: [...prev[type], ...validFiles]
-      }));
+      setFormData(prev => ({ ...prev, [type]: [...prev[type], ...validFiles] }));
       toast.success(`${validFiles.length} file(s) uploaded successfully`);
     }
   };
-  
-  // Remove uploaded file
+
   const removeFile = (type, index) => {
-    setFormData(prev => ({
-      ...prev,
-      [type]: prev[type].filter((_, i) => i !== index)
-    }));
+    setFormData(prev => ({ ...prev, [type]: prev[type].filter((_, i) => i !== index) }));
   };
-  
-  // Validate current step
+
   const validateStep = () => {
     const errors = {};
-    
     if (currentStep === 1) {
       if (!formData.registrationNumber) errors.registrationNumber = 'Registration number is required';
       if (!formData.vehicleType) errors.vehicleType = 'Vehicle type is required';
@@ -242,70 +281,92 @@ export default function AddFleet() {
       if (!formData.engineNumber) errors.engineNumber = 'Engine number is required';
       if (!formData.fuelType) errors.fuelType = 'Fuel type is required';
     }
-    
     if (currentStep === 2) {
       if (!formData.maxLoadCapacity) errors.maxLoadCapacity = 'Maximum load capacity is required';
-      if (formData.hasRefrigeration && (!formData.refrigerationTempMin || !formData.refrigerationTempMax)) {
-        errors.refrigeration = 'Temperature range is required for refrigerated vehicles';
-      }
+      if (formData.hasRefrigeration && !formData.refrigerationTempMin) errors.refrigerationTempMin = 'Minimum temperature is required for refrigerated vehicles';
+      if (formData.hasRefrigeration && !formData.refrigerationTempMax) errors.refrigerationTempMax = 'Maximum temperature is required for refrigerated vehicles';
     }
-    
     if (currentStep === 3) {
       if (!formData.ownerType) errors.ownerType = 'Owner type is required';
       if (!formData.assignedDepot) errors.assignedDepot = 'Assigned depot is required';
     }
-    
     if (currentStep === 4) {
       if (!formData.insurancePolicyNo) errors.insurancePolicyNo = 'Insurance policy number is required';
       if (!formData.insuranceExpiry) errors.insuranceExpiry = 'Insurance expiry date is required';
       if (!formData.fitnessCertNo) errors.fitnessCertNo = 'Fitness certificate number is required';
       if (!formData.fitnessExpiry) errors.fitnessExpiry = 'Fitness certificate expiry date is required';
     }
-    
     if (currentStep === 5) {
-      if (!formData.currentMileage) errors.currentMileage = 'Current mileage is required';
+      if (!formData.currentMileage && formData.currentMileage !== 0) errors.currentMileage = 'Current mileage is required';
       if (!formData.lastServiceDate) errors.lastServiceDate = 'Last service date is required';
       if (!formData.vehicleCondition) errors.vehicleCondition = 'Vehicle condition is required';
     }
-    
     setFormErrors(errors);
-    return Object.keys(errors).length === 0;
+    return errors;
   };
-  
-  // Next step
+
   const nextStep = () => {
-    if (validateStep()) {
+    const errors = validateStep();
+    const errorMessages = Object.values(errors);
+    if (errorMessages.length === 0) {
+      setStepErrors([]);
       setCurrentStep(prev => Math.min(prev + 1, 8));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      toast.error('Please fill in all required fields');
+      setStepErrors(errorMessages);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
-  
-  // Previous step
+
   const prevStep = () => {
+    setStepErrors([]);
     setCurrentStep(prev => Math.max(prev - 1, 1));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-  
-  // Submit form
+
   const handleSubmit = async () => {
-    if (validateStep()) {
-      setIsSubmitting(true);
-      // Simulate API call
-      setTimeout(() => {
-        setIsSubmitting(false);
-        toast.success('Fleet vehicle added successfully!');
-        // Reset form or redirect
-        setCurrentStep(1);
-        // Reset form data here if needed
-      }, 2000);
-    } else {
-      toast.error('Please complete all required fields');
+    const errors = validateStep();
+    const errorMessages = Object.values(errors);
+    if (errorMessages.length > 0) {
+      setStepErrors(errorMessages);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    setIsSubmitting(true);
+    setStepErrors([]);
+    try {
+      await registerVehicle(formData);
+      toast.success('Vehicle registered successfully!');
+      setCurrentStep(1);
+      setFormData({
+        registrationNumber: '', vehicleType: '', make: '', model: '', year: '',
+        color: '', chassisNumber: '', engineNumber: '', fuelType: '',
+        maxLoadCapacity: '', loadCapacityUnit: 'kg', volumeCapacity: '',
+        palletCapacity: '', hasRefrigeration: false, refrigerationTempMin: '',
+        refrigerationTempMax: '', refrigerationTempUnit: 'celsius', ownerType: '',
+        assignedDepot: '', primaryDriver: '', backupDriver: '', assignedRoute: '',
+        assignedZones: [], insurancePolicyNo: '', insuranceExpiry: '',
+        roadTaxCertNo: '', roadTaxExpiry: '', fitnessCertNo: '', fitnessExpiry: '',
+        speedGovernorCertNo: '', speedGovernorExpiry: '', trackerDeviceId: '',
+        policeClearanceNo: '', policeClearanceExpiry: '', currentMileage: '',
+        mileageUnit: 'km', lastServiceDate: '', lastServiceMileage: '',
+        nextServiceDue: '', nextServiceMileage: '', tyreCondition: '',
+        tyreLastReplacement: '', tyreReplacementMileage: '', vehicleCondition: '',
+        conditionNotes: '', status: 'active', availabilitySchedule: [],
+        fuelCardNumber: '', trackingProvider: '', vehiclePhotos: [],
+        documents: [], generalNotes: ''
+      });
+    } catch (err) {
+      const apiErrors = err?.errors
+        ? (Array.isArray(err.errors) ? err.errors : Object.values(err.errors).flat())
+        : [err?.message || 'An error occurred. Please try again.'];
+      setStepErrors(apiErrors);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } finally {
+      setIsSubmitting(false);
     }
   };
-  
-  // Steps configuration
+
   const steps = [
     { number: 1, title: 'Basic Info', icon: Truck },
     { number: 2, title: 'Capacity', icon: Scale },
@@ -316,47 +377,43 @@ export default function AddFleet() {
     { number: 7, title: 'Documents', icon: FileText },
     { number: 8, title: 'Review', icon: CheckCircle },
   ];
-  
-  // File upload component
-  const FileUploadField = ({ label, type, icon: Icon, multiple = false, accept = "image/*,application/pdf" }) => (
-    <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-indigo-500 transition">
-      <label className="cursor-pointer block">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
-            <Icon className="w-5 h-5 text-gray-500" />
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</p>
-            <p className="text-xs text-gray-500">
-              {formData[type].length > 0 
-                ? `${formData[type].length} file(s) uploaded` 
-                : `Click to upload (${multiple ? 'multiple' : 'single'} file, max 5MB each)`}
-            </p>
-          </div>
-          <input
-            type="file"
-            className="hidden"
-            accept={accept}
-            multiple={multiple}
-            onChange={(e) => handleFileUpload(e, type)}
-          />
-        </div>
-      </label>
-      {formData[type].length > 0 && (
-        <div className="mt-3 space-y-1">
-          {formData[type].map((file, index) => (
-            <div key={index} className="flex items-center justify-between text-xs bg-gray-50 dark:bg-gray-800 p-2 rounded">
-              <span className="truncate flex-1">{file.name}</span>
-              <button onClick={() => removeFile(type, index)} className="text-red-500 hover:text-red-700 ml-2">
-                <X className="w-3 h-3" />
-              </button>
+
+  const FileUploadField = ({ label, type, icon, multiple = false, accept = "image/*,application/pdf" }) => {
+    const FieldIcon = icon;
+    return (
+      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-indigo-500 transition">
+        <label className="cursor-pointer block">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
+              <FieldIcon className="w-5 h-5 text-gray-500" />
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-  
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{label}</p>
+              <p className="text-xs text-gray-500">
+                {formData[type].length > 0
+                  ? `${formData[type].length} file(s) uploaded`
+                  : `Click to upload (${multiple ? 'multiple' : 'single'} file, max 5MB each)`}
+              </p>
+            </div>
+            <input type="file" className="hidden" accept={accept} multiple={multiple} onChange={(e) => handleFileUpload(e, type)} />
+          </div>
+        </label>
+        {formData[type].length > 0 && (
+          <div className="mt-3 space-y-1">
+            {formData[type].map((file, index) => (
+              <div key={index} className="flex items-center justify-between text-xs bg-gray-50 dark:bg-gray-800 p-2 rounded">
+                <span className="truncate flex-1">{file.name}</span>
+                <button onClick={() => removeFile(type, index)} className="text-red-500 hover:text-red-700 ml-2">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -371,7 +428,7 @@ export default function AddFleet() {
           <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">
             Save Draft
           </button>
-          <button 
+          <button
             onClick={() => setShowPreview(!showPreview)}
             className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition"
           >
@@ -379,7 +436,7 @@ export default function AddFleet() {
           </button>
         </div>
       </div>
-      
+
       {/* Progress Steps */}
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 shadow-sm overflow-x-auto">
         <div className="flex items-center min-w-max">
@@ -390,15 +447,11 @@ export default function AddFleet() {
             return (
               <React.Fragment key={step.number}>
                 <div className="flex flex-col items-center gap-2">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                      isCompleted
-                        ? 'bg-green-500 text-white'
-                        : isCurrent
-                        ? 'bg-indigo-600 text-white ring-4 ring-indigo-100 dark:ring-indigo-900/30'
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
-                    }`}
-                  >
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                    isCompleted ? 'bg-green-500 text-white'
+                      : isCurrent ? 'bg-indigo-600 text-white ring-4 ring-indigo-100 dark:ring-indigo-900/30'
+                      : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
+                  }`}>
                     {isCompleted ? <CheckCircle className="w-5 h-5" /> : <Icon className="w-5 h-5" />}
                   </div>
                   <span className={`text-xs font-medium ${isCurrent ? 'text-indigo-600' : 'text-gray-500'}`}>
@@ -406,19 +459,47 @@ export default function AddFleet() {
                   </span>
                 </div>
                 {idx < steps.length - 1 && (
-                  <div className={`w-16 h-0.5 rounded-full mx-2 ${
-                    isCompleted ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'
-                  }`} />
+                  <div className={`w-16 h-0.5 rounded-full mx-2 ${isCompleted ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`} />
                 )}
               </React.Fragment>
             );
           })}
         </div>
       </div>
-      
+
       {/* Form Content */}
       <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
         <div className="p-6">
+
+          {/* Error Card */}
+          {stepErrors.length > 0 && (
+            <div className="mb-6 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 p-4">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-red-800 dark:text-red-300 mb-2">
+                    Please fix the following errors before continuing:
+                  </p>
+                  <ul className="space-y-1">
+                    {stepErrors.map((err, i) => (
+                      <li key={i} className="text-sm text-red-700 dark:text-red-400 flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
+                        {err}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <button
+                  onClick={() => setStepErrors([])}
+                  className="text-red-400 hover:text-red-600 dark:hover:text-red-300 flex-shrink-0"
+                  aria-label="Dismiss errors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Step 1: Basic Vehicle Information */}
           {currentStep === 1 && (
             <div className="space-y-6">
@@ -426,7 +507,7 @@ export default function AddFleet() {
                 <Truck className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Basic Vehicle Information</h2>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -437,7 +518,7 @@ export default function AddFleet() {
                     name="registrationNumber"
                     value={formData.registrationNumber}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border uppercase rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.registrationNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="KCA 123A"
@@ -446,25 +527,25 @@ export default function AddFleet() {
                     <p className="text-xs text-red-500 mt-1">{formErrors.registrationNumber}</p>
                   )}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Vehicle Type <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="vehicleType"
-                    value={formData.vehicleType}
-                    onChange={handleInputChange}
-                    disabled={vehicleTypesLoading}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 disabled:opacity-50"
-                  >
-                    <option value="">{vehicleTypesLoading ? 'Loading...' : 'Select vehicle type'}</option>
-                    {vehicleTypes.map((type) => (
-                      <option key={type.id} value={type.id}>{type.name}</option>
-                    ))}
-                  </select>
+                  <Select
+                    options={vehicleTypeOptions}
+                    value={sel(vehicleTypeOptions, formData.vehicleType)}
+                    onChange={handleSelectChange('vehicleType')}
+                    isLoading={vehicleTypesLoading}
+                    isDisabled={vehicleTypesLoading}
+                    placeholder="Select vehicle type"
+                    styles={buildSelectStyles(!!formErrors.vehicleType)}
+                  />
+                  {formErrors.vehicleType && (
+                    <p className="text-xs text-red-500 mt-1">{formErrors.vehicleType}</p>
+                  )}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Make <span className="text-red-500">*</span>
@@ -474,11 +555,13 @@ export default function AddFleet() {
                     name="make"
                     value={formData.make}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.make ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Toyota, Isuzu, etc."
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Model <span className="text-red-500">*</span>
@@ -488,11 +571,13 @@ export default function AddFleet() {
                     name="model"
                     value={formData.model}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.model ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Hilux, Dyna, etc."
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Year <span className="text-red-500">*</span>
@@ -502,11 +587,13 @@ export default function AddFleet() {
                     name="year"
                     value={formData.year}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.year ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="2020"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Color
@@ -516,11 +603,13 @@ export default function AddFleet() {
                     name="color"
                     value={formData.color}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.color ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="White, Black, etc."
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Chassis Number (VIN) <span className="text-red-500">*</span>
@@ -530,11 +619,13 @@ export default function AddFleet() {
                     name="chassisNumber"
                     value={formData.chassisNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.chassisNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Enter VIN"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Engine Number <span className="text-red-500">*</span>
@@ -544,32 +635,34 @@ export default function AddFleet() {
                     name="engineNumber"
                     value={formData.engineNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.engineNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Enter engine number"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Fuel Type <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="fuelType"
-                    value={formData.fuelType}
-                    onChange={handleInputChange}
-                    disabled={fuelTypesLoading}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 disabled:opacity-50"
-                  >
-                    <option value="">{fuelTypesLoading ? 'Loading...' : 'Select fuel type'}</option>
-                    {fuelTypes.map((type) => (
-                      <option key={type.id} value={type.id}>{type.name}</option>
-                    ))}
-                  </select>
+                  <Select
+                    options={fuelTypeOptions}
+                    value={sel(fuelTypeOptions, formData.fuelType)}
+                    onChange={handleSelectChange('fuelType')}
+                    isLoading={fuelTypesLoading}
+                    isDisabled={fuelTypesLoading}
+                    placeholder="Select fuel type"
+                    styles={buildSelectStyles(!!formErrors.fuelType)}
+                  />
+                  {formErrors.fuelType && (
+                    <p className="text-xs text-red-500 mt-1">{formErrors.fuelType}</p>
+                  )}
                 </div>
               </div>
             </div>
           )}
-          
+
           {/* Step 2: Capacity & Dimensions */}
           {currentStep === 2 && (
             <div className="space-y-6">
@@ -577,7 +670,7 @@ export default function AddFleet() {
                 <Scale className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Capacity & Dimensions</h2>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -589,21 +682,21 @@ export default function AddFleet() {
                       name="maxLoadCapacity"
                       value={formData.maxLoadCapacity}
                       onChange={handleInputChange}
-                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
                       placeholder="Enter capacity"
                     />
-                    <select
-                      name="loadCapacityUnit"
-                      value={formData.loadCapacityUnit}
-                      onChange={handleInputChange}
-                      className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                    >
-                      <option value="kg">kg</option>
-                      <option value="tonnes">Tonnes</option>
-                    </select>
+                    <div className="w-32">
+                      <Select
+                        options={loadCapacityUnitOptions}
+                        value={sel(loadCapacityUnitOptions, formData.loadCapacityUnit)}
+                        onChange={handleSelectChange('loadCapacityUnit')}
+                        styles={buildSelectStyles()}
+                        isSearchable={false}
+                      />
+                    </div>
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Volume Capacity (cubic metres)
@@ -613,12 +706,14 @@ export default function AddFleet() {
                     name="volumeCapacity"
                     value={formData.volumeCapacity}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.volumeCapacity ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="e.g., 15 m³"
                     step="0.1"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Number of Pallets
@@ -628,11 +723,13 @@ export default function AddFleet() {
                     name="palletCapacity"
                     value={formData.palletCapacity}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.palletCapacity ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Number of pallets"
                   />
                 </div>
-                
+
                 <div className="md:col-span-2">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -647,7 +744,7 @@ export default function AddFleet() {
                     </span>
                   </label>
                 </div>
-                
+
                 {formData.hasRefrigeration && (
                   <>
                     <div>
@@ -660,21 +757,21 @@ export default function AddFleet() {
                           name="refrigerationTempMin"
                           value={formData.refrigerationTempMin}
                           onChange={handleInputChange}
-                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
                           placeholder="Min temp"
                         />
-                        <select
-                          name="refrigerationTempUnit"
-                          value={formData.refrigerationTempUnit}
-                          onChange={handleInputChange}
-                          className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                        >
-                          <option value="celsius">°C</option>
-                          <option value="fahrenheit">°F</option>
-                        </select>
+                        <div className="w-28">
+                          <Select
+                            options={refrigerationTempUnitOptions}
+                            value={sel(refrigerationTempUnitOptions, formData.refrigerationTempUnit)}
+                            onChange={handleSelectChange('refrigerationTempUnit')}
+                            styles={buildSelectStyles()}
+                            isSearchable={false}
+                          />
+                        </div>
                       </div>
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                         Maximum Temperature
@@ -684,7 +781,9 @@ export default function AddFleet() {
                         name="refrigerationTempMax"
                         value={formData.refrigerationTempMax}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.refrigerationTempMax ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                         placeholder="Max temp"
                       />
                     </div>
@@ -693,7 +792,7 @@ export default function AddFleet() {
               </div>
             </div>
           )}
-          
+
           {/* Step 3: Ownership & Assignment */}
           {currentStep === 3 && (
             <div className="space-y-6">
@@ -701,144 +800,101 @@ export default function AddFleet() {
                 <Building className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Ownership & Assignment</h2>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Owner Type <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="ownerType"
-                    value={formData.ownerType}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select owner type</option>
-                    <option value="company">Company-Owned</option>
-                    <option value="leased">Leased</option>
-                    <option value="owner-driver">Owner-Driver</option>
-                  </select>
+                  <Select
+                    options={ownerTypeOptions}
+                    value={sel(ownerTypeOptions, formData.ownerType)}
+                    onChange={handleSelectChange('ownerType')}
+                    placeholder="Select owner type"
+                    styles={buildSelectStyles(!!formErrors.ownerType)}
+                  />
+                  {formErrors.ownerType && (
+                    <p className="text-xs text-red-500 mt-1">{formErrors.ownerType}</p>
+                  )}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Assigned Distributor/Depot <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="assignedDepot"
-                    value={formData.assignedDepot}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select depot</option>
-                    {availableDepots.map(depot => (
-                      <option key={depot} value={depot}>{depot}</option>
-                    ))}
-                  </select>
+                  <Select
+                    options={depotOptions}
+                    value={sel(depotOptions, formData.assignedDepot)}
+                    onChange={handleSelectChange('assignedDepot')}
+                    placeholder="Select depot"
+                    styles={buildSelectStyles(!!formErrors.assignedDepot)}
+                  />
+                  {formErrors.assignedDepot && (
+                    <p className="text-xs text-red-500 mt-1">{formErrors.assignedDepot}</p>
+                  )}
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Primary Driver
                   </label>
-                  <select
-                    name="primaryDriver"
-                    value={formData.primaryDriver}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select primary driver</option>
-                    {availableDrivers.map(driver => (
-                      <option key={driver.id} value={driver.name}>{driver.name}</option>
-                    ))}
-                  </select>
+                  <Select
+                    options={driverOptions}
+                    value={sel(driverOptions, formData.primaryDriver)}
+                    onChange={handleSelectChange('primaryDriver')}
+                    placeholder="Select primary driver"
+                    isClearable
+                    styles={buildSelectStyles()}
+                  />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Backup Driver
                   </label>
-                  <select
-                    name="backupDriver"
-                    value={formData.backupDriver}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select backup driver</option>
-                    {availableDrivers.map(driver => (
-                      <option key={driver.id} value={driver.name}>{driver.name}</option>
-                    ))}
-                  </select>
+                  <Select
+                    options={driverOptions}
+                    value={sel(driverOptions, formData.backupDriver)}
+                    onChange={handleSelectChange('backupDriver')}
+                    placeholder="Select backup driver"
+                    isClearable
+                    styles={buildSelectStyles()}
+                  />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Assigned Route/Zone
                   </label>
-                  <select
-                    name="assignedRoute"
-                    value={formData.assignedRoute}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select route</option>
-                    {availableRoutes.map(route => (
-                      <option key={route} value={route}>{route}</option>
-                    ))}
-                  </select>
+                  <Select
+                    options={routeOptions}
+                    value={sel(routeOptions, formData.assignedRoute)}
+                    onChange={handleSelectChange('assignedRoute')}
+                    placeholder="Select route"
+                    isClearable
+                    styles={buildSelectStyles()}
+                  />
                 </div>
               </div>
-              
-              {/* Assigned Zones */}
+
+              {/* Assigned Delivery Zones – multi-select */}
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Assigned Delivery Zones
                 </label>
-                
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {formData.assignedZones.map((zone) => (
-                    <span
-                      key={zone}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-full text-sm"
-                    >
-                      {zone}
-                      <button
-                        onClick={() => removeZone(zone)}
-                        className="hover:text-red-500 ml-1"
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex gap-2">
-                  <select
-                    value={assignedZonesInput}
-                    onChange={(e) => setAssignedZonesInput(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select a zone to add</option>
-                    {availableZones.filter(z => !formData.assignedZones.includes(z)).map(zone => (
-                      <option key={zone} value={zone}>{zone}</option>
-                    ))}
-                  </select>
-                  <button
-                    onClick={() => {
-                      if (assignedZonesInput) {
-                        addZone(assignedZonesInput);
-                        setAssignedZonesInput('');
-                      }
-                    }}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
-                  >
-                    Add Zone
-                  </button>
-                </div>
+                <Select
+                  isMulti
+                  options={zonesOptions}
+                  value={formData.assignedZones.map(z => ({ value: z, label: z }))}
+                  onChange={handleZonesChange}
+                  placeholder="Select zones..."
+                  styles={buildSelectStyles()}
+                  closeMenuOnSelect={false}
+                />
               </div>
             </div>
           )}
-          
+
           {/* Step 4: Compliance & Documentation */}
           {currentStep === 4 && (
             <div className="space-y-6">
@@ -846,7 +902,7 @@ export default function AddFleet() {
                 <Shield className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Compliance & Documentation</h2>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -857,11 +913,13 @@ export default function AddFleet() {
                     name="insurancePolicyNo"
                     value={formData.insurancePolicyNo}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.insurancePolicyNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Policy number"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Insurance Expiry Date <span className="text-red-500">*</span>
@@ -871,23 +929,28 @@ export default function AddFleet() {
                     name="insuranceExpiry"
                     value={formData.insuranceExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.insuranceExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Road Tax Certificate Number
                   </label>
-                  <input                    type="text"
+                  <input
+                    type="text"
                     name="roadTaxCertNo"
                     value={formData.roadTaxCertNo}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.roadTaxCertNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Certificate number"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Road Tax Expiry Date
@@ -897,10 +960,12 @@ export default function AddFleet() {
                     name="roadTaxExpiry"
                     value={formData.roadTaxExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.roadTaxExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Fitness Certificate Number <span className="text-red-500">*</span>
@@ -910,11 +975,13 @@ export default function AddFleet() {
                     name="fitnessCertNo"
                     value={formData.fitnessCertNo}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.fitnessCertNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Certificate number"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Fitness Certificate Expiry <span className="text-red-500">*</span>
@@ -924,10 +991,12 @@ export default function AddFleet() {
                     name="fitnessExpiry"
                     value={formData.fitnessExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.fitnessExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Speed Governor Certificate Number
@@ -937,11 +1006,13 @@ export default function AddFleet() {
                     name="speedGovernorCertNo"
                     value={formData.speedGovernorCertNo}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.speedGovernorCertNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Certificate number"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Speed Governor Expiry
@@ -951,10 +1022,12 @@ export default function AddFleet() {
                     name="speedGovernorExpiry"
                     value={formData.speedGovernorExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.speedGovernorExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tracker/GPS Device ID
@@ -964,11 +1037,13 @@ export default function AddFleet() {
                     name="trackerDeviceId"
                     value={formData.trackerDeviceId}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.trackerDeviceId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Device ID"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Police Clearance Number
@@ -978,11 +1053,13 @@ export default function AddFleet() {
                     name="policeClearanceNo"
                     value={formData.policeClearanceNo}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.policeClearanceNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Clearance number"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Police Clearance Expiry
@@ -992,13 +1069,15 @@ export default function AddFleet() {
                     name="policeClearanceExpiry"
                     value={formData.policeClearanceExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.policeClearanceExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
               </div>
             </div>
           )}
-          
+
           {/* Step 5: Maintenance & Condition */}
           {currentStep === 5 && (
             <div className="space-y-6">
@@ -1006,7 +1085,7 @@ export default function AddFleet() {
                 <Wrench className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Maintenance & Condition</h2>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -1018,21 +1097,21 @@ export default function AddFleet() {
                       name="currentMileage"
                       value={formData.currentMileage}
                       onChange={handleInputChange}
-                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
                       placeholder="Enter mileage"
                     />
-                    <select
-                      name="mileageUnit"
-                      value={formData.mileageUnit}
-                      onChange={handleInputChange}
-                      className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                    >
-                      <option value="km">km</option>
-                      <option value="miles">miles</option>
-                    </select>
+                    <div className="w-32">
+                      <Select
+                        options={mileageUnitOptions}
+                        value={sel(mileageUnitOptions, formData.mileageUnit)}
+                        onChange={handleSelectChange('mileageUnit')}
+                        styles={buildSelectStyles()}
+                        isSearchable={false}
+                      />
+                    </div>
                   </div>
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Last Service Date <span className="text-red-500">*</span>
@@ -1042,10 +1121,12 @@ export default function AddFleet() {
                     name="lastServiceDate"
                     value={formData.lastServiceDate}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.lastServiceDate ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Last Service Mileage
@@ -1055,11 +1136,13 @@ export default function AddFleet() {
                     name="lastServiceMileage"
                     value={formData.lastServiceMileage}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.lastServiceMileage ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Mileage at last service"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Next Service Due Date
@@ -1069,10 +1152,12 @@ export default function AddFleet() {
                     name="nextServiceDue"
                     value={formData.nextServiceDue}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.nextServiceDue ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Next Service Mileage
@@ -1082,30 +1167,26 @@ export default function AddFleet() {
                     name="nextServiceMileage"
                     value={formData.nextServiceMileage}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.nextServiceMileage ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Mileage for next service"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tyre Condition
                   </label>
-                  <select
-                    name="tyreCondition"
-                    value={formData.tyreCondition}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select condition</option>
-                    <option value="new">New</option>
-                    <option value="good">Good</option>
-                    <option value="fair">Fair</option>
-                    <option value="poor">Poor</option>
-                    <option value="critical">Critical</option>
-                  </select>
+                  <Select
+                    options={tyreConditionOptions}
+                    value={sel(tyreConditionOptions, formData.tyreCondition)}
+                    onChange={handleSelectChange('tyreCondition')}
+                    placeholder="Select condition"
+                    styles={buildSelectStyles()}
+                  />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tyre Last Replacement Date
@@ -1115,10 +1196,12 @@ export default function AddFleet() {
                     name="tyreLastReplacement"
                     value={formData.tyreLastReplacement}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.tyreLastReplacement ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tyre Replacement Mileage
@@ -1128,29 +1211,29 @@ export default function AddFleet() {
                     name="tyreReplacementMileage"
                     value={formData.tyreReplacementMileage}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.tyreReplacementMileage ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Mileage at replacement"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Vehicle Condition <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    name="vehicleCondition"
-                    value={formData.vehicleCondition}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select condition</option>
-                    <option value="excellent">Excellent</option>
-                    <option value="good">Good</option>
-                    <option value="fair">Fair</option>
-                    <option value="poor">Poor</option>
-                  </select>
+                  <Select
+                    options={vehicleConditionOptions}
+                    value={sel(vehicleConditionOptions, formData.vehicleCondition)}
+                    onChange={handleSelectChange('vehicleCondition')}
+                    placeholder="Select condition"
+                    styles={buildSelectStyles(!!formErrors.vehicleCondition)}
+                  />
+                  {formErrors.vehicleCondition && (
+                    <p className="text-xs text-red-500 mt-1">{formErrors.vehicleCondition}</p>
+                  )}
                 </div>
-                
+
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Condition Notes
@@ -1160,14 +1243,16 @@ export default function AddFleet() {
                     value={formData.conditionNotes}
                     onChange={handleInputChange}
                     rows="3"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.conditionNotes ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Any additional notes about vehicle condition"
                   />
                 </div>
               </div>
             </div>
           )}
-          
+
           {/* Step 6: Operational Settings */}
           {currentStep === 6 && (
             <div className="space-y-6">
@@ -1175,43 +1260,35 @@ export default function AddFleet() {
                 <Settings className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Operational Settings</h2>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Vehicle Status
                   </label>
-                  <select
-                    name="status"
-                    value={formData.status}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                    <option value="maintenance">Under Maintenance</option>
-                    <option value="retired">Retired</option>
-                  </select>
+                  <Select
+                    options={statusOptions}
+                    value={sel(statusOptions, formData.status)}
+                    onChange={handleSelectChange('status')}
+                    styles={buildSelectStyles()}
+                    isSearchable={false}
+                  />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Tracking Provider
                   </label>
-                  <select
-                    name="trackingProvider"
-                    value={formData.trackingProvider}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select provider</option>
-                    <option value="ctrack">Ctrack</option>
-                    <option value="mix">MiX Telematics</option>
-                    <option value="cartrack">Cartrack</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <Select
+                    options={trackingProviderOptions}
+                    value={sel(trackingProviderOptions, formData.trackingProvider)}
+                    onChange={handleSelectChange('trackingProvider')}
+                    placeholder="Select provider"
+                    isClearable
+                    styles={buildSelectStyles()}
+                  />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Fuel Card Number
@@ -1221,18 +1298,20 @@ export default function AddFleet() {
                     name="fuelCardNumber"
                     value={formData.fuelCardNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.fuelCardNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                     placeholder="Fuel card number"
                   />
                 </div>
               </div>
-              
+
               {/* Availability Schedule */}
               <div className="mt-4">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Availability Schedule
                 </label>
-                
+
                 <div className="flex flex-wrap gap-2 mb-3">
                   {formData.availabilitySchedule.map((schedule, index) => (
                     <span
@@ -1240,43 +1319,32 @@ export default function AddFleet() {
                       className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm"
                     >
                       {schedule}
-                      <button
-                        onClick={() => removeAvailabilitySchedule(schedule)}
-                        className="hover:text-red-500 ml-1"
-                      >
+                      <button onClick={() => removeAvailabilitySchedule(schedule)} className="hover:text-red-500 ml-1">
                         <X className="w-3 h-3" />
                       </button>
                     </span>
                   ))}
                 </div>
-                
+
                 <div className="flex gap-2">
-                  <select
-                    value={availabilityScheduleInput.day}
-                    onChange={(e) => setAvailabilityScheduleInput({ ...availabilityScheduleInput, day: e.target.value })}
-                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select day</option>
-                    <option value="Monday">Monday</option>
-                    <option value="Tuesday">Tuesday</option>
-                    <option value="Wednesday">Wednesday</option>
-                    <option value="Thursday">Thursday</option>
-                    <option value="Friday">Friday</option>
-                    <option value="Saturday">Saturday</option>
-                    <option value="Sunday">Sunday</option>
-                  </select>
-                  
-                  <select
-                    value={availabilityScheduleInput.shift}
-                    onChange={(e) => setAvailabilityScheduleInput({ ...availabilityScheduleInput, shift: e.target.value })}
-                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
-                  >
-                    <option value="">Select shift</option>
-                    {shiftOptions.map(shift => (
-                      <option key={shift} value={shift}>{shift}</option>
-                    ))}
-                  </select>
-                  
+                  <div className="flex-1">
+                    <Select
+                      options={dayOptions}
+                      value={sel(dayOptions, availabilityScheduleInput.day)}
+                      onChange={(selected) => setAvailabilityScheduleInput(prev => ({ ...prev, day: selected ? selected.value : '' }))}
+                      placeholder="Select day"
+                      styles={buildSelectStyles()}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <Select
+                      options={shiftOptions}
+                      value={sel(shiftOptions, availabilityScheduleInput.shift)}
+                      onChange={(selected) => setAvailabilityScheduleInput(prev => ({ ...prev, shift: selected ? selected.value : '' }))}
+                      placeholder="Select shift"
+                      styles={buildSelectStyles()}
+                    />
+                  </div>
                   <button
                     onClick={addAvailabilitySchedule}
                     className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
@@ -1287,7 +1355,7 @@ export default function AddFleet() {
               </div>
             </div>
           )}
-          
+
           {/* Step 7: Documents */}
           {currentStep === 7 && (
             <div className="space-y-6">
@@ -1295,7 +1363,7 @@ export default function AddFleet() {
                 <FileText className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Notes & Attachments</h2>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FileUploadField
                   label="Vehicle Photos (Front, Back, Sides)"
@@ -1304,7 +1372,6 @@ export default function AddFleet() {
                   multiple={true}
                   accept="image/*"
                 />
-                
                 <FileUploadField
                   label="Documents (Insurance, Road Tax, etc.)"
                   type="documents"
@@ -1313,7 +1380,7 @@ export default function AddFleet() {
                   accept="application/pdf,image/*"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   General Notes/Remarks
@@ -1323,11 +1390,13 @@ export default function AddFleet() {
                   value={formData.generalNotes}
                   onChange={handleInputChange}
                   rows="4"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      formErrors.generalNotes ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
                   placeholder="Any additional notes about the vehicle..."
                 />
               </div>
-              
+
               <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                 <div className="flex gap-3">
                   <HelpCircle className="w-5 h-5 text-blue-600 flex-shrink-0" />
@@ -1344,7 +1413,7 @@ export default function AddFleet() {
               </div>
             </div>
           )}
-          
+
           {/* Step 8: Review */}
           {currentStep === 8 && (
             <div className="space-y-6">
@@ -1352,7 +1421,7 @@ export default function AddFleet() {
                 <CheckCircle className="w-6 h-6 text-indigo-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Review & Confirm</h2>
               </div>
-              
+
               <div className="space-y-4">
                 <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Basic Vehicle Information</h3>
@@ -1365,7 +1434,7 @@ export default function AddFleet() {
                     <div><span className="text-gray-500">Engine:</span> {formData.engineNumber}</div>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Capacity</h3>
                   <div className="grid grid-cols-2 gap-2 text-sm">
@@ -1375,7 +1444,7 @@ export default function AddFleet() {
                     <div><span className="text-gray-500">Refrigeration:</span> {formData.hasRefrigeration ? 'Yes' : 'No'}</div>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Compliance</h3>
                   <div className="grid grid-cols-2 gap-2 text-sm">
@@ -1385,7 +1454,7 @@ export default function AddFleet() {
                     <div><span className="text-gray-500">Fitness Expiry:</span> {formData.fitnessExpiry}</div>
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Assigned Zones</h3>
                   <div className="flex flex-wrap gap-1">
@@ -1394,7 +1463,7 @@ export default function AddFleet() {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Attachments</h3>
                   <div className="text-sm">
@@ -1406,7 +1475,7 @@ export default function AddFleet() {
             </div>
           )}
         </div>
-        
+
         {/* Navigation Buttons */}
         <div className="flex justify-between p-6 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 rounded-b-xl">
           <button
@@ -1417,7 +1486,7 @@ export default function AddFleet() {
             <ArrowLeft className="w-4 h-4" />
             Previous
           </button>
-          
+
           {currentStep < 8 ? (
             <button
               onClick={nextStep}
@@ -1433,21 +1502,15 @@ export default function AddFleet() {
               className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition flex items-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
-                <>
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                  Adding Vehicle...
-                </>
+                <><RefreshCw className="w-4 h-4 animate-spin" /> Adding Vehicle...</>
               ) : (
-                <>
-                  <CheckCircle className="w-4 h-4" />
-                  Add Vehicle to Fleet
-                </>
+                <><CheckCircle className="w-4 h-4" /> Add Vehicle to Fleet</>
               )}
             </button>
           )}
         </div>
       </div>
-      
+
       {/* Preview Modal */}
       {showPreview && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowPreview(false)}>
@@ -1469,7 +1532,7 @@ export default function AddFleet() {
                     <div><span className="text-gray-500">Year:</span> {formData.year}</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Assignment</h4>
                   <div className="grid grid-cols-2 gap-3 text-sm">
@@ -1477,7 +1540,7 @@ export default function AddFleet() {
                     <div><span className="text-gray-500">Primary Driver:</span> {formData.primaryDriver || 'Not assigned'}</div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Status</h4>
                   <div className="text-sm">
