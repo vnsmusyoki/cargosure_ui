@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { 
   Plus, Search, Filter, Download, Printer, MoreVertical, 
   Eye, Edit, Trash2, Car, Truck, Bike, AlertCircle, 
@@ -11,6 +11,7 @@ import {
   AlertTriangle, Check, User, Phone, Mail, Star
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 // Mock vehicle data
 const mockVehicles = [
@@ -160,10 +161,10 @@ const FleetManagement = () => {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [expandedRows, setExpandedRows] = useState({});
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showAddVehicle, setShowAddVehicle] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1); 
   const [showScheduleMaintenance, setShowScheduleMaintenance] = useState(null);
   const itemsPerPage = 10;
+  const navigate = useNavigate();
 
   // Filter vehicles
   const filteredVehicles = mockVehicles.filter(vehicle => {
@@ -283,7 +284,7 @@ const FleetManagement = () => {
             <RefreshCw className={`w-4 h-4 text-gray-500 ${isRefreshing ? 'animate-spin' : ''}`} />
           </button>
           <button 
-            onClick={() => setShowAddVehicle(true)}
+            onClick={() => navigate('/fleet-management/add')}
             className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
@@ -967,84 +968,7 @@ const FleetManagement = () => {
         </div>
       )}
 
-      {/* Add Vehicle Modal */}
-      {showAddVehicle && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowAddVehicle(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 bg-white dark:bg-gray-800 p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-              <h3 className="font-semibold text-lg text-gray-900 dark:text-white">Add New Vehicle</h3>
-              <button onClick={() => setShowAddVehicle(false)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-5">
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Vehicle Type</label>
-                    <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
-                      <option>Motorcycle</option>
-                      <option>Van</option>
-                      <option>Tuk Tuk</option>
-                      <option>Bicycle</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Registration No.</label>
-                    <input type="text" placeholder="KCA 123A" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Make</label>
-                    <input type="text" placeholder="Toyota" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Model</label>
-                    <input type="text" placeholder="Probox" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Year</label>
-                    <input type="number" placeholder="2022" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Color</label>
-                    <input type="text" placeholder="White" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Assign Driver (Optional)</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
-                    <option>Select driver</option>
-                    <option>James Mwangi</option>
-                    <option>Sarah Wanjiku</option>
-                    <option>Peter Omondi</option>
-                  </select>
-                </div>
-              </div>
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={() => {
-                    toast.success('Vehicle added successfully');
-                    setShowAddVehicle(false);
-                  }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
-                >
-                  Add Vehicle
-                </button>
-                <button
-                  onClick={() => setShowAddVehicle(false)}
-                  className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };

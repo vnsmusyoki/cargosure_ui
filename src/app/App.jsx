@@ -16,8 +16,7 @@ import Register from "../features/auth/Register";
 import Dashboard from "../features/dashboard/Dashboard";
 
 import DriversManagement from "@/pages/company/drivers/DriversManagement";
-import DriverOnboardPage from "@/pages/company/drivers/DriverOnboardPage";
-import FleetManagement from "@/pages/company/fleet/FleetManagement";
+import DriverOnboardPage from "@/pages/company/drivers/DriverOnboardPage"; 
 import LiveTracking from "@/pages/company/tracking/LiveTracking";
 import OrderManagement from "@/pages/company/orders/OrderManagement";
 import OrderManagementCreate from "@/pages/company/orders/OrderManagementCreate";
@@ -33,9 +32,15 @@ import SuppliersManagement from "../pages/company/suppliers/SuppliersManagement"
 import PosManagement from "@/pages/company/sales/PosManagement";
 import PosLayout from "@/layouts/PosLayout";
 import BusinessSettings from "@/pages/company/settings/BusinessSettings";
-import FuelManagement from "../pages/company/fleet/FuelManagement";
-import VehicleDetails from "../pages/company/fleet/VehicleDetails";
-import RoutesManagement from "../pages/company/fleet/RoutesManagement";
+
+
+import FuelManagement from "../features/distributor/fleet/FuelManagement";
+import AddFleet from "../features/distributor/fleet/components/AddFleet";
+import FleetManagement from "../features/distributor/fleet/FleetManagement";
+import VehicleDetails from "../features/distributor/fleet/VehicleDetails";
+import RoutesManagement from "../features/distributor/fleet/RoutesManagement";
+
+
 
 import UnauthenticatedPage from "@/pages/errors/UnauthenticatedPage";
 import UnauthorizedPage from "@/pages/errors/UnauthorizedPage";
@@ -81,6 +86,7 @@ function App() {
                 <Route path="/orders-management" element={<OrderManagement />} />
                 <Route path="/orders-management/create" element={<OrderManagementCreate />} />
                 <Route path="/fleet-management" element={<FleetManagement />} />
+                <Route path="/fleet-management/add" element={<AddFleet />} />
                 <Route path="/fleet/fuel-management" element={<FuelManagement />} />
                 <Route path="/fleet/vehicle-details/:id" element={<VehicleDetails />} />
                 <Route path="/fleet/routes-management" element={<RoutesManagement />} />
