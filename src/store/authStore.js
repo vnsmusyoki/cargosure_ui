@@ -18,15 +18,6 @@ export const useAuthStore = create((set, get) => ({
   fetchUser: async () => {
     if (get().hasFetchedUser) return;
 
-    // Cookies already hydrated the store on init — trust them and skip the network call.
-    // If the server session has actually expired, the next real API call will 401 and
-    // the response interceptor will redirect to /unauthenticated at that point.
-    const existing = get().user;
-    if (existing?.role) {
-      set({ hasFetchedUser: true });
-      return;
-    }
-
     set({ loading: true });
     try {
       const data = await getMe();

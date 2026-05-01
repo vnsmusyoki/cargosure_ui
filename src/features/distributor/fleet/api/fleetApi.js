@@ -5,6 +5,11 @@ export const fetchVehicleTypes = async () => {
   return response.data;
 };
 
+export const fetchOrganizationVehicles = async () => {
+  const response = await api.get("/Vehicles");
+  return response.data;
+};
+
 export const fetchFuelTypes = async () => {
   const response = await api.get("/FuelTypes/fuel-types");
   return response.data;
@@ -90,5 +95,6 @@ export const registerVehicle = async (formData) => {
   };
 
   const response = await api.post('/Vehicles/register', payload);
+  console.log('Register Vehicle Response:', response);
   return response.data;
 };

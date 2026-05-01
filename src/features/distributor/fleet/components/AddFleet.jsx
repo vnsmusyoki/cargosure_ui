@@ -9,6 +9,7 @@ import {
   Award, IdCard, Fuel, Zap, Droplet, Settings, Image, Download
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import useVehicleTypes from '../hooks/useVehicletypes';
 import useFuelTypes from '../hooks/useFuelTypes';
 import { registerVehicle } from '../api/fleetApi';
@@ -86,6 +87,7 @@ const buildSelectStyles = (hasError = false) => {
 };
 
 export default function AddFleet() {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
@@ -335,27 +337,14 @@ export default function AddFleet() {
     setIsSubmitting(true);
     setStepErrors([]);
     try {
-      await registerVehicle(formData);
-      toast.success('Vehicle registered successfully!');
-      setCurrentStep(1);
-      setFormData({
-        registrationNumber: '', vehicleType: '', make: '', model: '', year: '',
-        color: '', chassisNumber: '', engineNumber: '', fuelType: '',
-        maxLoadCapacity: '', loadCapacityUnit: 'kg', volumeCapacity: '',
-        palletCapacity: '', hasRefrigeration: false, refrigerationTempMin: '',
-        refrigerationTempMax: '', refrigerationTempUnit: 'celsius', ownerType: '',
-        assignedDepot: '', primaryDriver: '', backupDriver: '', assignedRoute: '',
-        assignedZones: [], insurancePolicyNo: '', insuranceExpiry: '',
-        roadTaxCertNo: '', roadTaxExpiry: '', fitnessCertNo: '', fitnessExpiry: '',
-        speedGovernorCertNo: '', speedGovernorExpiry: '', trackerDeviceId: '',
-        policeClearanceNo: '', policeClearanceExpiry: '', currentMileage: '',
-        mileageUnit: 'km', lastServiceDate: '', lastServiceMileage: '',
-        nextServiceDue: '', nextServiceMileage: '', tyreCondition: '',
-        tyreLastReplacement: '', tyreReplacementMileage: '', vehicleCondition: '',
-        conditionNotes: '', status: 'active', availabilitySchedule: [],
-        fuelCardNumber: '', trackingProvider: '', vehiclePhotos: [],
-        documents: [], generalNotes: ''
-      });
+     const response =  await registerVehicle(formData);
+   
+      toast.success(response.data.message || 'Vehicle registered successfully!');
+       
+       setTimeout(() => {
+        navigate('/fleet-management');
+       }, 2000);
+
     } catch (err) {
       const apiErrors = err?.errors
         ? (Array.isArray(err.errors) ? err.errors : Object.values(err.errors).flat())
@@ -425,6 +414,10 @@ export default function AddFleet() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <button onClick={()=>navigate(-1)} className="flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back
+          </button>
           <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">
             Save Draft
           </button>

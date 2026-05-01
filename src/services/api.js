@@ -25,6 +25,7 @@ api.interceptors.response.use(
 
     // Session expired or no session — skip on login so wrong-password 401s don't redirect
     if (status === 401 && !requestUrl.includes('/Auth/login')) {
+      console.log('Session expired or unauthorized. Redirecting to login.');
       clearAuthCookies();
       window.location.replace('/unauthenticated');
       return Promise.reject({ message: 'Session expired. Please log in again.' });
