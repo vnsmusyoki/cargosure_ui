@@ -160,7 +160,7 @@ const FuelManagement = () => {
           </button>
           <button 
             onClick={() => setShowAddRecord(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             Add Refuel Record
@@ -229,7 +229,7 @@ const FuelManagement = () => {
           onClick={() => setActiveTab('logs')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'logs' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -243,7 +243,7 @@ const FuelManagement = () => {
           onClick={() => setActiveTab('analytics')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'analytics' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -254,7 +254,7 @@ const FuelManagement = () => {
           onClick={() => setActiveTab('efficiency')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'efficiency' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -347,7 +347,7 @@ const FuelManagement = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => setSelectedRecord(record)}
-                          className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                          className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
@@ -396,7 +396,7 @@ const FuelManagement = () => {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                           currentPage === pageNum
-                            ? 'bg-indigo-600 text-white'
+                            ? 'bg-brand-600 text-white'
                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                       >
@@ -429,7 +429,7 @@ const FuelManagement = () => {
                 <div key={idx} className="flex-1 flex flex-col items-center gap-2">
                   <div className="w-full flex flex-col items-center gap-1">
                     <div 
-                      className="w-12 bg-indigo-500 rounded-t-lg transition-all hover:bg-indigo-600"
+                      className="w-12 bg-brand-500 rounded-t-lg transition-all hover:bg-brand-600"
                       style={{ height: `${(month.consumption / 200) * 150}px` }}
                     ></div>
                     <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">{month.consumption} L</div>
@@ -530,9 +530,9 @@ const FuelManagement = () => {
         <div className="space-y-6">
           {/* Leaderboard */}
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
-            <div className="p-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-indigo-50 to-transparent dark:from-indigo-900/20">
+            <div className="p-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-brand-50 to-transparent dark:from-brand-900/20">
               <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                <Award className="w-5 h-5 text-indigo-600" />
+                <Award className="w-5 h-5 text-brand-600" />
                 Fuel Efficiency Leaderboard
               </h3>
               <p className="text-xs text-gray-500 mt-1">Ranked by average fuel efficiency (km/L)</p>
@@ -656,7 +656,7 @@ const FuelManagement = () => {
               </div>
             </div>
             <div className="p-5 border-t border-gray-100 dark:border-gray-700 flex gap-3">
-              <button className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">
+              <button className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">
                 Edit Record
               </button>
               <button onClick={() => setSelectedRecord(null)} className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
@@ -680,7 +680,7 @@ const FuelManagement = () => {
             <div className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Vehicle</label>
-                <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
+                <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700">
                   {mockVehiclesForFuel.map(v => (
                     <option key={v.id} value={v.id}>{v.registration} ({v.type})</option>
                   ))}
@@ -688,23 +688,23 @@ const FuelManagement = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
-                <input type="date" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="date" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Liters</label>
-                <input type="number" step="0.1" placeholder="0.0" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="number" step="0.1" placeholder="0.0" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cost per Liter (KES)</label>
-                <input type="number" placeholder="200" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="number" placeholder="200" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Odometer Reading (km)</label>
-                <input type="number" placeholder="0" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="number" placeholder="0" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Station</label>
-                <input type="text" placeholder="Fuel station name" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                <input type="text" placeholder="Fuel station name" className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
               </div>
             </div>
             <div className="p-5 border-t border-gray-100 dark:border-gray-700 flex gap-3">
@@ -713,7 +713,7 @@ const FuelManagement = () => {
                   toast.success('Fuel record added successfully');
                   setShowAddRecord(false);
                 }}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
               >
                 Add Record
               </button>
@@ -754,7 +754,7 @@ const FuelManagement = () => {
                   toast.success('File uploaded successfully');
                   setShowBulkUpload(false);
                 }}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
               >
                 Upload
               </button>

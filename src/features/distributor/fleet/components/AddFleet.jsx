@@ -370,7 +370,7 @@ export default function AddFleet() {
   const FileUploadField = ({ label, type, icon, multiple = false, accept = "image/*,application/pdf" }) => {
     const FieldIcon = icon;
     return (
-      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-indigo-500 transition">
+      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-brand-500 transition">
         <label className="cursor-pointer block">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
@@ -442,12 +442,12 @@ export default function AddFleet() {
                 <div className="flex flex-col items-center gap-2">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                     isCompleted ? 'bg-green-500 text-white'
-                      : isCurrent ? 'bg-indigo-600 text-white ring-4 ring-indigo-100 dark:ring-indigo-900/30'
+                      : isCurrent ? 'bg-brand-600 text-white ring-4 ring-brand-100 dark:ring-brand-900/30'
                       : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
                   }`}>
                     {isCompleted ? <CheckCircle className="w-5 h-5" /> : <Icon className="w-5 h-5" />}
                   </div>
-                  <span className={`text-xs font-medium ${isCurrent ? 'text-indigo-600' : 'text-gray-500'}`}>
+                  <span className={`text-xs font-medium ${isCurrent ? 'text-brand-600' : 'text-gray-500'}`}>
                     {step.title}
                   </span>
                 </div>
@@ -497,7 +497,7 @@ export default function AddFleet() {
           {currentStep === 1 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <Truck className="w-6 h-6 text-indigo-600" />
+                <Truck className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Basic Vehicle Information</h2>
               </div>
 
@@ -511,7 +511,7 @@ export default function AddFleet() {
                     name="registrationNumber"
                     value={formData.registrationNumber}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border uppercase rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border uppercase rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.registrationNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="KCA 123A"
@@ -548,7 +548,7 @@ export default function AddFleet() {
                     name="make"
                     value={formData.make}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.make ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Toyota, Isuzu, etc."
@@ -564,7 +564,7 @@ export default function AddFleet() {
                     name="model"
                     value={formData.model}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.model ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Hilux, Dyna, etc."
@@ -580,7 +580,7 @@ export default function AddFleet() {
                     name="year"
                     value={formData.year}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.year ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="2020"
@@ -596,7 +596,7 @@ export default function AddFleet() {
                     name="color"
                     value={formData.color}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.color ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="White, Black, etc."
@@ -612,7 +612,7 @@ export default function AddFleet() {
                     name="chassisNumber"
                     value={formData.chassisNumber}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.chassisNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Enter VIN"
@@ -628,7 +628,7 @@ export default function AddFleet() {
                     name="engineNumber"
                     value={formData.engineNumber}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.engineNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Enter engine number"
@@ -660,7 +660,7 @@ export default function AddFleet() {
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <Scale className="w-6 h-6 text-indigo-600" />
+                <Scale className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Capacity & Dimensions</h2>
               </div>
 
@@ -675,7 +675,7 @@ export default function AddFleet() {
                       name="maxLoadCapacity"
                       value={formData.maxLoadCapacity}
                       onChange={handleInputChange}
-                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       placeholder="Enter capacity"
                     />
                     <div className="w-32">
@@ -699,7 +699,7 @@ export default function AddFleet() {
                     name="volumeCapacity"
                     value={formData.volumeCapacity}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.volumeCapacity ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="e.g., 15 m³"
@@ -716,7 +716,7 @@ export default function AddFleet() {
                     name="palletCapacity"
                     value={formData.palletCapacity}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.palletCapacity ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Number of pallets"
@@ -730,7 +730,7 @@ export default function AddFleet() {
                       name="hasRefrigeration"
                       checked={formData.hasRefrigeration}
                       onChange={handleInputChange}
-                      className="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500"
+                      className="w-4 h-4 text-brand-600 rounded focus:ring-brand-500"
                     />
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       Has Refrigeration Capability
@@ -750,7 +750,7 @@ export default function AddFleet() {
                           name="refrigerationTempMin"
                           value={formData.refrigerationTempMin}
                           onChange={handleInputChange}
-                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           placeholder="Min temp"
                         />
                         <div className="w-28">
@@ -774,7 +774,7 @@ export default function AddFleet() {
                         name="refrigerationTempMax"
                         value={formData.refrigerationTempMax}
                         onChange={handleInputChange}
-                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                        className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.refrigerationTempMax ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                         placeholder="Max temp"
@@ -790,7 +790,7 @@ export default function AddFleet() {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <Building className="w-6 h-6 text-indigo-600" />
+                <Building className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Ownership & Assignment</h2>
               </div>
 
@@ -892,7 +892,7 @@ export default function AddFleet() {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <Shield className="w-6 h-6 text-indigo-600" />
+                <Shield className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Compliance & Documentation</h2>
               </div>
 
@@ -906,7 +906,7 @@ export default function AddFleet() {
                     name="insurancePolicyNo"
                     value={formData.insurancePolicyNo}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.insurancePolicyNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Policy number"
@@ -922,7 +922,7 @@ export default function AddFleet() {
                     name="insuranceExpiry"
                     value={formData.insuranceExpiry}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.insuranceExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -937,7 +937,7 @@ export default function AddFleet() {
                     name="roadTaxCertNo"
                     value={formData.roadTaxCertNo}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.roadTaxCertNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Certificate number"
@@ -953,7 +953,7 @@ export default function AddFleet() {
                     name="roadTaxExpiry"
                     value={formData.roadTaxExpiry}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.roadTaxExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -968,7 +968,7 @@ export default function AddFleet() {
                     name="fitnessCertNo"
                     value={formData.fitnessCertNo}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.fitnessCertNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Certificate number"
@@ -984,7 +984,7 @@ export default function AddFleet() {
                     name="fitnessExpiry"
                     value={formData.fitnessExpiry}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.fitnessExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -999,7 +999,7 @@ export default function AddFleet() {
                     name="speedGovernorCertNo"
                     value={formData.speedGovernorCertNo}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.speedGovernorCertNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Certificate number"
@@ -1015,7 +1015,7 @@ export default function AddFleet() {
                     name="speedGovernorExpiry"
                     value={formData.speedGovernorExpiry}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.speedGovernorExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -1030,7 +1030,7 @@ export default function AddFleet() {
                     name="trackerDeviceId"
                     value={formData.trackerDeviceId}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.trackerDeviceId ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Device ID"
@@ -1046,7 +1046,7 @@ export default function AddFleet() {
                     name="policeClearanceNo"
                     value={formData.policeClearanceNo}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.policeClearanceNo ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Clearance number"
@@ -1062,7 +1062,7 @@ export default function AddFleet() {
                     name="policeClearanceExpiry"
                     value={formData.policeClearanceExpiry}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.policeClearanceExpiry ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -1075,7 +1075,7 @@ export default function AddFleet() {
           {currentStep === 5 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <Wrench className="w-6 h-6 text-indigo-600" />
+                <Wrench className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Maintenance & Condition</h2>
               </div>
 
@@ -1090,7 +1090,7 @@ export default function AddFleet() {
                       name="currentMileage"
                       value={formData.currentMileage}
                       onChange={handleInputChange}
-                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       placeholder="Enter mileage"
                     />
                     <div className="w-32">
@@ -1114,7 +1114,7 @@ export default function AddFleet() {
                     name="lastServiceDate"
                     value={formData.lastServiceDate}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.lastServiceDate ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -1129,7 +1129,7 @@ export default function AddFleet() {
                     name="lastServiceMileage"
                     value={formData.lastServiceMileage}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.lastServiceMileage ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Mileage at last service"
@@ -1145,7 +1145,7 @@ export default function AddFleet() {
                     name="nextServiceDue"
                     value={formData.nextServiceDue}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.nextServiceDue ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -1160,7 +1160,7 @@ export default function AddFleet() {
                     name="nextServiceMileage"
                     value={formData.nextServiceMileage}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.nextServiceMileage ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Mileage for next service"
@@ -1189,7 +1189,7 @@ export default function AddFleet() {
                     name="tyreLastReplacement"
                     value={formData.tyreLastReplacement}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.tyreLastReplacement ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -1204,7 +1204,7 @@ export default function AddFleet() {
                     name="tyreReplacementMileage"
                     value={formData.tyreReplacementMileage}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.tyreReplacementMileage ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Mileage at replacement"
@@ -1236,7 +1236,7 @@ export default function AddFleet() {
                     value={formData.conditionNotes}
                     onChange={handleInputChange}
                     rows="3"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.conditionNotes ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Any additional notes about vehicle condition"
@@ -1250,7 +1250,7 @@ export default function AddFleet() {
           {currentStep === 6 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <Settings className="w-6 h-6 text-indigo-600" />
+                <Settings className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Operational Settings</h2>
               </div>
 
@@ -1291,7 +1291,7 @@ export default function AddFleet() {
                     name="fuelCardNumber"
                     value={formData.fuelCardNumber}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.fuelCardNumber ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Fuel card number"
@@ -1340,7 +1340,7 @@ export default function AddFleet() {
                   </div>
                   <button
                     onClick={addAvailabilitySchedule}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
+                    className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -1353,7 +1353,7 @@ export default function AddFleet() {
           {currentStep === 7 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <FileText className="w-6 h-6 text-indigo-600" />
+                <FileText className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Notes & Attachments</h2>
               </div>
 
@@ -1383,7 +1383,7 @@ export default function AddFleet() {
                   value={formData.generalNotes}
                   onChange={handleInputChange}
                   rows="4"
-                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.generalNotes ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   placeholder="Any additional notes about the vehicle..."
@@ -1411,7 +1411,7 @@ export default function AddFleet() {
           {currentStep === 8 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <CheckCircle className="w-6 h-6 text-indigo-600" />
+                <CheckCircle className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Review & Confirm</h2>
               </div>
 
@@ -1452,7 +1452,7 @@ export default function AddFleet() {
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Assigned Zones</h3>
                   <div className="flex flex-wrap gap-1">
                     {formData.assignedZones.map(zone => (
-                      <span key={zone} className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">{zone}</span>
+                      <span key={zone} className="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded-full">{zone}</span>
                     ))}
                   </div>
                 </div>
@@ -1483,7 +1483,7 @@ export default function AddFleet() {
           {currentStep < 8 ? (
             <button
               onClick={nextStep}
-              className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition flex items-center gap-2"
+              className="px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition flex items-center gap-2"
             >
               Next
               <ArrowRight className="w-4 h-4" />

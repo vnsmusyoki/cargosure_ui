@@ -109,7 +109,7 @@ const DriversManagement = () => {
           >
             <RefreshCw className={`w-4 h-4 text-gray-500 ${isRefreshing ? 'animate-spin' : ''}`} />
           </button>
-          <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition" onClick={()=> navigate('/drivers-management/onboard')}>
+          <button className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition" onClick={()=> navigate('/drivers-management/onboard')}>
             <UserPlus className="w-4 h-4" />
             Add New Driver
           </button>
@@ -122,7 +122,7 @@ const DriversManagement = () => {
           onClick={() => setActiveTab('overview')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'overview' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -133,7 +133,7 @@ const DriversManagement = () => {
           onClick={() => setActiveTab('drivers')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'drivers' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -161,8 +161,8 @@ const DriversManagement = () => {
                     </span>
                   </div>
                 </div>
-                <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-                  <Users className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+                  <Users className="w-6 h-6 text-brand-600 dark:text-brand-400" />
                 </div>
               </div>
               <div className="mt-3 flex gap-2 text-xs">
@@ -237,7 +237,7 @@ const DriversManagement = () => {
                   <div key={idx} className="flex-1 flex flex-col items-center gap-2 group">
                     <div className="relative w-full">
                       <div 
-                        className="w-full bg-indigo-500 rounded-t transition-all hover:bg-indigo-600 cursor-pointer"
+                        className="w-full bg-brand-500 rounded-t transition-all hover:bg-brand-600 cursor-pointer"
                         style={{ height: `${(value / 70) * 180}px` }}
                       >
                         <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
@@ -257,7 +257,7 @@ const DriversManagement = () => {
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white">Driver Performance Distribution</h3>
-                <button className="text-indigo-600 text-sm">View Details</button>
+                <button className="text-brand-600 text-sm">View Details</button>
               </div>
               <div className="flex items-center gap-6">
                 <div className="flex-1">
@@ -307,7 +307,7 @@ const DriversManagement = () => {
               <div className="space-y-4">
                 {mockDrivers.filter(d => d.status === 'active').slice(0, 3).map((driver, idx) => (
                   <div key={driver.id} className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-brand-500 to-brand-600 flex items-center justify-center text-white text-xs font-bold">
                       {driver.avatar}
                     </div>
                     <div className="flex-1">
@@ -353,7 +353,7 @@ const DriversManagement = () => {
             {/* Zone Distribution */}
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-5 shadow-sm">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-indigo-500" />
+                <MapPin className="w-4 h-4 text-brand-500" />
                 Zone Distribution
               </h3>
               <div className="space-y-3">
@@ -369,7 +369,7 @@ const DriversManagement = () => {
                       <span className="text-gray-500 text-xs">{zone.count} drivers</span>
                     </div>
                     <div className="h-1.5 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                      <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${zone.percentage}%` }}></div>
+                      <div className="h-full bg-brand-500 rounded-full" style={{ width: `${zone.percentage}%` }}></div>
                     </div>
                   </div>
                 ))}
@@ -386,7 +386,7 @@ const DriversManagement = () => {
               {mockDrivers.slice(0, 4).map((driver) => (
                 <div key={driver.id} className="p-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-brand-500 to-brand-600 flex items-center justify-center text-white font-semibold">
                       {driver.avatar}
                     </div>
                     <div>
@@ -467,7 +467,7 @@ const DriversManagement = () => {
                     <tr className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer">
                       <td className="px-4 py-3" onClick={() => toggleRowExpand(driver.id)}>
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-sm shadow-md">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-brand-500 to-brand-600 flex items-center justify-center text-white font-semibold text-sm shadow-md">
                             {driver.avatar}
                           </div>
                           <div>
@@ -505,7 +505,7 @@ const DriversManagement = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button 
                             onClick={() => setSelectedDriver(driver)}
-                            className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                            className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                             title="View Details"
                           >
                             <Eye className="w-4 h-4" />
@@ -552,7 +552,7 @@ const DriversManagement = () => {
                               <div className="text-xs text-gray-500 mb-1">Assigned Zones</div>
                               <div className="flex flex-wrap gap-1">
                                 {driver.zones.map((zone, idx) => (
-                                  <span key={idx} className="text-xs bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 px-2 py-1 rounded-full">
+                                  <span key={idx} className="text-xs bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400 px-2 py-1 rounded-full">
                                     {zone}
                                   </span>
                                 ))}
@@ -561,7 +561,7 @@ const DriversManagement = () => {
                             <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
                               <div className="text-xs text-gray-500 mb-1">Quick Actions</div>
                               <div className="flex gap-2">
-                                <button className="flex-1 bg-indigo-600 text-white text-xs py-1.5 rounded-lg">Message</button>
+                                <button className="flex-1 bg-brand-600 text-white text-xs py-1.5 rounded-lg">Message</button>
                                 <button className="flex-1 border border-gray-300 text-gray-700 text-xs py-1.5 rounded-lg">Assign Task</button>
                               </div>
                             </div>
@@ -612,7 +612,7 @@ const DriversManagement = () => {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                           currentPage === pageNum
-                            ? 'bg-indigo-600 text-white'
+                            ? 'bg-brand-600 text-white'
                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                       >
@@ -646,7 +646,7 @@ const DriversManagement = () => {
             </div>
             <div className="p-5">
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold shadow-md">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-brand-500 to-brand-600 flex items-center justify-center text-white text-2xl font-bold shadow-md">
                   {selectedDriver.avatar}
                 </div>
                 <div>
@@ -715,7 +715,7 @@ const DriversManagement = () => {
               </div>
 
               <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700 flex gap-3">
-                <button className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">
+                <button className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">
                   Send Message
                 </button>
                 <button className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">

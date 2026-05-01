@@ -91,7 +91,7 @@ export default function DistributorDashboard() {
 
   // Stats data
   const stats = [
-    { label: 'Total Deliveries', value: '1,248', change: '+12.5%', trend: 'up', icon: Package, color: 'bg-indigo-500' },
+    { label: 'Total Deliveries', value: '1,248', change: '+12.5%', trend: 'up', icon: Package, color: 'bg-brand-500' },
     { label: 'Active Drivers', value: '8', change: '+2', trend: 'up', icon: Users, color: 'bg-green-500' },
     { label: 'Completion Rate', value: '94.2%', change: '+5.1%', trend: 'up', icon: CheckCircle, color: 'bg-blue-500' },
     { label: 'Revenue', value: 'KES 284.9K', change: '+18.3%', trend: 'up', icon: DollarSign, color: 'bg-purple-500' },
@@ -147,7 +147,7 @@ export default function DistributorDashboard() {
             <option value="week">This Week</option>
             <option value="month">This Month</option>
           </select>
-          <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
+          <button className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
             <Plus className="w-4 h-4" />
             New Order
           </button>
@@ -186,7 +186,7 @@ export default function DistributorDashboard() {
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-2 text-sm font-medium transition capitalize ${
               activeTab === tab 
-                ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+                ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
             }`}
           >
@@ -243,14 +243,14 @@ export default function DistributorDashboard() {
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
               <div className="p-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
                 <h3 className="font-semibold text-gray-900 dark:text-white">Driver Status</h3>
-                <button className="text-indigo-600 dark:text-indigo-400 text-sm hover:underline">View all</button>
+                <button className="text-brand-600 dark:text-brand-400 text-sm hover:underline">View all</button>
               </div>
               <div className="divide-y divide-gray-100 dark:divide-gray-700 max-h-80 overflow-y-auto">
                 {mockDrivers.map((driver) => (
                   <div key={driver.id} className="p-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition" onClick={() => setSelectedDriver(driver)}>
                     <div className="flex items-center gap-3">
                       <div className="relative">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-sm shadow-md">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-brand-500 to-brand-600 flex items-center justify-center text-white font-semibold text-sm shadow-md">
                           {driver.avatar}
                         </div>
                         <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full ${getStatusColor(driver.status)} border-2 border-white dark:border-gray-800`}></div>
@@ -309,7 +309,7 @@ export default function DistributorDashboard() {
                         <td className="px-4 py-3">{getPriorityBadge(delivery.priority)}</td>
                         <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">{delivery.amount}</td>
                         <td className="px-4 py-3">
-                          <button className="text-indigo-600 dark:text-indigo-400 text-sm flex items-center gap-1 hover:underline">
+                          <button className="text-brand-600 dark:text-brand-400 text-sm flex items-center gap-1 hover:underline">
                             <Eye className="w-3 h-3" /> Track
                           </button>
                         </td>
@@ -319,7 +319,7 @@ export default function DistributorDashboard() {
                 </table>
               </div>
               <div className="p-4 border-t border-gray-100 dark:border-gray-700 text-center">
-                <button className="text-indigo-600 dark:text-indigo-400 text-sm font-medium hover:underline inline-flex items-center gap-1">
+                <button className="text-brand-600 dark:text-brand-400 text-sm font-medium hover:underline inline-flex items-center gap-1">
                   View All Deliveries <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -367,13 +367,13 @@ export default function DistributorDashboard() {
                 <div className="flex gap-2">
                   <button 
                     onClick={() => setChartPeriod('week')}
-                    className={`text-xs px-2 py-1 rounded ${chartPeriod === 'week' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400' : 'text-gray-500'}`}
+                    className={`text-xs px-2 py-1 rounded ${chartPeriod === 'week' ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-400' : 'text-gray-500'}`}
                   >
                     Week
                   </button>
                   <button 
                     onClick={() => setChartPeriod('month')}
-                    className={`text-xs px-2 py-1 rounded ${chartPeriod === 'month' ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400' : 'text-gray-500'}`}
+                    className={`text-xs px-2 py-1 rounded ${chartPeriod === 'month' ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-400' : 'text-gray-500'}`}
                   >
                     Month
                   </button>
@@ -384,7 +384,7 @@ export default function DistributorDashboard() {
                   <div key={idx} className="flex-1 flex flex-col items-center gap-1 group">
                     <div className="relative w-full">
                       <div 
-                        className="w-full bg-indigo-500 rounded-t transition-all hover:bg-indigo-600 cursor-pointer"
+                        className="w-full bg-brand-500 rounded-t transition-all hover:bg-brand-600 cursor-pointer"
                         style={{ height: `${(value / 70) * 120}px` }}
                       >
                         <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
@@ -406,7 +406,7 @@ export default function DistributorDashboard() {
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm p-5">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white">Top Performers</h3>
-                <button className="text-indigo-600 dark:text-indigo-400 text-sm hover:underline">View details</button>
+                <button className="text-brand-600 dark:text-brand-400 text-sm hover:underline">View details</button>
               </div>
               <div className="space-y-4">
                 {mockDrivers.filter(d => d.status !== 'offline').slice(0, 3).map((driver) => (
@@ -504,7 +504,7 @@ export default function DistributorDashboard() {
               <div className="p-5">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="relative">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-r from-brand-500 to-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
                       {driver.avatar}
                     </div>
                     <div className={`absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 rounded-full ${getStatusColor(driver.status)} border-2 border-white dark:border-gray-800`}></div>
@@ -531,7 +531,7 @@ export default function DistributorDashboard() {
                 <div className="flex gap-2">
                   <button 
                     onClick={() => setSelectedDriver(driver)}
-                    className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                    className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                   >
                     View Details
                   </button>
@@ -588,7 +588,7 @@ export default function DistributorDashboard() {
             </div>
             <div className="p-5">
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 flex items-center justify-center text-xl font-semibold text-white shadow-md">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-r from-brand-500 to-brand-600 flex items-center justify-center text-xl font-semibold text-white shadow-md">
                   {selectedDriver.avatar}
                 </div>
                 <div>
@@ -617,7 +617,7 @@ export default function DistributorDashboard() {
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400"><Clock className="w-4 h-4" />Last active: {selectedDriver.lastActive}</div>
               </div>
               <div className="flex gap-3 mt-5">
-                <button className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">Send Message</button>
+                <button className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">Send Message</button>
                 <button className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">View Route</button>
               </div>
             </div>
@@ -651,7 +651,7 @@ export default function DistributorDashboard() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 dark:text-gray-400">Amount</p>
-                  <p className="font-medium text-lg text-indigo-600 dark:text-indigo-400">{selectedDelivery.amount}</p>
+                  <p className="font-medium text-lg text-brand-600 dark:text-brand-400">{selectedDelivery.amount}</p>
                 </div>
               </div>
               <div className="mb-4">
@@ -669,7 +669,7 @@ export default function DistributorDashboard() {
                 </div>
               </div>
               <div className="flex gap-3 mt-5">
-                <button className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">Track Delivery</button>
+                <button className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">Track Delivery</button>
                 <button className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">Contact Driver</button>
               </div>
             </div>

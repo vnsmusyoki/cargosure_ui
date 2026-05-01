@@ -357,13 +357,13 @@ const WareHouseView = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Capacity Utilization</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{warehouse.capacity.utilization}%</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Layers className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Layers className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <div className="mt-2">
             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div className="bg-indigo-600 h-2 rounded-full" style={{ width: `${warehouse.capacity.utilization}%` }} />
+              <div className="bg-brand-600 h-2 rounded-full" style={{ width: `${warehouse.capacity.utilization}%` }} />
             </div>
           </div>
         </div>
@@ -420,7 +420,7 @@ const WareHouseView = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-6 py-3 text-sm font-medium transition whitespace-nowrap flex items-center gap-2 ${
                     activeTab === tab.id
-                      ? 'text-indigo-600 border-b-2 border-indigo-600 dark:text-indigo-400'
+                      ? 'text-brand-600 border-b-2 border-brand-600 dark:text-brand-400'
                       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
@@ -499,7 +499,7 @@ const WareHouseView = () => {
                               <ChevronDown className={`w-4 h-4 transition-transform ${expandedOrderId === order.orderId ? 'rotate-180' : ''}`} />
                             </button>
                           </td>
-                          <td className="px-4 py-3 whitespace-nowrap text-xs font-semibold text-indigo-600 dark:text-indigo-400">{order.orderId}</td>
+                          <td className="px-4 py-3 whitespace-nowrap text-xs font-semibold text-brand-600 dark:text-brand-400">{order.orderId}</td>
                           <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-white truncate max-w-[160px]">{order.customer}</td>
                           <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{order.date}</td>
                           <td className="px-4 py-3 whitespace-nowrap text-right text-sm text-gray-600 dark:text-gray-300">{order.items}</td>
@@ -590,7 +590,7 @@ const WareHouseView = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                   <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-indigo-600" />
+                    <MapPin className="w-5 h-5 text-brand-600" />
                     Location Details
                   </h3>
                   <div className="space-y-2 text-sm">
@@ -619,7 +619,7 @@ const WareHouseView = () => {
 
                 <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                   <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-indigo-600" />
+                    <Calendar className="w-5 h-5 text-brand-600" />
                     Operational Info
                   </h3>
                   <div className="space-y-2 text-sm">
@@ -653,7 +653,7 @@ const WareHouseView = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <div className="text-center mb-4">
-                      <div className="text-3xl font-bold text-indigo-600">{warehouse.capacity.utilization}%</div>
+                      <div className="text-3xl font-bold text-brand-600">{warehouse.capacity.utilization}%</div>
                       <div className="text-sm text-gray-500">Utilization Rate</div>
                     </div>
                     <div className="space-y-3">
@@ -663,7 +663,7 @@ const WareHouseView = () => {
                           <span>{warehouse.capacity.used.toLocaleString()} {warehouse.capacity.unit}</span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                          <div className="bg-indigo-600 h-2 rounded-full" style={{ width: `${warehouse.capacity.utilization}%` }} />
+                          <div className="bg-brand-600 h-2 rounded-full" style={{ width: `${warehouse.capacity.utilization}%` }} />
                         </div>
                       </div>
                       <div>
@@ -798,7 +798,7 @@ const WareHouseView = () => {
           {activeTab === 'performance' && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg p-4 text-white">
+                <div className="bg-gradient-to-br from-brand-500 to-brand-600 rounded-lg p-4 text-white">
                   <div className="text-3xl font-bold">{warehouse.performance.efficiency}%</div>
                   <div className="text-sm opacity-90">Overall Efficiency</div>
                   <TrendingUp className="w-8 h-8 mt-2 opacity-75" />
@@ -818,7 +818,7 @@ const WareHouseView = () => {
               <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                 <h3 className="text-md font-semibold text-gray-900 dark:text-white mb-3">Daily Throughput</h3>
                 <div className="text-center mb-4">
-                  <div className="text-4xl font-bold text-indigo-600">{warehouse.performance.dailyThroughput}</div>
+                  <div className="text-4xl font-bold text-brand-600">{warehouse.performance.dailyThroughput}</div>
                   <div className="text-sm text-gray-500">Average Orders Per Day</div>
                 </div>
                 <ResponsiveContainer width="100%" height={300}>
@@ -1155,33 +1155,33 @@ const WareHouseView = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-indigo-600" />
+                      <FileText className="w-5 h-5 text-brand-600" />
                       <div>
                         <p className="font-medium">Warehouse Lease Agreement.pdf</p>
                         <p className="text-xs text-gray-500">Uploaded: Jan 15, 2023 • 2.5 MB</p>
                       </div>
                     </div>
-                    <button className="text-indigo-600 hover:text-indigo-700">Download</button>
+                    <button className="text-brand-600 hover:text-brand-700">Download</button>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-indigo-600" />
+                      <FileText className="w-5 h-5 text-brand-600" />
                       <div>
                         <p className="font-medium">Insurance Certificate.pdf</p>
                         <p className="text-xs text-gray-500">Uploaded: Mar 10, 2024 • 1.2 MB</p>
                       </div>
                     </div>
-                    <button className="text-indigo-600 hover:text-indigo-700">Download</button>
+                    <button className="text-brand-600 hover:text-brand-700">Download</button>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg">
                     <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-indigo-600" />
+                      <FileText className="w-5 h-5 text-brand-600" />
                       <div>
                         <p className="font-medium">Safety Compliance Report.pdf</p>
                         <p className="text-xs text-gray-500">Uploaded: Feb 20, 2024 • 3.1 MB</p>
                       </div>
                     </div>
-                    <button className="text-indigo-600 hover:text-indigo-700">Download</button>
+                    <button className="text-brand-600 hover:text-brand-700">Download</button>
                   </div>
                 </div>
               </div>

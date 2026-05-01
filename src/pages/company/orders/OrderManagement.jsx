@@ -276,7 +276,7 @@ const OrderManagement = () => {
           </button>
           <button
             onClick={() => navigate('/orders-management/create')}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             New Order
@@ -292,8 +292,8 @@ const OrderManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Orders</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Package className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Package className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
         </div>
@@ -473,7 +473,7 @@ const OrderManagement = () => {
                     <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => setSelectedOrder(order)}
-                        className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                        className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                         title="View Details"
                       >
                         <Eye className="w-4 h-4" />
@@ -539,7 +539,7 @@ const OrderManagement = () => {
                       onClick={() => setCurrentPage(pageNum)}
                       className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                         currentPage === pageNum
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-brand-600 text-white'
                           : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
                     >
@@ -638,7 +638,7 @@ const OrderManagement = () => {
                   </div>
                   <div className="flex justify-between py-2">
                     <span className="font-semibold">Total</span>
-                    <span className="font-bold text-indigo-600">KES {selectedOrder.amount.toLocaleString()}</span>
+                    <span className="font-bold text-brand-600">KES {selectedOrder.amount.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
@@ -658,7 +658,7 @@ const OrderManagement = () => {
                   onClick={() => {
                     window.open(selectedOrder.tracking, '_blank');
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Track Order
                 </button>

@@ -245,7 +245,7 @@ const BusinessSettings = () => {
     <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
         <div className="flex items-center gap-2">
-          <Icon className="w-5 h-5 text-indigo-500" />
+          <Icon className="w-5 h-5 text-brand-500" />
           <h2 className="font-semibold text-gray-900 dark:text-white">{title}</h2>
         </div>
       </div>
@@ -265,7 +265,7 @@ const BusinessSettings = () => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
       />
       {helpText && <p className="text-xs text-gray-500 mt-1">{helpText}</p>}
     </div>
@@ -280,7 +280,7 @@ const BusinessSettings = () => {
       <button
         onClick={() => onChange(!enabled)}
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition ${
-          enabled ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600'
+          enabled ? 'bg-brand-600' : 'bg-gray-300 dark:bg-gray-600'
         }`}
       >
         <span
@@ -315,7 +315,7 @@ const BusinessSettings = () => {
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSaving ? (
                   <>
@@ -342,7 +342,7 @@ const BusinessSettings = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition whitespace-nowrap ${
                   activeTab === tab.id
-                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400'
+                    ? 'bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400'
                     : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
@@ -521,7 +521,7 @@ const BusinessSettings = () => {
                     </label>
                     <div className="flex flex-wrap gap-2">
                       {businessInfo.values.map((value, index) => (
-                        <span key={index} className="px-3 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-full text-sm flex items-center gap-2">
+                        <span key={index} className="px-3 py-1 bg-brand-50 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400 rounded-full text-sm flex items-center gap-2">
                           {value}
                           <button
                             onClick={() => {
@@ -745,7 +745,7 @@ const BusinessSettings = () => {
                   ))}
                   <button
                     onClick={() => setShowAddShippingModal(true)}
-                    className="w-full py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-400 hover:border-indigo-400 hover:text-indigo-600 transition flex items-center justify-center gap-2"
+                    className="w-full py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-600 dark:text-gray-400 hover:border-brand-400 hover:text-brand-600 transition flex items-center justify-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
                     Add Shipping Method
@@ -984,7 +984,7 @@ const BusinessSettings = () => {
                     />
                     <button
                       onClick={addIpToWhitelist}
-                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
+                      className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition"
                     >
                       Add IP
                     </button>
@@ -1113,7 +1113,7 @@ const BusinessSettings = () => {
               </button>
               <button
                 onClick={addShippingMethod}
-                className="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
+                className="flex-1 px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition"
               >
                 Add Method
               </button>

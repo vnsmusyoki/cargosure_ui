@@ -466,7 +466,7 @@ const CustomersManagement = () => {
             <Download className="w-4 h-4" />
             Import
           </button>
-          <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
+          <button className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition">
             <UserPlus className="w-4 h-4" />
             Add Customer
           </button>
@@ -481,8 +481,8 @@ const CustomersManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Customers</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalCustomers}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Users className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Users className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <div className="mt-3 flex gap-2 text-xs">
@@ -581,7 +581,7 @@ const CustomersManagement = () => {
               <div className="flex items-center gap-1 border border-gray-200 dark:border-gray-700 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-1.5 rounded transition ${viewMode === 'grid' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                  className={`p-1.5 rounded transition ${viewMode === 'grid' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -589,7 +589,7 @@ const CustomersManagement = () => {
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                  className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -609,7 +609,7 @@ const CustomersManagement = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => handleBulkAction('emailed')}
-                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-lg transition flex items-center gap-1"
+                  className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs rounded-lg transition flex items-center gap-1"
                 >
                   <Mail className="w-3 h-3" /> Email
                 </button>
@@ -649,7 +649,7 @@ const CustomersManagement = () => {
               {paginatedCustomers.map((customer) => (
                 <div
                   key={customer.id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden ${selectedCustomers.includes(customer.id) ? 'ring-2 ring-indigo-500' : ''}`}
+                  className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden ${selectedCustomers.includes(customer.id) ? 'ring-2 ring-brand-500' : ''}`}
                 >
                   <div className="p-4">
                     <div className="flex items-start justify-between mb-3">
@@ -657,12 +657,12 @@ const CustomersManagement = () => {
                         type="checkbox"
                         checked={selectedCustomers.includes(customer.id)}
                         onChange={() => handleSelectCustomer(customer.id)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                       />
                       <div className="flex gap-1">
                         <button
                           onClick={() => setSelectedCustomer(customer)}
-                          className="p-1 text-gray-400 hover:text-indigo-600 transition"
+                          className="p-1 text-gray-400 hover:text-brand-600 transition"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
@@ -681,7 +681,7 @@ const CustomersManagement = () => {
                     </div>
 
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-semibold text-lg">
                         {customer.firstName.charAt(0)}{customer.lastName.charAt(0)}
                       </div>
                       <div className="flex-1">
@@ -740,7 +740,7 @@ const CustomersManagement = () => {
                       type="checkbox"
                       checked={selectedCustomers.length === paginatedCustomers.length && paginatedCustomers.length > 0}
                       onChange={handleSelectAll}
-                      className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('firstName')}>
@@ -761,18 +761,18 @@ const CustomersManagement = () => {
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {paginatedCustomers.map((customer) => (
-                  <tr key={customer.id} className={`hover:bg-gray-50 dark:hover:bg-gray-700/50 transition ${selectedCustomers.includes(customer.id) ? 'bg-indigo-50 dark:bg-indigo-900/20' : ''}`}>
+                  <tr key={customer.id} className={`hover:bg-gray-50 dark:hover:bg-gray-700/50 transition ${selectedCustomers.includes(customer.id) ? 'bg-brand-50 dark:bg-brand-900/20' : ''}`}>
                     <td className="px-4 py-3">
                       <input
                         type="checkbox"
                         checked={selectedCustomers.includes(customer.id)}
                         onChange={() => handleSelectCustomer(customer.id)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
                           {customer.firstName.charAt(0)}{customer.lastName.charAt(0)}
                         </div>
                         <div>
@@ -806,7 +806,7 @@ const CustomersManagement = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => setSelectedCustomer(customer)}
-                          className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                          className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
@@ -865,7 +865,7 @@ const CustomersManagement = () => {
                       onClick={() => setCurrentPage(pageNum)}
                       className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                         currentPage === pageNum
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-brand-600 text-white'
                           : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
                     >
@@ -892,7 +892,7 @@ const CustomersManagement = () => {
           <div className="bg-white dark:bg-gray-800 rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="sticky top-0 bg-white dark:bg-gray-800 p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold text-xl">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-semibold text-xl">
                   {selectedCustomer.firstName.charAt(0)}{selectedCustomer.lastName.charAt(0)}
                 </div>
                 <div>
@@ -912,7 +912,7 @@ const CustomersManagement = () => {
                 <div className="space-y-4">
                   <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                      <UserCheck className="w-4 h-4 text-indigo-500" />
+                      <UserCheck className="w-4 h-4 text-brand-500" />
                       Personal Information
                     </h4>
                     <div className="space-y-2 text-sm">
@@ -931,7 +931,7 @@ const CustomersManagement = () => {
 
                   <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-indigo-500" />
+                      <MapPin className="w-4 h-4 text-brand-500" />
                       Address
                     </h4>
                     <div className="space-y-1 text-sm">
@@ -943,7 +943,7 @@ const CustomersManagement = () => {
 
                   <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                      <Tag className="w-4 h-4 text-indigo-500" />
+                      <Tag className="w-4 h-4 text-brand-500" />
                       Tags & Notes
                     </h4>
                     <div className="flex flex-wrap gap-2 mb-3">
@@ -959,7 +959,7 @@ const CustomersManagement = () => {
                 <div className="space-y-4">
                   <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                      <DollarSign className="w-4 h-4 text-indigo-500" />
+                      <DollarSign className="w-4 h-4 text-brand-500" />
                       Purchase Summary
                     </h4>
                     <div className="grid grid-cols-2 gap-3">
@@ -984,7 +984,7 @@ const CustomersManagement = () => {
 
                   <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                      <ShoppingBag className="w-4 h-4 text-indigo-500" />
+                      <ShoppingBag className="w-4 h-4 text-brand-500" />
                       Recent Orders
                     </h4>
                     <div className="space-y-2">
@@ -1010,7 +1010,7 @@ const CustomersManagement = () => {
 
                   <div className="bg-gray-50 dark:bg-gray-700/30 rounded-lg p-4">
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                      <Heart className="w-4 h-4 text-indigo-500" />
+                      <Heart className="w-4 h-4 text-brand-500" />
                       Preferences
                     </h4>
                     <div className="space-y-2 text-sm">
@@ -1024,7 +1024,7 @@ const CustomersManagement = () => {
               </div>
 
               <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700 flex gap-3">
-                <button className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">
+                <button className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">
                   Edit Customer
                 </button>
                 <button className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">
@@ -1059,7 +1059,7 @@ const CustomersManagement = () => {
                 <input
                   type="text"
                   placeholder="Email subject"
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                 />
               </div>
               <div>
@@ -1069,7 +1069,7 @@ const CustomersManagement = () => {
                 <textarea
                   rows={5}
                   placeholder="Type your message here..."
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                 />
               </div>
               <div className="flex gap-3 pt-2">
@@ -1078,7 +1078,7 @@ const CustomersManagement = () => {
                     toast.success(`Email sent to ${showEmailModal.email}`);
                     setShowEmailModal(null);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Send Email
                 </button>
@@ -1111,7 +1111,7 @@ const CustomersManagement = () => {
                   Drag and drop your CSV file here, or click to browse
                 </p>
                 <p className="text-xs text-gray-500">Supported formats: .csv, .xlsx</p>
-                <button className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm">
+                <button className="mt-4 px-4 py-2 bg-brand-600 text-white rounded-lg text-sm">
                   Select File
                 </button>
               </div>
@@ -1120,7 +1120,7 @@ const CustomersManagement = () => {
                   <strong>Required columns:</strong> firstName, lastName, email, phone
                 </p>
                 <p className="text-xs text-gray-500 mt-1">
-                  <a href="#" className="text-indigo-600">Download sample template</a>
+                  <a href="#" className="text-brand-600">Download sample template</a>
                 </p>
               </div>
               <div className="flex gap-3 mt-6">
@@ -1129,7 +1129,7 @@ const CustomersManagement = () => {
                     toast.success('Customers imported successfully');
                     setShowImportModal(false);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Import
                 </button>

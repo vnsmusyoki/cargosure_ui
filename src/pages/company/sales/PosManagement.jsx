@@ -368,13 +368,13 @@ const PosManagement = () => {
                 <div className="flex items-center gap-1 border border-gray-200 dark:border-gray-700 rounded-lg p-1">
                   <button
                     onClick={() => setViewMode('grid')}
-                    className={`p-1.5 rounded transition ${viewMode === 'grid' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                    className={`p-1.5 rounded transition ${viewMode === 'grid' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                   >
                     <Grid className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => setViewMode('list')}
-                    className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                    className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                   >
                     <List className="w-4 h-4" />
                   </button>
@@ -394,7 +394,7 @@ const PosManagement = () => {
                   placeholder="Search by name, SKU, or scan barcode... (F1)"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                 />
               </div>
               <select
@@ -422,13 +422,13 @@ const PosManagement = () => {
                     onClick={() => addToCart(product)}
                     className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-left hover:shadow-lg transition-all duration-200 hover:scale-105 group"
                   >
-                    <div className="w-full h-24 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30 rounded-lg flex items-center justify-center mb-3 group-hover:from-indigo-200 group-hover:to-purple-200 transition">
-                      <Package className="w-10 h-10 text-indigo-500" />
+                    <div className="w-full h-24 bg-gradient-to-br from-brand-100 to-purple-100 dark:from-brand-900/30 dark:to-purple-900/30 rounded-lg flex items-center justify-center mb-3 group-hover:from-brand-200 group-hover:to-purple-200 transition">
+                      <Package className="w-10 h-10 text-brand-500" />
                     </div>
                     <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-1 line-clamp-1">{product.name}</h3>
                     <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">{product.sku}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">KES {product.price}</span>
+                      <span className="text-lg font-bold text-brand-600 dark:text-brand-400">KES {product.price}</span>
                       <span className={`text-xs ${product.stock < 10 ? 'text-red-500' : 'text-green-500'}`}>
                         {product.stock} left
                       </span>
@@ -471,7 +471,7 @@ const PosManagement = () => {
                         <td className="px-4 py-3 text-center">
                           <button
                             onClick={() => addToCart(product)}
-                            className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition"
+                            className="px-3 py-1 bg-brand-600 hover:bg-brand-700 text-white text-sm rounded-lg transition"
                           >
                             Add
                           </button>
@@ -514,7 +514,7 @@ const PosManagement = () => {
           <div className="p-4 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <ShoppingCart className="w-5 h-5 text-indigo-600" />
+                <ShoppingCart className="w-5 h-5 text-brand-600" />
                 <h2 className="font-semibold text-gray-900 dark:text-white">Current Sale</h2>
               </div>
               <span className="text-xs text-gray-500">{cart.length} items</span>
@@ -557,8 +557,8 @@ const PosManagement = () => {
               onClick={() => setShowCustomerModal(true)}
               className="w-full flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition"
             >
-              <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
-                <User className="w-5 h-5 text-indigo-600" />
+              <div className="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-900/50 flex items-center justify-center">
+                <User className="w-5 h-5 text-brand-600" />
               </div>
               <div className="flex-1 text-left">
                 <p className="text-sm text-gray-500 dark:text-gray-400">Customer</p>
@@ -683,7 +683,7 @@ const PosManagement = () => {
               )}
               <div className="flex justify-between pt-2 border-t border-gray-200 dark:border-gray-600">
                 <span className="font-semibold text-gray-900 dark:text-white">Total</span>
-                <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">KES {total.toFixed(2)}</span>
+                <span className="text-xl font-bold text-brand-600 dark:text-brand-400">KES {total.toFixed(2)}</span>
               </div>
             </div>
 
@@ -697,7 +697,7 @@ const PosManagement = () => {
               <button
                 onClick={() => setShowPaymentModal(true)}
                 disabled={cart.length === 0}
-                className="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <CreditCard className="w-4 h-4" />
                 Pay (F2)
@@ -733,8 +733,8 @@ const PosManagement = () => {
                     }}
                     className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition text-left"
                   >
-                    <div className="w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
-                      <User className="w-5 h-5 text-indigo-600" />
+                    <div className="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-900/50 flex items-center justify-center">
+                      <User className="w-5 h-5 text-brand-600" />
                     </div>
                     <div className="flex-1">
                       <p className="font-medium text-gray-900 dark:text-white">{customer.name}</p>
@@ -751,7 +751,7 @@ const PosManagement = () => {
                   </button>
                 ))}
               </div>
-              <button className="w-full mt-4 py-2 border border-dashed border-indigo-300 text-indigo-600 rounded-lg text-sm font-medium hover:bg-indigo-50 transition flex items-center justify-center gap-2">
+              <button className="w-full mt-4 py-2 border border-dashed border-brand-300 text-brand-600 rounded-lg text-sm font-medium hover:bg-brand-50 transition flex items-center justify-center gap-2">
                 <UserPlus className="w-4 h-4" />
                 Add New Customer
               </button>
@@ -774,7 +774,7 @@ const PosManagement = () => {
               <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
                 <div className="flex justify-between mb-2">
                   <span className="text-gray-600 dark:text-gray-400">Total Amount</span>
-                  <span className="text-2xl font-bold text-indigo-600">KES {total.toFixed(2)}</span>
+                  <span className="text-2xl font-bold text-brand-600">KES {total.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -788,7 +788,7 @@ const PosManagement = () => {
                       onClick={() => setPaymentMethod('cash')}
                       className={`py-2 rounded-lg border flex items-center justify-center gap-2 transition ${
                         paymentMethod === 'cash'
-                          ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600'
+                          ? 'border-brand-500 bg-brand-50 dark:bg-brand-900/30 text-brand-600'
                           : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'
                       }`}
                     >
@@ -799,7 +799,7 @@ const PosManagement = () => {
                       onClick={() => setPaymentMethod('mpesa')}
                       className={`py-2 rounded-lg border flex items-center justify-center gap-2 transition ${
                         paymentMethod === 'mpesa'
-                          ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600'
+                          ? 'border-brand-500 bg-brand-50 dark:bg-brand-900/30 text-brand-600'
                           : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'
                       }`}
                     >
@@ -810,7 +810,7 @@ const PosManagement = () => {
                       onClick={() => setPaymentMethod('card')}
                       className={`py-2 rounded-lg border flex items-center justify-center gap-2 transition ${
                         paymentMethod === 'card'
-                          ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600'
+                          ? 'border-brand-500 bg-brand-50 dark:bg-brand-900/30 text-brand-600'
                           : 'border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'
                       }`}
                     >
@@ -829,7 +829,7 @@ const PosManagement = () => {
                     value={paymentAmount}
                     onChange={(e) => setPaymentAmount(parseFloat(e.target.value) || 0)}
                     placeholder="Enter amount"
-                    className="w-full px-4 py-3 text-lg border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 text-right"
+                    className="w-full px-4 py-3 text-lg border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 text-right"
                   />
                 </div>
 
@@ -847,7 +847,7 @@ const PosManagement = () => {
                 <button
                   onClick={handlePayment}
                   disabled={paymentAmount < total}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Complete Payment
                 </button>
@@ -890,7 +890,7 @@ const PosManagement = () => {
                 ))}
               </div>
               <div className="mt-3">
-                <button onClick={() => { navigator.clipboard?.writeText(calcInput); toast.success('Copied'); }} className="w-full py-2 bg-indigo-600 text-white rounded-lg">Copy</button>
+                <button onClick={() => { navigator.clipboard?.writeText(calcInput); toast.success('Copied'); }} className="w-full py-2 bg-brand-600 text-white rounded-lg">Copy</button>
               </div>
             </div>
           </div>

@@ -221,10 +221,10 @@ function Register() {
   return (
     <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950">
       {/* Left Side — Brand/Info Panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-700 to-indigo-800 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-700 to-brand-800 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 z-10"></div>
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-white/10 rounded-full"></div>
 
         <div className="relative z-20 flex flex-col justify-between p-12 h-full text-white">

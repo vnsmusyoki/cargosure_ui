@@ -295,7 +295,7 @@ const CreateWareHouse = () => {
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-medium flex items-center gap-2 transition disabled:opacity-50"
+              className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2 rounded-lg font-medium flex items-center gap-2 transition disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
@@ -329,7 +329,7 @@ const CreateWareHouse = () => {
                       isCompleted
                         ? 'bg-green-500 text-white'
                         : isCurrent
-                        ? 'bg-indigo-600 text-white ring-4 ring-indigo-200 dark:ring-indigo-900'
+                        ? 'bg-brand-600 text-white ring-4 ring-brand-200 dark:ring-brand-900'
                         : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     }`}
                   >
@@ -340,7 +340,7 @@ const CreateWareHouse = () => {
                     )}
                   </div>
                   <span className={`text-xs mt-2 ${
-                    isCurrent ? 'text-indigo-600 font-medium' : 'text-gray-500'
+                    isCurrent ? 'text-brand-600 font-medium' : 'text-gray-500'
                   }`}>
                     {step.title}
                   </span>
@@ -376,7 +376,7 @@ const CreateWareHouse = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="e.g., Nairobi Main Hub"
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -393,7 +393,7 @@ const CreateWareHouse = () => {
                     value={formData.code}
                     onChange={handleInputChange}
                     placeholder="e.g., WH-001"
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.code ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -408,7 +408,7 @@ const CreateWareHouse = () => {
                     name="type"
                     value={formData.type}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="distribution">Distribution Center</option>
                     <option value="fulfillment">Fulfillment Center</option>
@@ -429,7 +429,7 @@ const CreateWareHouse = () => {
                     value={formData.yearEstablished}
                     onChange={handleInputChange}
                     placeholder="e.g., 2020"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -443,7 +443,7 @@ const CreateWareHouse = () => {
                     onChange={handleInputChange}
                     rows="3"
                     placeholder="Describe the warehouse facility, its purpose, and key features..."
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -466,7 +466,7 @@ const CreateWareHouse = () => {
                     value={formData.address}
                     onChange={handleInputChange}
                     placeholder="e.g., Industrial Area, Mombasa Road"
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.address ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -483,7 +483,7 @@ const CreateWareHouse = () => {
                     value={formData.city}
                     onChange={handleInputChange}
                     placeholder="e.g., Nairobi"
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.city ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -500,7 +500,7 @@ const CreateWareHouse = () => {
                     value={formData.state}
                     onChange={handleInputChange}
                     placeholder="e.g., Nairobi County"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -512,7 +512,7 @@ const CreateWareHouse = () => {
                     name="country"
                     value={formData.country}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="Kenya">Kenya</option>
                     <option value="Uganda">Uganda</option>
@@ -532,7 +532,7 @@ const CreateWareHouse = () => {
                     value={formData.postalCode}
                     onChange={handleInputChange}
                     placeholder="e.g., 00100"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -544,7 +544,7 @@ const CreateWareHouse = () => {
                     name="region"
                     value={formData.region}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.region ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   >
@@ -574,7 +574,7 @@ const CreateWareHouse = () => {
                       coordinates: { ...prev.coordinates, lat: e.target.value }
                     }))}
                     placeholder="e.g., -1.2921"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -591,7 +591,7 @@ const CreateWareHouse = () => {
                       coordinates: { ...prev.coordinates, lng: e.target.value }
                     }))}
                     placeholder="e.g., 36.8219"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -615,7 +615,7 @@ const CreateWareHouse = () => {
                       value={formData.totalCapacity}
                       onChange={handleInputChange}
                       placeholder="e.g., 50000"
-                      className={`flex-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                      className={`flex-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                         errors.totalCapacity ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                       }`}
                     />
@@ -623,7 +623,7 @@ const CreateWareHouse = () => {
                       name="capacityUnit"
                       value={formData.capacityUnit}
                       onChange={handleInputChange}
-                      className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                      className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     >
                       <option value="sq ft">sq ft</option>
                       <option value="sq m">sq m</option>
@@ -644,7 +644,7 @@ const CreateWareHouse = () => {
                     value={formData.numberOfShelves}
                     onChange={handleInputChange}
                     placeholder="e.g., 500"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -658,7 +658,7 @@ const CreateWareHouse = () => {
                     value={formData.numberOfRacks}
                     onChange={handleInputChange}
                     placeholder="e.g., 200"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -672,7 +672,7 @@ const CreateWareHouse = () => {
                     value={formData.numberOfBays}
                     onChange={handleInputChange}
                     placeholder="e.g., 50"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -695,7 +695,7 @@ const CreateWareHouse = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="e.g., +254 700 111 222"
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.phone ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -712,7 +712,7 @@ const CreateWareHouse = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="e.g., warehouse@company.com"
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.email ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -729,7 +729,7 @@ const CreateWareHouse = () => {
                     value={formData.website}
                     onChange={handleInputChange}
                     placeholder="https://..."
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -747,7 +747,7 @@ const CreateWareHouse = () => {
                     value={formData.managerName}
                     onChange={handleInputChange}
                     placeholder="Full name"
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       errors.managerName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                   />
@@ -764,7 +764,7 @@ const CreateWareHouse = () => {
                     value={formData.managerPhone}
                     onChange={handleInputChange}
                     placeholder="e.g., +254 711 222 333"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
 
@@ -778,7 +778,7 @@ const CreateWareHouse = () => {
                     value={formData.managerEmail}
                     onChange={handleInputChange}
                     placeholder="manager@company.com"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -801,7 +801,7 @@ const CreateWareHouse = () => {
                         name="hasColdStorage"
                         checked={formData.facilities.hasColdStorage}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">Cold Storage</span>
                     </label>
@@ -837,7 +837,7 @@ const CreateWareHouse = () => {
                         name="hasHazardousStorage"
                         checked={formData.facilities.hasHazardousStorage}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">Hazardous Materials Storage</span>
                     </label>
@@ -848,7 +848,7 @@ const CreateWareHouse = () => {
                         name="hasAutomation"
                         checked={formData.facilities.hasAutomation}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">Automated Systems</span>
                     </label>
@@ -880,7 +880,7 @@ const CreateWareHouse = () => {
                         name="securityLevel"
                         value={formData.facilities.securityLevel}
                         onChange={handleFacilitiesChange}
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       >
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
@@ -895,7 +895,7 @@ const CreateWareHouse = () => {
                         name="hasCCTV"
                         checked={formData.facilities.hasCCTV}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">CCTV Surveillance</span>
                     </label>
@@ -906,7 +906,7 @@ const CreateWareHouse = () => {
                         name="hasFireSuppression"
                         checked={formData.facilities.hasFireSuppression}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">Fire Suppression System</span>
                     </label>
@@ -917,7 +917,7 @@ const CreateWareHouse = () => {
                         name="hasBackupPower"
                         checked={formData.facilities.hasBackupPower}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">Backup Power Generator</span>
                     </label>
@@ -960,7 +960,7 @@ const CreateWareHouse = () => {
                         name="hasRailAccess"
                         checked={formData.facilities.hasRailAccess}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">Rail Access</span>
                     </label>
@@ -971,7 +971,7 @@ const CreateWareHouse = () => {
                         name="hasAirAccess"
                         checked={formData.facilities.hasAirAccess}
                         onChange={handleFacilitiesChange}
-                        className="w-4 h-4 text-indigo-600 rounded"
+                        className="w-4 h-4 text-brand-600 rounded"
                       />
                       <span className="text-sm text-gray-700 dark:text-gray-300">Air Cargo Access</span>
                     </label>
@@ -997,7 +997,7 @@ const CreateWareHouse = () => {
                           type="checkbox"
                           checked={formData.services[service]}
                           onChange={() => handleServiceToggle(service)}
-                          className="w-4 h-4 text-indigo-600 rounded"
+                          className="w-4 h-4 text-brand-600 rounded"
                         />
                         <span className="text-sm text-gray-700 dark:text-gray-300">
                           {service.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
@@ -1019,7 +1019,7 @@ const CreateWareHouse = () => {
                             type="checkbox"
                             checked={!hours.closed}
                             onChange={(e) => handleOperatingHoursChange(day, 'closed', !e.target.checked)}
-                            className="w-4 h-4 text-indigo-600 rounded"
+                            className="w-4 h-4 text-brand-600 rounded"
                           />
                           <span className="text-sm">Open</span>
                         </label>
@@ -1055,7 +1055,7 @@ const CreateWareHouse = () => {
                     onChange={handleInputChange}
                     rows="4"
                     placeholder="Any additional information about the warehouse..."
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -1080,7 +1080,7 @@ const CreateWareHouse = () => {
             <button
               type="button"
               onClick={handleNext}
-              className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition"
+              className="px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-medium transition"
             >
               Next
               <ChevronRight className="w-4 h-4 inline ml-1" />

@@ -237,7 +237,7 @@ const CreateProduct = () => {
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition disabled:opacity-50"
+                className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>
@@ -275,7 +275,7 @@ const CreateProduct = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`px-4 py-3 text-sm font-medium flex items-center gap-2 transition ${
                       activeTab === tab.id
-                        ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+                        ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
                         : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                     }`}
                   >
@@ -299,7 +299,7 @@ const CreateProduct = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="e.g., Premium Wireless Headphones"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent dark:bg-gray-700"
                       />
                     </div>
 
@@ -315,7 +315,7 @@ const CreateProduct = () => {
                             value={formData.sku}
                             onChange={handleInputChange}
                             placeholder="Product identifier"
-                            className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                            className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           />
                           <button
                             type="button"
@@ -338,7 +338,7 @@ const CreateProduct = () => {
                             value={formData.barcode}
                             onChange={handleInputChange}
                             placeholder="UPC/EAN"
-                            className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                            className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           />
                           <button
                             type="button"
@@ -360,7 +360,7 @@ const CreateProduct = () => {
                           name="category"
                           value={formData.category}
                           onChange={handleInputChange}
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         >
                           <option value="">Select category</option>
                           {categories.map(cat => (
@@ -376,7 +376,7 @@ const CreateProduct = () => {
                           name="subcategory"
                           value={formData.subcategory}
                           onChange={handleInputChange}
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           disabled={!formData.category}
                         >
                           <option value="">Select subcategory</option>
@@ -399,7 +399,7 @@ const CreateProduct = () => {
                         value={formData.brand}
                         onChange={handleInputChange}
                         placeholder="Product brand"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                     </div>
 
@@ -424,7 +424,7 @@ const CreateProduct = () => {
                         onChange={(e) => setFormData(prev => ({ ...prev, tagInput: e.target.value }))}
                         onKeyDown={handleArrayInput}
                         placeholder="Type tag and press Enter"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                     </div>
 
@@ -438,7 +438,7 @@ const CreateProduct = () => {
                         onChange={handleInputChange}
                         rows={2}
                         placeholder="Brief product description for listings"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                     </div>
 
@@ -452,7 +452,7 @@ const CreateProduct = () => {
                         onChange={handleInputChange}
                         rows={5}
                         placeholder="Detailed product description with features and specifications"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                     </div>
                   </div>
@@ -472,7 +472,7 @@ const CreateProduct = () => {
                           value={formData.costPrice}
                           onChange={handleInputChange}
                           placeholder="0.00"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         />
                       </div>
                       <div>
@@ -485,7 +485,7 @@ const CreateProduct = () => {
                           value={formData.sellingPrice}
                           onChange={handleInputChange}
                           placeholder="0.00"
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         />
                       </div>
                     </div>
@@ -500,7 +500,7 @@ const CreateProduct = () => {
                         value={formData.comparePrice}
                         onChange={handleInputChange}
                         placeholder="Original price to show discount"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                       {formData.comparePrice && parseFloat(formData.comparePrice) > parseFloat(formData.sellingPrice) && (
                         <p className="text-xs text-green-600 mt-1">
@@ -518,7 +518,7 @@ const CreateProduct = () => {
                           name="taxRate"
                           value={formData.taxRate}
                           onChange={handleInputChange}
-                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         >
                           <option value="0">0% - Zero Rated</option>
                           <option value="8">8% - Reduced Rate</option>
@@ -532,7 +532,7 @@ const CreateProduct = () => {
                             name="isTaxable"
                             checked={formData.isTaxable}
                             onChange={handleInputChange}
-                            className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                           />
                           <span className="text-sm text-gray-700 dark:text-gray-300">This product is taxable</span>
                         </label>
@@ -552,7 +552,7 @@ const CreateProduct = () => {
                             value={formData.stockQuantity}
                             onChange={handleInputChange}
                             placeholder="0"
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           />
                         </div>
                         <div>
@@ -563,7 +563,7 @@ const CreateProduct = () => {
                             name="unit"
                             value={formData.unit}
                             onChange={handleInputChange}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           >
                             {units.map(unit => (
                               <option key={unit} value={unit}>{unit.charAt(0).toUpperCase() + unit.slice(1)}</option>
@@ -583,7 +583,7 @@ const CreateProduct = () => {
                             value={formData.lowStockThreshold}
                             onChange={handleInputChange}
                             placeholder="10"
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           />
                         </div>
                         <div>
@@ -596,7 +596,7 @@ const CreateProduct = () => {
                             value={formData.reorderPoint}
                             onChange={handleInputChange}
                             placeholder="When to reorder"
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                           />
                         </div>
                       </div>
@@ -613,13 +613,13 @@ const CreateProduct = () => {
                           value={formData.weight}
                           onChange={handleInputChange}
                           placeholder="0.00"
-                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         />
                         <select
                           name="weightUnit"
                           value={formData.weightUnit}
                           onChange={handleInputChange}
-                          className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         >
                           <option value="kg">kg</option>
                           <option value="g">g</option>
@@ -644,7 +644,7 @@ const CreateProduct = () => {
                           setCurrentVariant(null);
                           setShowVariantModal(true);
                         }}
-                        className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm flex items-center gap-2"
+                        className="px-3 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm flex items-center gap-2"
                       >
                         <Plus className="w-4 h-4" />
                         Add Variant
@@ -694,9 +694,9 @@ const CreateProduct = () => {
                           value={formData.shippingWeight}
                           onChange={handleInputChange}
                           placeholder="0.00"
-                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         />
-                        <select className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
+                        <select className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700">
                           <option>kg</option>
                           <option>g</option>
                         </select>
@@ -716,7 +716,7 @@ const CreateProduct = () => {
                             ...prev,
                             shippingDimensions: { ...prev.shippingDimensions, length: e.target.value }
                           }))}
-                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         />
                         <input
                           type="number"
@@ -726,7 +726,7 @@ const CreateProduct = () => {
                             ...prev,
                             shippingDimensions: { ...prev.shippingDimensions, width: e.target.value }
                           }))}
-                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         />
                         <input
                           type="number"
@@ -736,7 +736,7 @@ const CreateProduct = () => {
                             ...prev,
                             shippingDimensions: { ...prev.shippingDimensions, height: e.target.value }
                           }))}
-                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                         />
                       </div>
                     </div>
@@ -751,7 +751,7 @@ const CreateProduct = () => {
                         value={formData.hazardClass}
                         onChange={handleInputChange}
                         placeholder="e.g., Flammable, Toxic"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                     </div>
 
@@ -765,7 +765,7 @@ const CreateProduct = () => {
                         onChange={handleInputChange}
                         rows={2}
                         placeholder="e.g., Keep in cool dry place, refrigerate after opening"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                     </div>
                   </div>
@@ -784,7 +784,7 @@ const CreateProduct = () => {
                         value={formData.seoTitle}
                         onChange={handleInputChange}
                         placeholder={formData.name}
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                       <p className="text-xs text-gray-500 mt-1">Recommended length: 50-60 characters</p>
                     </div>
@@ -799,7 +799,7 @@ const CreateProduct = () => {
                         onChange={handleInputChange}
                         rows={3}
                         placeholder="Brief description for search engines"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                       <p className="text-xs text-gray-500 mt-1">Recommended length: 150-160 characters</p>
                     </div>
@@ -814,7 +814,7 @@ const CreateProduct = () => {
                         value={formData.seoKeywords}
                         onChange={handleInputChange}
                         placeholder="keyword1, keyword2, keyword3"
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                       />
                     </div>
 
@@ -877,7 +877,7 @@ const CreateProduct = () => {
                       </button>
                     </div>
                   ))}
-                  <label className="w-24 h-24 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-indigo-500 transition">
+                  <label className="w-24 h-24 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-brand-500 transition">
                     <Plus className="w-6 h-6 text-gray-400" />
                     <span className="text-xs text-gray-500 mt-1">Add</span>
                     <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => handleImageUpload(e, 'gallery')} />
@@ -910,7 +910,7 @@ const CreateProduct = () => {
                     value="published"
                     checked={formData.status === 'published'}
                     onChange={handleInputChange}
-                    className="text-indigo-600"
+                    className="text-brand-600"
                   />
                 </label>
                 <label className="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer">
@@ -929,7 +929,7 @@ const CreateProduct = () => {
                     value="draft"
                     checked={formData.status === 'draft'}
                     onChange={handleInputChange}
-                    className="text-indigo-600"
+                    className="text-brand-600"
                   />
                 </label>
                 <label className="flex items-center justify-between p-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg cursor-pointer">
@@ -948,7 +948,7 @@ const CreateProduct = () => {
                     value="archived"
                     checked={formData.status === 'archived'}
                     onChange={handleInputChange}
-                    className="text-indigo-600"
+                    className="text-brand-600"
                   />
                 </label>
               </div>
@@ -964,7 +964,7 @@ const CreateProduct = () => {
                     name="featured"
                     checked={formData.featured}
                     onChange={handleInputChange}
-                    className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                   />
                 </label>
               </div>
@@ -992,7 +992,7 @@ const CreateProduct = () => {
                         supplierName: supplier?.name || ''
                       }));
                     }}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select supplier</option>
                     {suppliers.map(sup => (
@@ -1010,7 +1010,7 @@ const CreateProduct = () => {
                     value={formData.supplierSku}
                     onChange={handleInputChange}
                     placeholder="Supplier's reference"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 <div>
@@ -1023,7 +1023,7 @@ const CreateProduct = () => {
                     value={formData.leadTime}
                     onChange={handleInputChange}
                     placeholder="Days from order to delivery"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -1043,7 +1043,7 @@ const CreateProduct = () => {
                     onChange={handleInputChange}
                     rows={2}
                     placeholder="e.g., 1 year manufacturer warranty"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 <div>
@@ -1056,7 +1056,7 @@ const CreateProduct = () => {
                     onChange={handleInputChange}
                     rows={2}
                     placeholder="e.g., 30 days return policy"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -1138,7 +1138,7 @@ const AddVariantForm = ({ onSave, onCancel }) => {
           value={variant.name}
           onChange={(e) => setVariant(prev => ({ ...prev, name: e.target.value }))}
           placeholder="e.g., Large, Red, 1kg"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
         />
       </div>
       <div>
@@ -1150,7 +1150,7 @@ const AddVariantForm = ({ onSave, onCancel }) => {
           value={variant.sku}
           onChange={(e) => setVariant(prev => ({ ...prev, sku: e.target.value }))}
           placeholder="Unique identifier"
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
         />
       </div>
       <div className="grid grid-cols-2 gap-3">
@@ -1163,7 +1163,7 @@ const AddVariantForm = ({ onSave, onCancel }) => {
             value={variant.price}
             onChange={(e) => setVariant(prev => ({ ...prev, price: e.target.value }))}
             placeholder="0.00"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
           />
         </div>
         <div>
@@ -1175,7 +1175,7 @@ const AddVariantForm = ({ onSave, onCancel }) => {
             value={variant.stock}
             onChange={(e) => setVariant(prev => ({ ...prev, stock: e.target.value }))}
             placeholder="0"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
           />
         </div>
       </div>
@@ -1191,14 +1191,14 @@ const AddVariantForm = ({ onSave, onCancel }) => {
               placeholder="Attribute (e.g., Color)"
               value={attr.key}
               onChange={(e) => updateAttribute(idx, 'key', e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 text-sm"
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 text-sm"
             />
             <input
               type="text"
               placeholder="Value (e.g., Red)"
               value={attr.value}
               onChange={(e) => updateAttribute(idx, 'value', e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 text-sm"
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 text-sm"
             />
             {variant.attributes.length > 1 && (
               <button
@@ -1214,7 +1214,7 @@ const AddVariantForm = ({ onSave, onCancel }) => {
         <button
           type="button"
           onClick={addAttribute}
-          className="text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
+          className="text-sm text-brand-600 hover:text-brand-700 flex items-center gap-1"
         >
           <PlusCircle className="w-4 h-4" />
           Add Attribute
@@ -1222,7 +1222,7 @@ const AddVariantForm = ({ onSave, onCancel }) => {
       </div>
 
       <div className="flex gap-3 pt-4">
-        <button type="submit" className="flex-1 bg-indigo-600 text-white py-2 rounded-lg text-sm font-medium">
+        <button type="submit" className="flex-1 bg-brand-600 text-white py-2 rounded-lg text-sm font-medium">
           Add Variant
         </button>
         <button type="button" onClick={onCancel} className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium">

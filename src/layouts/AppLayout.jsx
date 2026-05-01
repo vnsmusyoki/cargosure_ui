@@ -877,14 +877,14 @@ const AppLayout = () => {
                   className="flex items-center space-x-3 cursor-pointer"
                   onClick={() => handleNavigation("/dashboard")}
                 >
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <div className="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-500 rounded-lg flex items-center justify-center shadow-lg">
                     <Truck className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <div className="text-xl font-bold text-gray-900 dark:text-white">
                       DeliverTrack
                     </div>
-                    <div className="text-xs text-indigo-600 dark:text-indigo-400 font-medium uppercase">
+                    <div className="text-xs text-brand-600 dark:text-brand-400 font-medium uppercase">
                       {currentMenu.name} PORTAL
                     </div>
                   </div>
@@ -918,7 +918,7 @@ const AppLayout = () => {
               <input
                 type="text"
                 placeholder="Search menu..."
-                className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm text-gray-900 dark:text-gray-100"
+                className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm text-gray-900 dark:text-gray-100"
                 value={menuSearch}
                 onChange={(e) => setMenuSearch(e.target.value)}
               />
@@ -939,7 +939,7 @@ const AppLayout = () => {
             {!sidebarCollapsed ? (
               <>
                 <div className="flex items-center space-x-3 min-w-0">
-                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold shadow-md flex-shrink-0">
+                  <div className="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-500 rounded-full flex items-center justify-center text-white font-bold shadow-md flex-shrink-0">
                     {user.avatar}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -1039,7 +1039,7 @@ const AppLayout = () => {
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="pl-10 pr-4 py-2 w-64 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-sm"
+                  className="pl-10 pr-4 py-2 w-64 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />

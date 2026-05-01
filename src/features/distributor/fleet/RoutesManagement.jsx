@@ -304,7 +304,7 @@ const RoutesManagement = () => {
           </button>
           <button 
             onClick={() => setShowCreateRoute(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             Create Route
@@ -320,8 +320,8 @@ const RoutesManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Routes</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalRoutes}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Route className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Route className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <p className="text-xs text-green-600 mt-2">Active: {stats.activeRoutes} routes</p>
@@ -373,7 +373,7 @@ const RoutesManagement = () => {
           onClick={() => setActiveTab('routes')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'routes' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -387,7 +387,7 @@ const RoutesManagement = () => {
           onClick={() => setActiveTab('optimization')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'optimization' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -398,7 +398,7 @@ const RoutesManagement = () => {
           onClick={() => setActiveTab('performance')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'performance' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -466,7 +466,7 @@ const RoutesManagement = () => {
                       <p className="text-xs text-gray-500 mt-0.5 line-clamp-1">{route.description}</p>
                     </div>
                     <div className="flex gap-1">
-                      <button onClick={() => setSelectedRoute(route)} className="p-1 text-gray-400 hover:text-indigo-600">
+                      <button onClick={() => setSelectedRoute(route)} className="p-1 text-gray-400 hover:text-brand-600">
                         <Eye className="w-4 h-4" />
                       </button>
                       <button className="p-1 text-gray-400 hover:text-blue-600">
@@ -507,7 +507,7 @@ const RoutesManagement = () => {
                       <span className="text-xs text-gray-500">{route.totalDeliveries} deliveries</span>
                       <button 
                         onClick={() => setShowOptimizationModal(true)}
-                        className="px-2 py-1 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-xs rounded-lg hover:bg-indigo-100 transition"
+                        className="px-2 py-1 bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 text-xs rounded-lg hover:bg-brand-100 transition"
                       >
                         Optimize
                       </button>
@@ -548,7 +548,7 @@ const RoutesManagement = () => {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                           currentPage === pageNum
-                            ? 'bg-indigo-600 text-white'
+                            ? 'bg-brand-600 text-white'
                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                       >
@@ -575,13 +575,13 @@ const RoutesManagement = () => {
         <div className="space-y-6">
           {/* Optimization Impact */}
           <div className="grid md:grid-cols-3 gap-4">
-            <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-xl p-5 text-white">
+            <div className="bg-gradient-to-r from-brand-500 to-brand-600 rounded-xl p-5 text-white">
               <div className="flex items-center gap-2 mb-3">
                 <Zap className="w-5 h-5" />
                 <span className="font-semibold">Potential Savings</span>
               </div>
               <p className="text-3xl font-bold mb-1">12.5%</p>
-              <p className="text-sm text-indigo-100">Estimated time reduction</p>
+              <p className="text-sm text-brand-100">Estimated time reduction</p>
             </div>
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
@@ -605,7 +605,7 @@ const RoutesManagement = () => {
           <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
             <div className="p-4 border-b border-gray-100 dark:border-gray-700">
               <h3 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-                <Target className="w-5 h-5 text-indigo-600" />
+                <Target className="w-5 h-5 text-brand-600" />
                 AI-Powered Optimization Suggestions
               </h3>
               <p className="text-xs text-gray-500 mt-1">Based on historical data and traffic patterns</p>
@@ -633,7 +633,7 @@ const RoutesManagement = () => {
                           handleOptimizeRoute(route?.id);
                         }}
                         disabled={optimizingRouteId === route?.id}
-                        className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition flex items-center gap-1"
+                        className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-sm rounded-lg transition flex items-center gap-1"
                       >
                         {optimizingRouteId === route?.id ? (
                           <Loader className="w-4 h-4 animate-spin" />
@@ -742,7 +742,7 @@ const RoutesManagement = () => {
           </div>
 
           {/* Recommendations */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-5 border border-blue-100 dark:border-blue-800">
+          <div className="bg-gradient-to-r from-blue-50 to-brand-50 dark:from-blue-900/20 dark:to-brand-900/20 rounded-xl p-5 border border-blue-100 dark:border-blue-800">
             <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Route Optimization Recommendations</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="flex items-start gap-3">
@@ -833,7 +833,7 @@ const RoutesManagement = () => {
                 <div className="space-y-2">
                   {selectedRoute.stops.map((stop, idx) => (
                     <div key={idx} className="flex items-center gap-3 text-sm p-2 bg-gray-50 dark:bg-gray-700/30 rounded-lg">
-                      <div className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-xs font-medium">
+                      <div className="w-6 h-6 rounded-full bg-brand-100 dark:bg-brand-900/30 flex items-center justify-center text-xs font-medium">
                         {stop.order}
                       </div>
                       <div className="flex-1">
@@ -868,7 +868,7 @@ const RoutesManagement = () => {
 
               {/* Actions */}
               <div className="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
-                <button className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">
+                <button className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">
                   Edit Route
                 </button>
                 <button 
@@ -900,26 +900,26 @@ const RoutesManagement = () => {
             <div className="p-5 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Route Name</label>
-                <input type="text" placeholder="e.g., Westlands Delivery Route" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                <input type="text" placeholder="e.g., Westlands Delivery Route" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Start Point</label>
-                  <input type="text" placeholder="Starting location" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="text" placeholder="Starting location" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">End Point</label>
-                  <input type="text" placeholder="Ending location" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="text" placeholder="Ending location" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Waypoints (comma separated)</label>
-                <input type="text" placeholder="Location1, Location2, Location3" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                <input type="text" placeholder="Location1, Location2, Location3" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Vehicle Type</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
                     <option>Motorcycle</option>
                     <option>Van</option>
                     <option>Tuk Tuk</option>
@@ -928,7 +928,7 @@ const RoutesManagement = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Priority</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
                     <option>High</option>
                     <option>Medium</option>
                     <option>Low</option>
@@ -942,7 +942,7 @@ const RoutesManagement = () => {
                   toast.success('Route created successfully');
                   setShowCreateRoute(false);
                 }}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
               >
                 Create Route
               </button>
@@ -984,7 +984,7 @@ const RoutesManagement = () => {
                   handleOptimizeRoute(1);
                   setShowOptimizationModal(false);
                 }}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
               >
                 Run Optimization
               </button>

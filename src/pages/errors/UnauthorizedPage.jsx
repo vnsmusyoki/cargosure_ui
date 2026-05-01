@@ -26,7 +26,7 @@ export default function UnauthorizedPage() {
 
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-lg transition"
+          className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-2.5 rounded-lg transition"
         >
           <ArrowLeft className="w-4 h-4" />
           Go back

@@ -221,7 +221,7 @@ const LiveTracking = () => {
             <div class="text-sm">Driver: ${vehicle.driver}</div>
             <div class="text-sm">Speed: ${vehicle.speed} km/h</div>
             <div class="text-sm">Fuel: ${vehicle.fuelLevel || 'N/A'}%</div>
-            <button onclick="window.selectVehicle(${vehicle.id})" class="mt-2 px-3 py-1 bg-indigo-600 text-white text-xs rounded">View Details</button>
+            <button onclick="window.selectVehicle(${vehicle.id})" class="mt-2 px-3 py-1 bg-brand-600 text-white text-xs rounded">View Details</button>
           </div>
         `);
       
@@ -456,7 +456,7 @@ const LiveTracking = () => {
                 {mapView === 'single' && (
                   <button
                     onClick={backToAllVehicles}
-                    className="text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
+                    className="text-sm text-brand-600 hover:text-brand-700 flex items-center gap-1"
                   >
                     <ChevronLeft className="w-4 h-4" />
                     Back to all
@@ -471,7 +471,7 @@ const LiveTracking = () => {
                     onClick={() => selectVehicle(vehicle.id)}
                     className={`p-3 rounded-lg cursor-pointer transition flex items-center justify-between ${
                       selectedVehicle?.id === vehicle.id
-                        ? 'bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-200 dark:border-indigo-800'
+                        ? 'bg-brand-50 dark:bg-brand-900/30 border border-brand-200 dark:border-brand-800'
                         : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 border border-transparent'
                     }`}
                   >
@@ -495,7 +495,7 @@ const LiveTracking = () => {
             {selectedVehicle && (
               <div className="flex-1 overflow-y-auto">
                 {/* Vehicle Header */}
-                <div className="p-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20">
+                <div className="p-4 border-b border-gray-100 dark:border-gray-700 bg-gradient-to-r from-brand-50 to-blue-50 dark:from-brand-900/20 dark:to-blue-900/20">
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white">{selectedVehicle.registration}</h3>
@@ -512,7 +512,7 @@ const LiveTracking = () => {
                   </div>
                   <button
                     onClick={centerOnVehicle}
-                    className="mt-3 text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
+                    className="mt-3 text-sm text-brand-600 hover:text-brand-700 flex items-center gap-1"
                   >
                     <Navigation className="w-4 h-4" />
                     Center on map

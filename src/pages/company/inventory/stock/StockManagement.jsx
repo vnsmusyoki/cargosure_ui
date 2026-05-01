@@ -353,7 +353,7 @@ const StockManagement = () => {
           </button>
           <button 
             onClick={() => setShowAddItem(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             Add Product
@@ -369,8 +369,8 @@ const StockManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Products</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalItems}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Package className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Package className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <div className="mt-3 flex gap-2 text-xs">
@@ -425,7 +425,7 @@ const StockManagement = () => {
           onClick={() => setActiveTab('overview')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'overview' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -436,7 +436,7 @@ const StockManagement = () => {
           onClick={() => setActiveTab('inventory')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'inventory' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -450,7 +450,7 @@ const StockManagement = () => {
           onClick={() => setActiveTab('reorder')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'reorder' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -461,7 +461,7 @@ const StockManagement = () => {
           onClick={() => setActiveTab('expiring')}
           className={`px-4 py-2 text-sm font-medium transition capitalize flex items-center gap-2 ${
             activeTab === 'expiring' 
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600' 
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600' 
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -547,7 +547,7 @@ const StockManagement = () => {
                   </div>
                   <button
                     onClick={() => setShowReorderModal(item)}
-                    className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-lg transition"
+                    className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs rounded-lg transition"
                   >
                     Reorder Now
                   </button>
@@ -695,7 +695,7 @@ const StockManagement = () => {
                         <div className="flex items-center justify-end gap-2">
                           <button 
                             onClick={() => setSelectedItem(item)}
-                            className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                            className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                             title="View Details"
                           >
                             <Eye className="w-4 h-4" />
@@ -757,7 +757,7 @@ const StockManagement = () => {
                               <div className="flex gap-2">
                                 <button 
                                   onClick={() => setShowAdjustStock(item)}
-                                  className="flex-1 bg-indigo-600 text-white text-xs py-1.5 rounded-lg"
+                                  className="flex-1 bg-brand-600 text-white text-xs py-1.5 rounded-lg"
                                 >
                                   Adjust Stock
                                 </button>
@@ -806,7 +806,7 @@ const StockManagement = () => {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                           currentPage === pageNum
-                            ? 'bg-indigo-600 text-white'
+                            ? 'bg-brand-600 text-white'
                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                       >
@@ -867,7 +867,7 @@ const StockManagement = () => {
                       <td className="px-4 py-3 text-right">
                         <button 
                           onClick={() => setShowReorderModal(item)}
-                          className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-lg transition"
+                          className="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs rounded-lg transition"
                         >
                           Generate PO
                         </button>
@@ -939,7 +939,7 @@ const StockManagement = () => {
                         <button className="px-3 py-1.5 border border-gray-300 text-gray-700 text-xs rounded-lg hover:bg-gray-50 transition mr-2">
                           Mark for Disposal
                         </button>
-                        <button className="px-3 py-1.5 bg-indigo-600 text-white text-xs rounded-lg transition">
+                        <button className="px-3 py-1.5 bg-brand-600 text-white text-xs rounded-lg transition">
                           Add to Promotion
                         </button>
                        </td>
@@ -975,7 +975,7 @@ const StockManagement = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-indigo-600">KES {selectedItem.sellingPrice.toLocaleString()}</div>
+                  <div className="text-2xl font-bold text-brand-600">KES {selectedItem.sellingPrice.toLocaleString()}</div>
                   <div className="text-xs text-gray-500">Cost: KES {selectedItem.costPrice.toLocaleString()}</div>
                 </div>
               </div>
@@ -1039,7 +1039,7 @@ const StockManagement = () => {
                     setSelectedItem(null);
                     setShowAdjustStock(selectedItem);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Adjust Stock
                 </button>
@@ -1083,7 +1083,7 @@ const StockManagement = () => {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Adjustment Type
                   </label>
-                  <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
+                  <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700">
                     <option>Add Stock (+)</option>
                     <option>Remove Stock (-)</option>
                     <option>Set to Quantity</option>
@@ -1096,14 +1096,14 @@ const StockManagement = () => {
                   <input
                     type="number"
                     placeholder="Enter quantity"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Reason
                   </label>
-                  <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
+                  <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700">
                     <option>Stock Received</option>
                     <option>Stock Returned</option>
                     <option>Damaged Goods</option>
@@ -1118,7 +1118,7 @@ const StockManagement = () => {
                   <input
                     type="text"
                     placeholder="PO number or invoice"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -1128,7 +1128,7 @@ const StockManagement = () => {
                     toast.success('Stock adjusted successfully');
                     setShowAdjustStock(null);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Apply Adjustment
                 </button>
@@ -1169,7 +1169,7 @@ const StockManagement = () => {
                   <input
                     type="number"
                     defaultValue={showReorderModal.maxStock - showReorderModal.quantity}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                   <p className="text-xs text-gray-500 mt-1">Suggested: {showReorderModal.maxStock - showReorderModal.quantity} {showReorderModal.unit}</p>
                 </div>
@@ -1180,7 +1180,7 @@ const StockManagement = () => {
                   <input
                     type="number"
                     defaultValue={showReorderModal.costPrice}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 <div>
@@ -1189,7 +1189,7 @@ const StockManagement = () => {
                   </label>
                   <input
                     type="date"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 <div>
@@ -1199,7 +1199,7 @@ const StockManagement = () => {
                   <textarea
                     rows={2}
                     placeholder="Additional instructions for supplier"
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -1215,7 +1215,7 @@ const StockManagement = () => {
                     toast.success('Purchase order generated successfully');
                     setShowReorderModal(null);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Generate PO
                 </button>
@@ -1246,17 +1246,17 @@ const StockManagement = () => {
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Product Name</label>
-                    <input type="text" placeholder="Enter product name" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                    <input type="text" placeholder="Enter product name" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">SKU</label>
-                    <input type="text" placeholder="Auto-generated or manual" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                    <input type="text" placeholder="Auto-generated or manual" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
-                    <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
+                    <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700">
                       <option>Medications</option>
                       <option>Equipment</option>
                       <option>Supplies</option>
@@ -1264,27 +1264,27 @@ const StockManagement = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subcategory</label>
-                    <input type="text" placeholder="e.g., Pain Relief" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                    <input type="text" placeholder="e.g., Pain Relief" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cost Price (KES)</label>
-                    <input type="number" placeholder="0.00" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                    <input type="number" placeholder="0.00" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Selling Price (KES)</label>
-                    <input type="number" placeholder="0.00" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                    <input type="number" placeholder="0.00" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Initial Stock</label>
-                    <input type="number" placeholder="0" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                    <input type="number" placeholder="0" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Unit</label>
-                    <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
+                    <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700">
                       <option>units</option>
                       <option>tablets</option>
                       <option>capsules</option>
@@ -1296,7 +1296,7 @@ const StockManagement = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Supplier</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700">
+                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700">
                     <option>Kenya Medical Supplies</option>
                     <option>PharmaKenya Ltd</option>
                     <option>MediTech Solutions</option>
@@ -1307,7 +1307,7 @@ const StockManagement = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Storage Location</label>
-                  <input type="text" placeholder="e.g., Aisle 1, Shelf A" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700" />
+                  <input type="text" placeholder="e.g., Aisle 1, Shelf A" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700" />
                 </div>
               </div>
               <div className="flex gap-3 mt-6">
@@ -1316,7 +1316,7 @@ const StockManagement = () => {
                     toast.success('Product added successfully');
                     setShowAddItem(false);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Add Product
                 </button>

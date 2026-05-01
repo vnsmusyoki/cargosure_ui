@@ -470,7 +470,7 @@ const CategoriesManagement = () => {
   };
 
   const LevelIcon = ({ level }) => {
-    if (level === 0) return <FolderTree className="w-4 h-4 text-indigo-500" />;
+    if (level === 0) return <FolderTree className="w-4 h-4 text-brand-500" />;
     if (level === 1) return <FolderOpen className="w-4 h-4 text-blue-500" />;
     return <Tag className="w-4 h-4 text-gray-500" />;
   };
@@ -486,7 +486,7 @@ const CategoriesManagement = () => {
       <React.Fragment key={category.id}>
         <div
           className={`group flex items-center justify-between px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors border-b border-gray-100 dark:border-gray-700 ${
-            selectedCategories.includes(category.id) ? 'bg-indigo-50 dark:bg-indigo-900/20' : ''
+            selectedCategories.includes(category.id) ? 'bg-brand-50 dark:bg-brand-900/20' : ''
           }`}
           style={getLevelIndent(level)}
         >
@@ -495,7 +495,7 @@ const CategoriesManagement = () => {
               type="checkbox"
               checked={selectedCategories.includes(category.id)}
               onChange={() => handleSelectCategory(category.id)}
-              className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
             />
             {category.children && category.children.length > 0 ? (
               <button
@@ -556,7 +556,7 @@ const CategoriesManagement = () => {
                 onClick={() => {
                   toast.success(`Category "${category.name}" duplicated`);
                 }}
-                className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                 title="Duplicate"
               >
                 <Copy className="w-4 h-4" />
@@ -604,7 +604,7 @@ const CategoriesManagement = () => {
               setEditingCategory(null);
               setIsFormModalOpen(true);
             }}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             Add Category
@@ -620,8 +620,8 @@ const CategoriesManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Categories</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalCategories}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <FolderTree className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <FolderTree className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <div className="mt-3 flex gap-2 text-xs">
@@ -705,13 +705,13 @@ const CategoriesManagement = () => {
               <div className="flex items-center gap-1 border border-gray-200 dark:border-gray-700 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('tree')}
-                  className={`p-1.5 rounded transition ${viewMode === 'tree' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                  className={`p-1.5 rounded transition ${viewMode === 'tree' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                 >
                   <FolderTree className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                  className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -777,7 +777,7 @@ const CategoriesManagement = () => {
                       type="checkbox"
                       checked={selectedCategories.length === paginatedList.length && paginatedList.length > 0}
                       onChange={handleSelectAll}
-                      className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('name')}>
@@ -799,13 +799,13 @@ const CategoriesManagement = () => {
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {paginatedList.map((category) => (
-                  <tr key={category.id} className={`hover:bg-gray-50 dark:hover:bg-gray-700/50 transition ${selectedCategories.includes(category.id) ? 'bg-indigo-50 dark:bg-indigo-900/20' : ''}`}>
+                  <tr key={category.id} className={`hover:bg-gray-50 dark:hover:bg-gray-700/50 transition ${selectedCategories.includes(category.id) ? 'bg-brand-50 dark:bg-brand-900/20' : ''}`}>
                     <td className="px-4 py-3">
                       <input
                         type="checkbox"
                         checked={selectedCategories.includes(category.id)}
                         onChange={() => handleSelectCategory(category.id)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                       />
                     </td>
                     <td className="px-4 py-3">
@@ -871,7 +871,7 @@ const CategoriesManagement = () => {
                           onClick={() => {
                             toast.success(`Category "${category.name}" duplicated`);
                           }}
-                          className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                          className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                           title="Duplicate"
                         >
                           <Copy className="w-4 h-4" />
@@ -917,7 +917,7 @@ const CategoriesManagement = () => {
                       onClick={() => setCurrentPage(pageNum)}
                       className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                         currentPage === pageNum
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-brand-600 text-white'
                           : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
                     >
@@ -1009,7 +1009,7 @@ const CategoriesManagement = () => {
                   toast.success(editingCategory?.id ? 'Category updated' : 'Category created');
                   setIsFormModalOpen(false);
                 }}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
               >
                 {editingCategory?.id ? 'Update Category' : 'Create Category'}
               </button>
@@ -1036,8 +1036,8 @@ const CategoriesManagement = () => {
             </div>
             <div className="p-5">
               <div className="flex items-start gap-4 mb-6">
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900/50 dark:to-indigo-800/50 flex items-center justify-center">
-                  <FolderTree className="w-8 h-8 text-indigo-600" />
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-brand-100 to-brand-200 dark:from-brand-900/50 dark:to-brand-800/50 flex items-center justify-center">
+                  <FolderTree className="w-8 h-8 text-brand-600" />
                 </div>
                 <div className="flex-1">
                   <h4 className="font-bold text-xl text-gray-900 dark:text-white">{selectedCategory.name}</h4>
@@ -1088,7 +1088,7 @@ const CategoriesManagement = () => {
                     setIsFormModalOpen(true);
                     setSelectedCategory(null);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Edit Category
                 </button>

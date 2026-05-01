@@ -435,8 +435,8 @@ const WareHousesManagement = () => {
       <div className="p-5">
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-center gap-2">
-            <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-              <Warehouse className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+            <div className="p-2 bg-brand-100 dark:bg-brand-900/30 rounded-lg">
+              <Warehouse className="w-5 h-5 text-brand-600 dark:text-brand-400" />
             </div>
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white">{warehouse.name}</h3>
@@ -481,7 +481,7 @@ const WareHousesManagement = () => {
         <div className="flex gap-2 mt-4">
           <button
             onClick={() => navigate(`/inventory/warehouses/view/${warehouse.id}`)}
-            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-1.5 rounded-lg text-xs font-medium transition"
+            className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-1.5 rounded-lg text-xs font-medium transition"
           >
             View Details
           </button>
@@ -515,7 +515,7 @@ const WareHousesManagement = () => {
           </button>
           <button
             onClick={() => navigate('/inventory/warehouses/create')}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             Add Warehouse
@@ -531,8 +531,8 @@ const WareHousesManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Warehouses</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Building className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Building className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <div className="mt-2 text-xs text-gray-500">
@@ -654,13 +654,13 @@ const WareHousesManagement = () => {
             <div className="flex items-center gap-1 border border-gray-200 dark:border-gray-700 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('table')}
-                className={`p-1.5 rounded ${viewMode === 'table' ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600' : 'text-gray-400'}`}
+                className={`p-1.5 rounded ${viewMode === 'table' ? 'bg-brand-100 dark:bg-brand-900/30 text-brand-600' : 'text-gray-400'}`}
               >
                 <List className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded ${viewMode === 'grid' ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600' : 'text-gray-400'}`}
+                className={`p-1.5 rounded ${viewMode === 'grid' ? 'bg-brand-100 dark:bg-brand-900/30 text-brand-600' : 'text-gray-400'}`}
               >
                 <Grid3x3 className="w-4 h-4" />
               </button>
@@ -696,8 +696,8 @@ const WareHousesManagement = () => {
                   <tr key={warehouse.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer" onClick={() => navigate(`/inventory/warehouses/view/${warehouse.id}`)}>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <div className="p-1.5 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-                          <Warehouse className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                        <div className="p-1.5 bg-brand-100 dark:bg-brand-900/30 rounded-lg">
+                          <Warehouse className="w-4 h-4 text-brand-600 dark:text-brand-400" />
                         </div>
                         <div>
                           <div className="font-medium text-gray-900 dark:text-white">{warehouse.name}</div>
@@ -727,7 +727,7 @@ const WareHousesManagement = () => {
                       <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => navigate(`/inventory/warehouses/view/${warehouse.id}`)}
-                          className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                          className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
@@ -786,7 +786,7 @@ const WareHousesManagement = () => {
                         onClick={() => setCurrentPage(pageNum)}
                         className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                           currentPage === pageNum
-                            ? 'bg-indigo-600 text-white'
+                            ? 'bg-brand-600 text-white'
                             : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
                       >

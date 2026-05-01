@@ -227,7 +227,7 @@ const DriverOnboardPage = () => {
   
   // File upload component
   const FileUploadField = ({ label, fieldName, icon: Icon, accept = "image/*,application/pdf" }) => (
-    <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-indigo-500 transition">
+    <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 hover:border-brand-500 transition">
       <label className="cursor-pointer block">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
@@ -292,13 +292,13 @@ const DriverOnboardPage = () => {
                       isCompleted
                         ? 'bg-green-500 text-white'
                         : isCurrent
-                        ? 'bg-indigo-600 text-white ring-4 ring-indigo-100 dark:ring-indigo-900/30'
+                        ? 'bg-brand-600 text-white ring-4 ring-brand-100 dark:ring-brand-900/30'
                         : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
                     }`}
                   >
                     {isCompleted ? <CheckCircle className="w-5 h-5" /> : <Icon className="w-5 h-5" />}
                   </div>
-                  <span className={`text-xs font-medium ${isCurrent ? 'text-indigo-600' : 'text-gray-500'}`}>
+                  <span className={`text-xs font-medium ${isCurrent ? 'text-brand-600' : 'text-gray-500'}`}>
                     {step.title}
                   </span>
                 </div>
@@ -320,7 +320,7 @@ const DriverOnboardPage = () => {
           {currentStep === 1 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <User className="w-6 h-6 text-indigo-600" />
+                <User className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Personal Information</h2>
               </div>
               
@@ -334,7 +334,7 @@ const DriverOnboardPage = () => {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.firstName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Enter first name"
@@ -353,7 +353,7 @@ const DriverOnboardPage = () => {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 ${
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700 dark:border-gray-600 ${
                       formErrors.lastName ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
                     }`}
                     placeholder="Enter last name"
@@ -369,7 +369,7 @@ const DriverOnboardPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="driver@example.com"
                   />
                 </div>
@@ -383,7 +383,7 @@ const DriverOnboardPage = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="+254 XXX XXX XXX"
                   />
                 </div>
@@ -397,7 +397,7 @@ const DriverOnboardPage = () => {
                     name="alternativePhone"
                     value={formData.alternativePhone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="Optional"
                   />
                 </div>
@@ -411,7 +411,7 @@ const DriverOnboardPage = () => {
                     name="nationalId"
                     value={formData.nationalId}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="Enter national ID"
                   />
                 </div>
@@ -425,7 +425,7 @@ const DriverOnboardPage = () => {
                     name="dateOfBirth"
                     value={formData.dateOfBirth}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 
@@ -437,7 +437,7 @@ const DriverOnboardPage = () => {
                     name="gender"
                     value={formData.gender}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select gender</option>
                     <option value="male">Male</option>
@@ -455,7 +455,7 @@ const DriverOnboardPage = () => {
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="Street address"
                   />
                 </div>
@@ -469,7 +469,7 @@ const DriverOnboardPage = () => {
                     name="city"
                     value={formData.city}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="Nairobi"
                   />
                 </div>
@@ -483,7 +483,7 @@ const DriverOnboardPage = () => {
                     name="emergencyContact"
                     value={formData.emergencyContact}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="Full name"
                   />
                 </div>
@@ -497,7 +497,7 @@ const DriverOnboardPage = () => {
                     name="emergencyPhone"
                     value={formData.emergencyPhone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 dark:bg-gray-700"
                     placeholder="Emergency contact number"
                   />
                 </div>
@@ -509,7 +509,7 @@ const DriverOnboardPage = () => {
           {currentStep === 2 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <IdCard className="w-6 h-6 text-indigo-600" />
+                <IdCard className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Driver License Details</h2>
               </div>
               
@@ -523,7 +523,7 @@ const DriverOnboardPage = () => {
                     name="licenseNumber"
                     value={formData.licenseNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Enter license number"
                   />
                 </div>
@@ -536,7 +536,7 @@ const DriverOnboardPage = () => {
                     name="licenseClass"
                     value={formData.licenseClass}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select class</option>
                     <option value="A">Class A - Motorcycle</option>
@@ -556,7 +556,7 @@ const DriverOnboardPage = () => {
                     name="licenseIssuedDate"
                     value={formData.licenseIssuedDate}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 
@@ -569,7 +569,7 @@ const DriverOnboardPage = () => {
                     name="licenseExpiry"
                     value={formData.licenseExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 
@@ -582,7 +582,7 @@ const DriverOnboardPage = () => {
                     name="licenseIssuingAuthority"
                     value={formData.licenseIssuingAuthority}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="NTSA"
                   />
                 </div>
@@ -594,7 +594,7 @@ const DriverOnboardPage = () => {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <Car className="w-6 h-6 text-indigo-600" />
+                <Car className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Vehicle Information</h2>
               </div>
               
@@ -607,7 +607,7 @@ const DriverOnboardPage = () => {
                     name="vehicleType"
                     value={formData.vehicleType}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select type</option>
                     <option value="Motorcycle">Motorcycle</option>
@@ -627,7 +627,7 @@ const DriverOnboardPage = () => {
                     name="licensePlate"
                     value={formData.licensePlate}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="KCA 123A"
                   />
                 </div>
@@ -641,7 +641,7 @@ const DriverOnboardPage = () => {
                     name="vehicleMake"
                     value={formData.vehicleMake}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Toyota, Honda, etc."
                   />
                 </div>
@@ -655,7 +655,7 @@ const DriverOnboardPage = () => {
                     name="vehicleModel"
                     value={formData.vehicleModel}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Probox, Fit, etc."
                   />
                 </div>
@@ -669,7 +669,7 @@ const DriverOnboardPage = () => {
                     name="vehicleYear"
                     value={formData.vehicleYear}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="2020"
                   />
                 </div>
@@ -683,7 +683,7 @@ const DriverOnboardPage = () => {
                     name="vehicleColor"
                     value={formData.vehicleColor}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="White, Black, etc."
                   />
                 </div>
@@ -697,7 +697,7 @@ const DriverOnboardPage = () => {
                     name="vehicleCapacity"
                     value={formData.vehicleCapacity}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="500kg"
                   />
                 </div>
@@ -710,7 +710,7 @@ const DriverOnboardPage = () => {
                     name="fuelType"
                     value={formData.fuelType}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select fuel type</option>
                     <option value="Petrol">Petrol</option>
@@ -728,7 +728,7 @@ const DriverOnboardPage = () => {
                     name="insuranceProvider"
                     value={formData.insuranceProvider}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Insurance company name"
                   />
                 </div>
@@ -742,7 +742,7 @@ const DriverOnboardPage = () => {
                     name="insurancePolicyNo"
                     value={formData.insurancePolicyNo}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Policy number"
                   />
                 </div>
@@ -756,7 +756,7 @@ const DriverOnboardPage = () => {
                     name="insuranceExpiry"
                     value={formData.insuranceExpiry}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
               </div>
@@ -767,7 +767,7 @@ const DriverOnboardPage = () => {
           {currentStep === 4 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <CreditCard className="w-6 h-6 text-indigo-600" />
+                <CreditCard className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Banking & Payment Details</h2>
               </div>
               
@@ -796,7 +796,7 @@ const DriverOnboardPage = () => {
                     name="bankName"
                     value={formData.bankName}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Equity, KCB, etc."
                   />
                 </div>
@@ -810,7 +810,7 @@ const DriverOnboardPage = () => {
                     name="accountName"
                     value={formData.accountName}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Full name as per bank"
                   />
                 </div>
@@ -824,7 +824,7 @@ const DriverOnboardPage = () => {
                     name="accountNumber"
                     value={formData.accountNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Bank account number"
                   />
                 </div>
@@ -838,7 +838,7 @@ const DriverOnboardPage = () => {
                     name="bankCode"
                     value={formData.bankCode}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Optional"
                   />
                 </div>
@@ -856,7 +856,7 @@ const DriverOnboardPage = () => {
                     name="mpesaNumber"
                     value={formData.mpesaNumber}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="07XX XXX XXX"
                   />
                 </div>
@@ -872,7 +872,7 @@ const DriverOnboardPage = () => {
           {currentStep === 5 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <MapPin className="w-6 h-6 text-indigo-600" />
+                <MapPin className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Work Setup & Zones</h2>
               </div>
               
@@ -885,7 +885,7 @@ const DriverOnboardPage = () => {
                     name="employmentType"
                     value={formData.employmentType}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select type</option>
                     <option value="fulltime">Full Time</option>
@@ -903,7 +903,7 @@ const DriverOnboardPage = () => {
                     name="startDate"
                     value={formData.startDate}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   />
                 </div>
                 
@@ -915,7 +915,7 @@ const DriverOnboardPage = () => {
                     name="shiftPreference"
                     value={formData.shiftPreference}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select shift</option>
                     <option value="Morning">Morning (6AM - 2PM)</option>
@@ -934,7 +934,7 @@ const DriverOnboardPage = () => {
                     name="baseLocation"
                     value={formData.baseLocation}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Starting point / depot"
                   />
                 </div>
@@ -948,7 +948,7 @@ const DriverOnboardPage = () => {
                     name="weeklyTarget"
                     value={formData.weeklyTarget}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                     placeholder="Number of deliveries per week"
                   />
                 </div>
@@ -964,7 +964,7 @@ const DriverOnboardPage = () => {
                   {formData.assignedZones.map((zone) => (
                     <span
                       key={zone}
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 rounded-full text-sm"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400 rounded-full text-sm"
                     >
                       {zone}
                       <button
@@ -981,7 +981,7 @@ const DriverOnboardPage = () => {
                   <select
                     value={assignedZonesInput}
                     onChange={(e) => setAssignedZonesInput(e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700"
+                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700"
                   >
                     <option value="">Select a zone to add</option>
                     {availableZones.filter(z => !formData.assignedZones.includes(z)).map(zone => (
@@ -995,7 +995,7 @@ const DriverOnboardPage = () => {
                         setAssignedZonesInput('');
                       }
                     }}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition"
+                    className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition"
                   >
                     Add Zone
                   </button>
@@ -1012,7 +1012,7 @@ const DriverOnboardPage = () => {
           {currentStep === 6 && (
             <div className="space-y-6">
               <div className="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-gray-700">
-                <FileText className="w-6 h-6 text-indigo-600" />
+                <FileText className="w-6 h-6 text-brand-600" />
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Required Documents</h2>
               </div>
               
@@ -1085,7 +1085,7 @@ const DriverOnboardPage = () => {
           {currentStep < 6 ? (
             <button
               onClick={nextStep}
-              className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition flex items-center gap-2"
+              className="px-6 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg transition flex items-center gap-2"
             >
               Next
               <ArrowRight className="w-4 h-4" />
@@ -1155,7 +1155,7 @@ const DriverOnboardPage = () => {
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Assigned Zones</h4>
                   <div className="flex flex-wrap gap-1">
                     {formData.assignedZones.map(zone => (
-                      <span key={zone} className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">{zone}</span>
+                      <span key={zone} className="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded-full">{zone}</span>
                     ))}
                   </div>
                 </div>

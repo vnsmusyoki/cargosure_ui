@@ -469,7 +469,7 @@ const SuppliersManagement = () => {
               setEditingSupplier(null);
               setIsFormModalOpen(true);
             }}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             Add Supplier
@@ -485,8 +485,8 @@ const SuppliersManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Suppliers</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalSuppliers}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Building2 className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Building2 className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <div className="mt-3 flex gap-2 text-xs">
@@ -579,13 +579,13 @@ const SuppliersManagement = () => {
               <div className="flex items-center gap-1 border border-gray-200 dark:border-gray-700 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-1.5 rounded transition ${viewMode === 'grid' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                  className={`p-1.5 rounded transition ${viewMode === 'grid' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                 >
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600' : 'text-gray-400'}`}
+                  className={`p-1.5 rounded transition ${viewMode === 'list' ? 'bg-brand-100 dark:bg-brand-900/50 text-brand-600' : 'text-gray-400'}`}
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -633,7 +633,7 @@ const SuppliersManagement = () => {
               {paginatedSuppliers.map((supplier) => (
                 <div
                   key={supplier.id}
-                  className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden ${selectedSuppliers.includes(supplier.id) ? 'ring-2 ring-indigo-500' : ''}`}
+                  className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden ${selectedSuppliers.includes(supplier.id) ? 'ring-2 ring-brand-500' : ''}`}
                 >
                   {/* Checkbox for selection */}
                   <div className="p-3 pb-0">
@@ -641,15 +641,15 @@ const SuppliersManagement = () => {
                       type="checkbox"
                       checked={selectedSuppliers.includes(supplier.id)}
                       onChange={() => handleSelectSupplier(supplier.id)}
-                      className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                     />
                   </div>
 
                   <div className="p-4 pt-0">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900/50 dark:to-indigo-800/50 flex items-center justify-center">
-                          <Building2 className="w-6 h-6 text-indigo-600" />
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-100 to-brand-200 dark:from-brand-900/50 dark:to-brand-800/50 flex items-center justify-center">
+                          <Building2 className="w-6 h-6 text-brand-600" />
                         </div>
                         <div>
                           <h3 className="font-semibold text-gray-900 dark:text-white">
@@ -708,7 +708,7 @@ const SuppliersManagement = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={() => setSelectedSupplier(supplier)}
-                        className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-1.5 rounded-lg text-xs font-medium transition"
+                        className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-1.5 rounded-lg text-xs font-medium transition"
                       >
                         View Details
                       </button>
@@ -740,7 +740,7 @@ const SuppliersManagement = () => {
                       type="checkbox"
                       checked={selectedSuppliers.length === paginatedSuppliers.length && paginatedSuppliers.length > 0}
                       onChange={handleSelectAll}
-                      className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                     />
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('name')}>
@@ -763,13 +763,13 @@ const SuppliersManagement = () => {
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {paginatedSuppliers.map((supplier) => (
-                  <tr key={supplier.id} className={`hover:bg-gray-50 dark:hover:bg-gray-700/50 transition ${selectedSuppliers.includes(supplier.id) ? 'bg-indigo-50 dark:bg-indigo-900/20' : ''}`}>
+                  <tr key={supplier.id} className={`hover:bg-gray-50 dark:hover:bg-gray-700/50 transition ${selectedSuppliers.includes(supplier.id) ? 'bg-brand-50 dark:bg-brand-900/20' : ''}`}>
                     <td className="px-4 py-3">
                       <input
                         type="checkbox"
                         checked={selectedSuppliers.includes(supplier.id)}
                         onChange={() => handleSelectSupplier(supplier.id)}
-                        className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                        className="rounded border-gray-300 text-brand-600 focus:ring-brand-500"
                       />
                     </td>
                     <td className="px-4 py-3">
@@ -818,7 +818,7 @@ const SuppliersManagement = () => {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => setSelectedSupplier(supplier)}
-                          className="p-1.5 text-gray-400 hover:text-indigo-600 transition"
+                          className="p-1.5 text-gray-400 hover:text-brand-600 transition"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
@@ -892,7 +892,7 @@ const SuppliersManagement = () => {
                       onClick={() => setCurrentPage(pageNum)}
                       className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
                         currentPage === pageNum
-                          ? 'bg-indigo-600 text-white'
+                          ? 'bg-brand-600 text-white'
                           : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }`}
                     >
@@ -919,8 +919,8 @@ const SuppliersManagement = () => {
           <div className="bg-white dark:bg-gray-800 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="sticky top-0 bg-white dark:bg-gray-800 p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900/50 dark:to-indigo-800/50 flex items-center justify-center">
-                  <Building2 className="w-6 h-6 text-indigo-600" />
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-100 to-brand-200 dark:from-brand-900/50 dark:to-brand-800/50 flex items-center justify-center">
+                  <Building2 className="w-6 h-6 text-brand-600" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg text-gray-900 dark:text-white">{selectedSupplier.name}</h3>
@@ -1022,7 +1022,7 @@ const SuppliersManagement = () => {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {selectedSupplier.documents.map((doc, idx) => (
-                      <a key={idx} href="#" className="text-xs bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-lg text-indigo-600 hover:bg-indigo-50 transition flex items-center gap-2">
+                      <a key={idx} href="#" className="text-xs bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-lg text-brand-600 hover:bg-brand-50 transition flex items-center gap-2">
                         <FileText className="w-3 h-3" /> {doc}
                       </a>
                     ))}
@@ -1038,7 +1038,7 @@ const SuppliersManagement = () => {
                     setIsFormModalOpen(true);
                     setSelectedSupplier(null);
                   }}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Edit Supplier
                 </button>
@@ -1235,7 +1235,7 @@ const SuppliersManagement = () => {
                   toast.success(editingSupplier?.id ? 'Supplier updated' : 'Supplier created');
                   setIsFormModalOpen(false);
                 }}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
               >
                 {editingSupplier?.id ? 'Update Supplier' : 'Create Supplier'}
               </button>

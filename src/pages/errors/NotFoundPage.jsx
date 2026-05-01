@@ -33,7 +33,7 @@ export default function NotFoundPage() {
           </button>
           <button
             onClick={() => navigate("/dashboard")}
-            className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-lg transition"
+            className="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-5 py-2.5 rounded-lg transition"
           >
             <Home className="w-4 h-4" />
             Dashboard

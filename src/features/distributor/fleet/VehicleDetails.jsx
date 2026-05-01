@@ -366,7 +366,7 @@ export default function VehicleDetails() {
           >
             <Share2 className="w-4 h-4" />
           </button>
-          <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition">
+          <button className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-sm font-medium flex items-center gap-2 transition">
             <Edit className="w-4 h-4" />
             Edit Vehicle
           </button>
@@ -465,7 +465,7 @@ export default function VehicleDetails() {
           onClick={() => setSelectedTab('tracking')}
           className={`px-4 py-2 text-sm font-medium transition flex items-center gap-2 ${
             selectedTab === 'tracking'
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -476,7 +476,7 @@ export default function VehicleDetails() {
           onClick={() => setSelectedTab('routes')}
           className={`px-4 py-2 text-sm font-medium transition flex items-center gap-2 ${
             selectedTab === 'routes'
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -487,7 +487,7 @@ export default function VehicleDetails() {
           onClick={() => setSelectedTab('driver')}
           className={`px-4 py-2 text-sm font-medium transition flex items-center gap-2 ${
             selectedTab === 'driver'
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -498,7 +498,7 @@ export default function VehicleDetails() {
           onClick={() => setSelectedTab('stats')}
           className={`px-4 py-2 text-sm font-medium transition flex items-center gap-2 ${
             selectedTab === 'stats'
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -509,7 +509,7 @@ export default function VehicleDetails() {
           onClick={() => setSelectedTab('maintenance')}
           className={`px-4 py-2 text-sm font-medium transition flex items-center gap-2 ${
             selectedTab === 'maintenance'
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -520,7 +520,7 @@ export default function VehicleDetails() {
           onClick={() => setSelectedTab('alerts')}
           className={`px-4 py-2 text-sm font-medium transition flex items-center gap-2 ${
             selectedTab === 'alerts'
-              ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+              ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
           }`}
         >
@@ -665,7 +665,7 @@ export default function VehicleDetails() {
                         <span className="text-gray-900 dark:text-white">{vehicle.currentRoute.progress}%</span>
                       </div>
                       <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                        <div className="h-full bg-indigo-600 rounded-full" style={{ width: `${vehicle.currentRoute.progress}%` }}></div>
+                        <div className="h-full bg-brand-600 rounded-full" style={{ width: `${vehicle.currentRoute.progress}%` }}></div>
                       </div>
                     </div>
                   </div>
@@ -714,7 +714,7 @@ export default function VehicleDetails() {
                       <div>To: {route.endPoint.name}</div>
                       <div>Time: {route.startTime} - {route.endTime}</div>
                     </div>
-                    <button className="mt-3 text-xs text-indigo-600 dark:text-indigo-400 hover:underline">
+                    <button className="mt-3 text-xs text-brand-600 dark:text-brand-400 hover:underline">
                       View Route Details →
                     </button>
                   </div>
@@ -730,7 +730,7 @@ export default function VehicleDetails() {
             {/* Driver Profile */}
             <div className="lg:col-span-1">
               <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 text-center shadow-sm">
-                <div className="w-24 h-24 mx-auto bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4">
+                <div className="w-24 h-24 mx-auto bg-gradient-to-br from-brand-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mb-4">
                   {vehicle.driver.name.charAt(0)}
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white">{vehicle.driver.name}</h3>
@@ -751,7 +751,7 @@ export default function VehicleDetails() {
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
-                  <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">
+                  <button className="w-full bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">
                     Contact Driver
                   </button>
                 </div>
@@ -829,8 +829,8 @@ export default function VehicleDetails() {
                     <p className="text-xs text-gray-500 dark:text-gray-400">Total Distance</p>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">{vehicle.stats.totalDistance.toLocaleString()} km</p>
                   </div>
-                  <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-                    <Navigation className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                  <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+                    <Navigation className="w-6 h-6 text-brand-600 dark:text-brand-400" />
                   </div>
                 </div>
                 <div className="mt-2 flex items-center gap-2 text-xs text-green-600">
@@ -926,7 +926,7 @@ export default function VehicleDetails() {
               <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 shadow-sm">
                 <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Engine Hours</h3>
                 <div className="text-center py-6">
-                  <div className="text-4xl font-bold text-indigo-600 dark:text-indigo-400">
+                  <div className="text-4xl font-bold text-brand-600 dark:text-brand-400">
                     {vehicle.stats.totalEngineHours}
                   </div>
                   <p className="text-sm text-gray-500 mt-2">Total Engine Hours</p>
@@ -1058,21 +1058,21 @@ export default function VehicleDetails() {
                   onClick={shareLocation}
                   className="w-full flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                 >
-                  <User className="w-5 h-5 text-indigo-600" />
+                  <User className="w-5 h-5 text-brand-600" />
                   <span className="text-sm">Share with Driver</span>
                 </button>
                 <button
                   onClick={shareLocation}
                   className="w-full flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                 >
-                  <Mail className="w-5 h-5 text-indigo-600" />
+                  <Mail className="w-5 h-5 text-brand-600" />
                   <span className="text-sm">Share via Email</span>
                 </button>
                 <button
                   onClick={shareLocation}
                   className="w-full flex items-center gap-3 p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                 >
-                  <Share2 className="w-5 h-5 text-indigo-600" />
+                  <Share2 className="w-5 h-5 text-brand-600" />
                   <span className="text-sm">Copy Shareable Link</span>
                 </button>
               </div>
@@ -1126,7 +1126,7 @@ export default function VehicleDetails() {
               <div className="flex gap-3 mt-6">
                 <button
                   onClick={() => setShowAlertModal(false)}
-                  className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition"
+                  className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
                 >
                   Dismiss
                 </button>

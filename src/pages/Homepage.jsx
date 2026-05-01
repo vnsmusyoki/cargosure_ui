@@ -151,7 +151,7 @@ const HomePage = () => {
     { icon: Smartphone, title: "Customer Portal", description: "WhatsApp & SMS tracking links — customers track deliveries without any app install.", badge: "Frictionless", color: "green" },
     { icon: Camera, title: "Proof of Delivery", description: "Geotagged photos, e-signatures, and timestamps for every delivery stop.", badge: "Secure", color: "purple" },
     { icon: Bell, title: "Smart Notifications", description: "Automated alerts at pickup, in-transit, approaching, and delivered status.", badge: "Automated", color: "amber" },
-    { icon: TrendingUp, title: "Route Optimization", description: "AI-powered multi-stop sequencing reduces fuel costs by up to 28%.", badge: "AI-Powered", color: "indigo" },
+    { icon: TrendingUp, title: "Route Optimization", description: "AI-powered multi-stop sequencing reduces fuel costs by up to 28%.", badge: "AI-Powered", color: "brand" },
     { icon: BarChart3, title: "Fleet Analytics", description: "Driver scorecards, delivery metrics, cost analysis, and efficiency insights.", badge: "Insights", color: "cyan" },
     { icon: Shield, title: "Geofencing", description: "Virtual boundaries with instant alerts when vehicles enter or exit zones.", badge: "Security", color: "red" },
     { icon: FileText, title: "Smart Invoicing", description: "Auto-generate invoices, payment reconciliation with M-Pesa integration.", badge: "Finance", color: "teal" }
@@ -227,7 +227,7 @@ const HomePage = () => {
     { name: "WhatsApp API", icon: "💬", color: "from-green-400 to-green-600" },
     { name: "Twilio", icon: "📧", color: "from-red-400 to-red-600" },
     { name: "Shopify", icon: "🛒", color: "from-emerald-500 to-teal-600" },
-    { name: "SAP", icon: "🏢", color: "from-blue-600 to-indigo-600" },
+    { name: "SAP", icon: "🏢", color: "from-blue-600 to-brand-600" },
     { name: "Oracle", icon: "🗄️", color: "from-red-600 to-orange-600" }
   ];
 
@@ -238,7 +238,7 @@ const HomePage = () => {
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-20 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-20 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-transparent via-transparent to-transparent" />
         </div>
 
@@ -255,7 +255,7 @@ const HomePage = () => {
               {/* Headline */}
               <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.2] tracking-tight ${theme.text}`}>
                 Track every delivery,
-                <span className="block bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 bg-clip-text text-transparent mt-2">
+                <span className="block bg-gradient-to-r from-blue-600 via-brand-500 to-purple-600 bg-clip-text text-transparent mt-2">
                   eliminate uncertainty
                 </span>
               </h1>
@@ -297,7 +297,7 @@ const HomePage = () => {
 
             {/* Right Dashboard Preview */}
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-indigo-600/30 rounded-3xl blur-2xl" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-brand-600/30 rounded-3xl blur-2xl" />
               <div className="relative transform hover:scale-[1.02] transition-all duration-500">
                 <HeroDashboard isDark={isDark} />
               </div>
@@ -329,7 +329,7 @@ const HomePage = () => {
                 className={`group ${theme.card} rounded-2xl p-6 transition-all duration-300 ${theme.cardHover} card-hover-effect`}
               >
                 <div className="mb-5">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-brand-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                     <feature.icon className="w-6 h-6 text-blue-500" />
                   </div>
                 </div>
@@ -410,7 +410,7 @@ const HomePage = () => {
       <section id="pricing" className={`py-24 lg:py-32 px-4 sm:px-6 lg:px-8 ${theme.bgSecondary}`}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-2 bg-indigo-500/10 text-indigo-500 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 bg-brand-500/10 text-brand-500 rounded-full px-4 py-1.5 text-sm font-medium mb-6">
               <CreditCard className="w-4 h-4" /> Simple, transparent pricing            </div>
             <h2 className={`text-4xl lg:text-5xl font-bold mb-4 ${theme.text}`}>Choose the perfect plan</h2>
             <p className={`text-lg ${theme.textSecondary}`}>Start free, upgrade as you grow — cancel anytime, no questions asked.</p>
@@ -427,7 +427,7 @@ const HomePage = () => {
                 } p-8 ${plan.highlighted ? 'lg:scale-105' : ''}`}
               >
                 {plan.highlighted && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-brand-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
                     🌟 Most Popular
                   </div>
                 )}
@@ -508,7 +508,7 @@ const HomePage = () => {
                 </div>
                 <p className={`${theme.textSecondary} italic leading-relaxed mb-8`}>“{testimonial.quote}”</p>
                 <div className={`flex items-center gap-4 pt-6 border-t ${theme.border}`}>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                     {testimonial.imageInitial}
                   </div>
                   <div>
@@ -527,7 +527,7 @@ const HomePage = () => {
       <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="relative rounded-3xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-brand-600 to-purple-600" />
             <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
             <div className="relative p-12 lg:p-16 text-center">
               <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">

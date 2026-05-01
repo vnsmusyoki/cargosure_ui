@@ -62,11 +62,11 @@ export default function SetNewPassword() {
               Your password has been updated. You will be redirected to the login page.
             </p>
             <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5 mb-4">
-              <div className="bg-indigo-600 h-1.5 rounded-full animate-pulse w-full" />
+              <div className="bg-brand-600 h-1.5 rounded-full animate-pulse w-full" />
             </div>
             <a
               href="/login"
-              className="inline-flex items-center gap-2 font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
+              className="inline-flex items-center gap-2 font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
             >
               Go to Login <ArrowRight className="w-4 h-4" />
             </a>
@@ -79,10 +79,10 @@ export default function SetNewPassword() {
   return (
     <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950">
       {/* Left Side - Brand Panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-indigo-700 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-brand-700 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 z-10" />
-        <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-400/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-brand-400/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-white/10 rounded-full" />
 
         <div className="relative z-20 flex flex-col justify-between p-12 h-full text-white">
@@ -90,7 +90,7 @@ export default function SetNewPassword() {
             <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2">
               <Truck className="w-8 h-8" />
             </div>
-            <span className="font-bold text-2xl">Deliver<span className="text-indigo-200">Track</span></span>
+            <span className="font-bold text-2xl">Deliver<span className="text-brand-200">Track</span></span>
           </div>
 
           <div className="max-w-md">
@@ -98,13 +98,13 @@ export default function SetNewPassword() {
               <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
                 <Key className="w-6 h-6" />
               </div>
-              <span className="text-indigo-200 text-sm font-medium">Create New Password</span>
+              <span className="text-brand-200 text-sm font-medium">Create New Password</span>
             </div>
             <h2 className="text-4xl font-bold leading-tight">
               Create a
-              <span className="block text-indigo-200">strong password</span>
+              <span className="block text-brand-200">strong password</span>
             </h2>
-            <p className="text-indigo-100 mt-4 text-lg leading-relaxed">
+            <p className="text-brand-100 mt-4 text-lg leading-relaxed">
               Your new password must be different from previously used passwords and meet the security requirements below.
             </p>
             <div className="mt-8 flex gap-4">
@@ -123,7 +123,7 @@ export default function SetNewPassword() {
             </div>
           </div>
 
-          <div className="text-sm text-indigo-200">
+          <div className="text-sm text-brand-200">
             <p>© {new Date().getFullYear()} DeliverTrack. Secure password reset.</p>
           </div>
         </div>
@@ -135,18 +135,18 @@ export default function SetNewPassword() {
           {/* Mobile Logo */}
           <div className="lg:hidden flex justify-center mb-8">
             <div className="flex items-center gap-2">
-              <div className="bg-indigo-600 rounded-lg p-2">
+              <div className="bg-brand-600 rounded-lg p-2">
                 <Truck className="w-6 h-6 text-white" />
               </div>
               <span className="font-bold text-2xl text-gray-900 dark:text-white">
-                Deliver<span className="text-indigo-600">Track</span>
+                Deliver<span className="text-brand-600">Track</span>
               </span>
             </div>
           </div>
 
           <a
             href="/login"
-            className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition mb-8"
+            className="inline-flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Sign In
@@ -179,7 +179,7 @@ export default function SetNewPassword() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-12 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                  className="block w-full pl-10 pr-12 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
                   placeholder="Enter your new password"
                   autoFocus
                 />
@@ -225,7 +225,7 @@ export default function SetNewPassword() {
                   id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full pl-10 pr-12 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                  className="block w-full pl-10 pr-12 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
                   placeholder="Confirm your new password"
                 />
                 <button
@@ -272,7 +272,7 @@ export default function SetNewPassword() {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${
+              className={`w-full flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${
                 isLoading ? 'opacity-70 cursor-not-allowed' : ''
               }`}
             >

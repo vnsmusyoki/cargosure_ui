@@ -21,7 +21,7 @@ const STATUS_NORM = {
 
 const TYPE_COLOR_POOL = [
   'bg-blue-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500',
-  'bg-red-500', 'bg-pink-500', 'bg-indigo-500', 'bg-teal-500',
+  'bg-red-500', 'bg-pink-500', 'bg-brand-500', 'bg-teal-500',
   'bg-orange-500', 'bg-cyan-500',
 ];
 
@@ -246,7 +246,7 @@ const FleetManagement = () => {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="flex flex-col items-center gap-3 text-gray-500 dark:text-gray-400">
-          <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-brand-600" />
           <p className="text-sm">Loading fleet data...</p>
         </div>
       </div>
@@ -259,7 +259,7 @@ const FleetManagement = () => {
         <div className="flex flex-col items-center gap-3 text-center">
           <AlertTriangle className="w-8 h-8 text-red-500" />
           <p className="text-sm font-medium text-gray-900 dark:text-white">Failed to load fleet data</p>
-          <button onClick={() => refetch()} className="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition">
+          <button onClick={() => refetch()} className="px-4 py-2 bg-brand-600 text-white text-sm rounded-lg hover:bg-brand-700 transition">
             Retry
           </button>
         </div>
@@ -286,7 +286,7 @@ const FleetManagement = () => {
           </button>
           <button
             onClick={() => navigate('/fleet-management/add')}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
+            className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
             Add Vehicle
@@ -302,8 +302,8 @@ const FleetManagement = () => {
               <p className="text-xs text-gray-500 dark:text-gray-400">Total Vehicles</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total}</p>
             </div>
-            <div className="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-xl">
-              <Car className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+            <div className="bg-brand-100 dark:bg-brand-900/30 p-3 rounded-xl">
+              <Car className="w-6 h-6 text-brand-600 dark:text-brand-400" />
             </div>
           </div>
           <div className="mt-3 flex flex-wrap gap-2 text-xs">
@@ -368,7 +368,7 @@ const FleetManagement = () => {
             onClick={() => setActiveTab(key)}
             className={`px-4 py-2 text-sm font-medium transition flex items-center gap-2 ${
               activeTab === key
-                ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600'
+                ? 'text-brand-600 dark:text-brand-400 border-b-2 border-brand-600'
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
             }`}
           >
@@ -391,7 +391,7 @@ const FleetManagement = () => {
               <Car className="w-12 h-12 text-gray-300 mx-auto mb-3" />
               <p className="font-medium text-gray-700 dark:text-gray-300">No vehicles registered yet</p>
               <p className="text-sm text-gray-500 mt-1 mb-4">Add your first vehicle to see fleet analytics here</p>
-              <button onClick={() => navigate('/fleet-management/add')} className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
+              <button onClick={() => navigate('/fleet-management/add')} className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition">
                 Add First Vehicle
               </button>
             </div>
@@ -447,7 +447,7 @@ const FleetManagement = () => {
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Fleet Insights</h3>
                     <div className="grid grid-cols-2 gap-3">
                       {[
-                        { icon: Navigation, label: 'GPS Tracked', value: `${stats.gpsPercent}%`, sub: `${stats.withGps}/${stats.total} vehicles`, color: 'bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600' },
+                        { icon: Navigation, label: 'GPS Tracked', value: `${stats.gpsPercent}%`, sub: `${stats.withGps}/${stats.total} vehicles`, color: 'bg-brand-50 dark:bg-brand-900/20 text-brand-600' },
                         { icon: Thermometer, label: 'Refrigerated', value: stats.refrigerated, sub: 'cold chain units', color: 'bg-cyan-50 dark:bg-cyan-900/20 text-cyan-600' },
                         { icon: Package, label: 'Total Capacity', value: `${stats.totalCapacityTons}t`, sub: 'fleet load capacity', color: 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600' },
                         { icon: Shield, label: 'Compliance', value: `${stats.complianceScore}%`, sub: 'insurance + fitness', color: 'bg-orange-50 dark:bg-orange-900/20 text-orange-600' },
@@ -494,7 +494,7 @@ const FleetManagement = () => {
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Ownership Structure</h3>
                   <div className="space-y-3">
                     {[
-                      { label: 'Company Owned', count: stats.companyOwned, color: 'bg-indigo-500' },
+                      { label: 'Company Owned', count: stats.companyOwned, color: 'bg-brand-500' },
                       { label: 'Leased', count: stats.leased, color: 'bg-blue-500' },
                       { label: 'Owner Driver', count: stats.ownerDriver, color: 'bg-teal-500' },
                     ].map(({ label, count, color }) => {
@@ -709,7 +709,7 @@ const FleetManagement = () => {
                           </td>
                           <td className="px-4 py-3 text-right">
                             <div className="flex items-center justify-end gap-2">
-                              <Link to={`/fleet/vehicle-details/${v.id}`} className="p-1.5 text-gray-400 hover:text-indigo-600 transition" title="View Details">
+                              <Link to={`/fleet/vehicle-details/${v.id}`} className="p-1.5 text-gray-400 hover:text-brand-600 transition" title="View Details">
                                 <Eye className="w-4 h-4" />
                               </Link>
                               <button className="p-1.5 text-gray-400 hover:text-blue-600 transition" title="Edit"><Edit className="w-4 h-4" /></button>
@@ -761,7 +761,7 @@ const FleetManagement = () => {
                                 <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-sm">
                                   <div className="text-xs text-gray-500 mb-2 font-medium">Quick Actions</div>
                                   <div className="flex flex-col gap-2">
-                                    <Link to={`/fleet/vehicle-details/${v.id}`} className="flex-1 bg-indigo-600 text-white text-xs py-1.5 rounded-lg text-center hover:bg-indigo-700 transition">View Details</Link>
+                                    <Link to={`/fleet/vehicle-details/${v.id}`} className="flex-1 bg-brand-600 text-white text-xs py-1.5 rounded-lg text-center hover:bg-brand-700 transition">View Details</Link>
                                     <button onClick={() => setShowScheduleMaintenance(v)} className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-xs py-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">Schedule Service</button>
                                   </div>
                                   {v.notes && <p className="text-xs text-gray-500 mt-2 italic">{v.notes}</p>}
@@ -791,7 +791,7 @@ const FleetManagement = () => {
                         else if (currentPage >= totalPages - 2) page = totalPages - 4 + i;
                         else page = currentPage - 2 + i;
                         return (
-                          <button key={page} onClick={() => setCurrentPage(page)} className={`w-8 h-8 rounded-lg text-sm font-medium transition ${currentPage === page ? 'bg-indigo-600 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
+                          <button key={page} onClick={() => setCurrentPage(page)} className={`w-8 h-8 rounded-lg text-sm font-medium transition ${currentPage === page ? 'bg-brand-600 text-white' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'}`}>
                             {page}
                           </button>
                         );
@@ -863,7 +863,7 @@ const FleetManagement = () => {
                       </td>
                       <td className="px-4 py-3">{getStatusBadge(v.status)}</td>
                       <td className="px-4 py-3 text-right">
-                        <button onClick={() => setShowScheduleMaintenance(v)} className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs rounded-lg transition">
+                        <button onClick={() => setShowScheduleMaintenance(v)} className="px-3 py-1 bg-brand-600 hover:bg-brand-700 text-white text-xs rounded-lg transition">
                           Schedule Service
                         </button>
                       </td>
@@ -899,17 +899,17 @@ const FleetManagement = () => {
                   <div key={label}>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{label}</label>
                     {type === 'select' ? (
-                      <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white">
+                      <select className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:text-white">
                         {options.map(o => <option key={o}>{o}</option>)}
                       </select>
                     ) : (
-                      <input type={type} placeholder={placeholder} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white" />
+                      <input type={type} placeholder={placeholder} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-brand-500 dark:bg-gray-700 dark:text-white" />
                     )}
                   </div>
                 ))}
               </div>
               <div className="flex gap-3 mt-6">
-                <button onClick={() => { toast.success('Maintenance scheduled successfully'); setShowScheduleMaintenance(null); }} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg text-sm font-medium transition">Schedule</button>
+                <button onClick={() => { toast.success('Maintenance scheduled successfully'); setShowScheduleMaintenance(null); }} className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition">Schedule</button>
                 <button onClick={() => setShowScheduleMaintenance(null)} className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition">Cancel</button>
               </div>
             </div>

@@ -46,10 +46,10 @@ export default function Login() {
   return (
     <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950">
       {/* Left Side - Brand/Info Panel */}
-      <div className="hidden lg:flex lg:w-1/2 bg-indigo-700 relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-brand-700 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 z-10"></div>
-        <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-400/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-brand-400/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-white/10 rounded-full"></div>
 
         <div className="relative z-20 flex flex-col justify-between p-12 h-full text-white">
@@ -58,9 +58,9 @@ export default function Login() {
           <div className="max-w-md">
             <h2 className="text-4xl font-bold leading-tight">
               Welcome back to
-              <span className="block text-indigo-200">Delivery Visibility</span>
+              <span className="block text-brand-200">Delivery Visibility</span>
             </h2>
-            <p className="text-indigo-100 mt-4 text-lg leading-relaxed">
+            <p className="text-brand-100 mt-4 text-lg leading-relaxed">
               Track your deliveries in real-time, manage your fleet, and keep
               customers informed — all from one platform.
             </p>
@@ -81,7 +81,7 @@ export default function Login() {
             </div>
           </div>
 
-          <div className="text-sm text-indigo-200">
+          <div className="text-sm text-brand-200">
             <p>© {new Date().getFullYear()} DeliverTrack. Secure & Reliable.</p>
           </div>
         </div>
@@ -93,11 +93,11 @@ export default function Login() {
           {/* Mobile Logo */}
           <div className="lg:hidden flex justify-center mb-8">
             <div className="flex items-center gap-2">
-              <div className="bg-indigo-600 rounded-lg p-2">
+              <div className="bg-brand-600 rounded-lg p-2">
                 <Truck className="w-6 h-6 text-white" />
               </div>
               <span className="font-bold text-2xl text-gray-900 dark:text-white">
-                Deliver<span className="text-indigo-600">Track</span>
+                Deliver<span className="text-brand-600">Track</span>
               </span>
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function Login() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
                   placeholder="yourmail@example.com"
                 />
               </div>
@@ -158,7 +158,7 @@ export default function Login() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-12 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                  className="block w-full pl-10 pr-12 py-2.5 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition"
                   placeholder="••••••••"
                 />
                 <button
@@ -182,13 +182,13 @@ export default function Login() {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 text-indigo-600 border-gray-300 dark:border-slate-600 rounded focus:ring-indigo-500"
+                  className="w-4 h-4 text-brand-600 border-gray-300 dark:border-slate-600 rounded focus:ring-brand-500"
                 />
                 <span className="text-sm text-gray-600 dark:text-slate-400">Remember me</span>
               </label>
               <button
                 type="button"
-                className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
+                className="text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300"
                 onClick={() => navigate("/forgot-password")}
               >
                 Forgot password?
@@ -199,7 +199,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${
+              className={`w-full flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white py-2.5 rounded-lg font-semibold transition duration-200 ${
                 loading ? "opacity-70 cursor-not-allowed" : ""
               }`}
             >
@@ -218,7 +218,7 @@ export default function Login() {
 
           <p className="text-center text-sm text-gray-500 dark:text-slate-400 mt-6">
             Don't have an account?{" "}
-            <button className="font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300" onClick={()=> navigate('/register')}>
+            <button className="font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-300" onClick={()=> navigate('/register')}>
               Contact sales
             </button>
           </p>
