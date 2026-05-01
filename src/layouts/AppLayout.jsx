@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import * as Icons from "lucide-react";
+import { useAuthStore } from "@/store/authStore";
+import { useMenuStore } from "@/store/menuStore";
 import {
   Bell,
   Search,
@@ -56,470 +58,39 @@ const DynamicIcon = ({ iconName, size = 20, className = "" }) => {
   return <IconComponent size={size} className={className} />;
 };
 
-// Role-based menu configuration (hardcoded)
-const roleMenus = {
-  admin: {
-    name: "Administrator",
-    modules: [
-      {
-        category: "Main",
-        items: [
-          {
-            id: "dashboard",
-            label: "Dashboard",
-            icon: "LayoutDashboard",
-            path: "/dashboard",
-            moduleNumber: 1,
-          },
-          {
-            id: "orders",
-            label: "Order Management",
-            icon: "Package",
-            path: "/orders",
-            moduleNumber: 2,
-          },
-          {
-            id: "drivers",
-            label: "Driver & Fleet",
-            icon: "Truck",
-            path: "/drivers",
-            moduleNumber: 3,
-          },
-          {
-            id: "tracking",
-            label: "Live Tracking",
-            icon: "MapPin",
-            path: "/tracking",
-            moduleNumber: 4,
-          },
-          {
-            id: "customers",
-            label: "Customers",
-            icon: "Users",
-            path: "/customers",
-            moduleNumber: 5,
-          },
-        ],
-      },
-      {
-        category: "Analytics",
-        items: [
-          {
-            id: "analytics",
-            label: "Analytics & Reports",
-            icon: "BarChart3",
-            path: "/analytics",
-            moduleNumber: 6,
-          },
-          {
-            id: "notifications",
-            label: "Notifications",
-            icon: "Bell",
-            path: "/notifications",
-            moduleNumber: 7,
-          },
-        ],
-      },
-      {
-        category: "Finance",
-        items: [
-          {
-            id: "billing",
-            label: "Billing & Invoicing",
-            icon: "CreditCard",
-            path: "/billing",
-            moduleNumber: 8,
-          },
-        ],
-      },
-      {
-        category: "Enterprise",
-        items: [
-          {
-            id: "fleet-advanced",
-            label: "Advanced Fleet",
-            icon: "Building2",
-            path: "/fleet-advanced",
-            moduleNumber: 9,
-          },
-          {
-            id: "inventory",
-            label: "Inventory Integration",
-            icon: "Database",
-            path: "/inventory",
-            moduleNumber: 10,
-          },
-          {
-            id: "multi-branch",
-            label: "Multi-Branch",
-            icon: "Layers",
-            path: "/multi-branch",
-            moduleNumber: 11,
-          },
-          {
-            id: "api",
-            label: "API Integrations",
-            icon: "Cloud",
-            path: "/api",
-            moduleNumber: 12,
-          },
-        ],
-      },
-      {
-        category: "System",
-        items: [
-          {
-            id: "user-access",
-            label: "User Access",
-            icon: "Shield",
-            path: "/user-access",
-            moduleNumber: 13,
-          },
-          {
-            id: "monitoring",
-            label: "Monitoring",
-            icon: "Activity",
-            path: "/monitoring",
-            moduleNumber: 14,
-          },
-          {
-            id: "security",
-            label: "Security",
-            icon: "Lock",
-            path: "/security",
-            moduleNumber: 15,
-          },
-        ],
-      },
-    ],
-  },
-  company: {
-  name: "Company Admin",
-  modules: [
-    {
-      category: "Main",
-      items: [
-        { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/dashboard", moduleNumber: 1 },
-      ],
-    },
-  {
-  category: "Stores",
-  items: [
-    { id: "stores-dashboard", label: "Stores Management", icon: "LayoutDashboard", path: "/stores-management", moduleNumber: 4 },
+ 
 
-    { id: "items", label: "Items / Products", icon: "Package", path: "/stores/items", moduleNumber: 5 },
-
-    { id: "inventory", label: "Inventory", icon: "Boxes", path: "/stores/inventory", moduleNumber: 6 },
-
-    { id: "stock-movement", label: "Stock Movements", icon: "ArrowRightLeft", path: "/stores/stock-movements", moduleNumber: 7 },
-
-    { id: "suppliers", label: "Suppliers", icon: "Truck", path: "/stores/suppliers", moduleNumber: 8 },
-
-    { id: "purchase-orders", label: "Purchase Orders", icon: "FileText", path: "/stores/purchase-orders", moduleNumber: 9 },
-
-    { id: "transfers", label: "Stock Transfers", icon: "Repeat", path: "/stores/transfers", moduleNumber: 10 },
-
-    { id: "adjustments", label: "Stock Adjustments", icon: "SlidersHorizontal", path: "/stores/adjustments", moduleNumber: 11 },
-
-    { id: "reports", label: "Reports", icon: "BarChart3", path: "/stores/reports", moduleNumber: 12 },
-  ],
-},
-  {
-  category: "Fleet",
-  items: [
-    { id: "fleet", label: "Fleet Management", icon: "Truck", path: "/fleet-management", moduleNumber: 4 },  
-    { id: "fuel", label: "Fuel Logs", icon: "Fuel", path: "/fleet/fuel-management", moduleNumber: 7 },
-    { id: "tracking", label: "Live Tracking", icon: "MapPin", path: "/live-tracking", moduleNumber: 8 },
-    { id: "routes", label: "Routes", icon: "Route", path: "/fleet/routes-management", moduleNumber: 9 },
-  ],
-},
-{
-  category: "Drivers",
-  items: [
-    { id: "drivers", label: "Drivers Management", icon: "Users", path: "/drivers-management", moduleNumber: 10 },
-    { id: "assignments", label: "Assignments", icon: "ClipboardList", path: "/drivers/assignments", moduleNumber: 11 },
-    { id: "attendance", label: "Attendance", icon: "CalendarCheck", path: "/drivers/attendance", moduleNumber: 12 },
-    { id: "payroll", label: "Payroll", icon: "Wallet", path: "/drivers/payroll", moduleNumber: 13 },
-    { id: "performance", label: "Performance", icon: "BarChart3", path: "/drivers/performance", moduleNumber: 14 },
-  ],
-},
-    {
-  category: "Customers",
-  items: [
-    { id: "customers", label: "Customers Management", icon: "Users", path: "/customers-management", moduleNumber: 7 },
-    { id: "customer-orders", label: "Orders", icon: "ShoppingCart", path: "/customers/orders", moduleNumber: 8 },
-    { id: "customer-billing", label: "Billing", icon: "CreditCard", path: "/customers/billing", moduleNumber: 9 },
-  ],
-},
-{
-  category: "Suppliers",
-  items: [
-    { id: "suppliers", label: "Suppliers Management", icon: "Truck", path: "/suppliers-management", moduleNumber: 10 },
-
-    { id: "supplier-contacts", label: "Contacts", icon: "Users", path: "/suppliers/contacts", moduleNumber: 11 },
-    { id: "supplier-shipments", label: "Shipments", icon: "Package", path: "/suppliers/shipments", moduleNumber: 12 },
-    { id: "supplier-procurement", label: "Procurement", icon: "ClipboardList", path: "/suppliers/procurement", moduleNumber: 13 },
-
-    { id: "supplier-payments", label: "Payments", icon: "CreditCard", path: "/suppliers/payments", moduleNumber: 14 },
-    { id: "supplier-returns", label: "Returns", icon: "RotateCcw", path: "/suppliers/returns", moduleNumber: 15 },
-
-    { id: "supplier-performance", label: "Performance", icon: "BarChart3", path: "/suppliers/performance", moduleNumber: 16 },
-
-    { id: "import-suppliers", label: "Import Contacts", icon: "Upload", path: "/suppliers/import", moduleNumber: 17 },
-  ],
-},
-    {
-  category: "Products",
-  items: [
-    { id: "products", label: "All Products", icon: "Package", path: "/products", moduleNumber: 7 },
-    { id: "add-product", label: "Add Product", icon: "PlusCircle", path: "/products/create", moduleNumber: 8 },
-
-    { id: "categories", label: "Categories", icon: "Tag", path: "/products/categories", moduleNumber: 9 },
-    { id: "brands", label: "Brands", icon: "Bookmark", path: "/products/brands", moduleNumber: 10 },
-    { id: "units", label: "Units", icon: "Scale", path: "/products/units", moduleNumber: 11 },
-    { id: "variations", label: "Variations", icon: "SlidersHorizontal", path: "/products/variations", moduleNumber: 12 },
-
-    { id: "import-products", label: "Import Products", icon: "Upload", path: "/products/import", moduleNumber: 13 },
-    { id: "import-stock", label: "Opening Stock", icon: "Database", path: "/products/import-stock", moduleNumber: 14 },
-
-    { id: "print-labels", label: "Print Labels", icon: "Printer", path: "/products/labels", moduleNumber: 15 },
-    { id: "warranties", label: "Warranties", icon: "ShieldCheck", path: "/products/warranties", moduleNumber: 16 },
-  ],
-},
-{
-  category: "Stock Adjustments",
-  items: [
-    { id: "stock-adjustments", label: "Stock Adjustments", icon: "SlidersHorizontal", path: "/stock-adjustments", moduleNumber: 80 },
-
-    { id: "add-adjustment", label: "Add Adjustment", icon: "PlusCircle", path: "/stock-adjustments/create", moduleNumber: 81 },
-
-    { id: "stock-losses", label: "Stock Losses", icon: "AlertTriangle", path: "/stock-adjustments/losses", moduleNumber: 82 },
-
-    { id: "stock-damages", label: "Damaged Stock", icon: "AlertCircle", path: "/stock-adjustments/damaged", moduleNumber: 83 },
-
-    { id: "stock-audit", label: "Stock Audit Logs", icon: "ClipboardCheck", path: "/stock-adjustments/audit", moduleNumber: 84 },
-  ],
-},
-{
-  category: "Purchases",
-  items: [
-    { id: "purchases", label: "All Purchases", icon: "ShoppingCart", path: "/purchases", moduleNumber: 30 },
-    { id: "add-purchase", label: "Add Purchase", icon: "PlusCircle", path: "/purchases/create", moduleNumber: 31 },
-
-    { id: "purchase-orders", label: "Purchase Orders", icon: "ClipboardList", path: "/purchases/orders", moduleNumber: 32 },
-    { id: "stock-receiving", label: "Stock Receiving", icon: "Inbox", path: "/purchases/receiving", moduleNumber: 33 },
-
-    { id: "purchase-returns", label: "Purchase Returns", icon: "RotateCcw", path: "/purchases/returns", moduleNumber: 34 },
-    { id: "supplier-invoices", label: "Supplier Invoices", icon: "FileText", path: "/purchases/invoices", moduleNumber: 35 },
-
-    { id: "import-purchases", label: "Import Purchases", icon: "Upload", path: "/purchases/import", moduleNumber: 36 },
-  ],
-},
-{
-  category: "Sales",
-  items: [
-    { id: "sales", label: "All Sales", icon: "ShoppingCart", path: "/sales", moduleNumber: 40 },
-    { id: "pos", label: "POS", icon: "Monitor", path: "/sales/pos", moduleNumber: 41 },
-
-    { id: "add-sale", label: "Add Sale", icon: "PlusCircle", path: "/sales/create", moduleNumber: 42 },
-
-    { id: "drafts", label: "List Drafts", icon: "FileText", path: "/sales/drafts", moduleNumber: 43 },
-    { id: "add-draft", label: "Add Draft", icon: "FilePlus", path: "/sales/drafts/create", moduleNumber: 44 },
-
-    { id: "discounts", label: "Discounts", icon: "Percent", path: "/sales/discounts", moduleNumber: 45 },
-    { id: "shipments", label: "Shipments", icon: "Truck", path: "/sales/shipments", moduleNumber: 46 },
-
-    { id: "import-sales", label: "Import Sales", icon: "Upload", path: "/sales/import", moduleNumber: 47 },
-
-    { id: "sales-returns", label: "Sales Returns", icon: "RotateCcw", path: "/sales/returns", moduleNumber: 48 },
-    { id: "payments", label: "Payments", icon: "CreditCard", path: "/sales/payments", moduleNumber: 49 },
-
-    { id: "sales-reports", label: "Sales Reports", icon: "BarChart3", path: "/sales/reports", moduleNumber: 50 },
-  ],
-},
-    {
-      category: "Inventory",
-      items: [
-        { id: "inventory-overview", label: "Inventory Overview", icon: "Package", path: "/inventory", moduleNumber: 9 },
-        { id: "stock-levels", label: "Stock Levels", icon: "Boxes", path: "/inventory/stock", moduleNumber: 10 },
-        { id: "stock-movements", label: "Stock Transfers", icon: "ArrowLeftRight", path: "/inventory/movements", moduleNumber: 11 },
-        { id: "warehouses", label: "Warehouses", icon: "Warehouse", path: "/inventory/warehouses", moduleNumber: 12 },
-        { id: "low-stock-alerts", label: "Low Stock Alerts", icon: "AlertTriangle", path: "/inventory/alerts", moduleNumber: 13 },
-      ],
-    },
-    {
-  category: "Expenses",
-  items: [
-    { id: "expenses", label: "List Expenses", icon: "Receipt", path: "/expenses", moduleNumber: 26 },
-    { id: "add-expense", label: "Add Expense", icon: "PlusCircle", path: "/expenses/create", moduleNumber: 27 },
-    { id: "expense-categories", label: "Expense Categories", icon: "Tag", path: "/expenses/categories", moduleNumber: 28 },
-  ],
-},
-     {
-  category: "Payment Accounts",
-  items: [
-    { id: "accounts", label: "Accounts Overview", icon: "Wallet", path: "/payments/accounts", moduleNumber: 16 },
-
-    { id: "invoices", label: "Invoices", icon: "FileText", path: "/payments/invoices", moduleNumber: 17 },
-    { id: "billing", label: "Billing & Receivables", icon: "CreditCard", path: "/payments/billing", moduleNumber: 18 },
-
-    { id: "payments", label: "Payments Received", icon: "DollarSign", path: "/payments/received", moduleNumber: 19 },
-    { id: "expenses", label: "Expenses", icon: "Receipt", path: "/payments/expenses", moduleNumber: 20 },
-
-    { id: "transactions", label: "Transaction History", icon: "ListOrdered", path: "/payments/transactions", moduleNumber: 21 },
-
-    { id: "reconciliation", label: "Reconciliation", icon: "CheckCircle", path: "/payments/reconciliation", moduleNumber: 22 },
-
-    { id: "taxes", label: "Tax Records", icon: "Percent", path: "/payments/taxes", moduleNumber: 23 },
-  ],
-},
-    {
-  category: "Reports",
-  items: [ 
-    { id: "sales-report", label: "Sales Reports", icon: "TrendingUp", path: "/reports/sales", moduleNumber: 61 },
-    { id: "purchase-report", label: "Purchase Reports", icon: "ShoppingCart", path: "/reports/purchases", moduleNumber: 62 },
-    { id: "stock-report", label: "Stock Reports", icon: "Package", path: "/reports/stock", moduleNumber: 63 },
-
-    { id: "profit-loss", label: "Profit & Loss", icon: "LineChart", path: "/reports/profit-loss", moduleNumber: 64 },
-    { id: "cashflow", label: "Cash Flow", icon: "DollarSign", path: "/reports/cashflow", moduleNumber: 65 },
-
-    { id: "customer-report", label: "Customer Reports", icon: "Users", path: "/reports/customers", moduleNumber: 66 },
-    { id: "supplier-report", label: "Supplier Reports", icon: "Truck", path: "/reports/suppliers", moduleNumber: 67 },
-
-    { id: "fleet-report", label: "Fleet Reports", icon: "Truck", path: "/reports/fleet", moduleNumber: 68 },
-    { id: "driver-report", label: "Driver Reports", icon: "UserCheck", path: "/reports/drivers", moduleNumber: 69 },
-
-    { id: "tax-report", label: "Tax Reports", icon: "Percent", path: "/reports/tax", moduleNumber: 70 },
-  ],
-},
-{
-  category: "Staff Management",
-  items: [
-    { id: "employees", label: "Employees", icon: "Users", path: "/staff-management", moduleNumber: 30 },
-
-    { id: "roles", label: "Roles & Permissions", icon: "ShieldCheck", path: "/roles-management", moduleNumber: 31 },
-
-    { id: "departments", label: "Departments", icon: "Network", path: "/staff/departments", moduleNumber: 32 },
-
-    { id: "attendance", label: "Attendance", icon: "Clock", path: "/staff/attendance", moduleNumber: 33 },
-
-    { id: "payroll", label: "Payroll", icon: "Wallet", path: "/staff/payroll", moduleNumber: 34 },
-
-    { id: "payments", label: "Payments", icon: "CreditCard", path: "/staff/payments", moduleNumber: 35 },
-
-    { id: "leave", label: "Leave Management", icon: "CalendarDays", path: "/staff/leave", moduleNumber: 36 },
-
-    { id: "activity-logs", label: "Activity Logs", icon: "Activity", path: "/staff/activity-logs", moduleNumber: 37 },
-  ],
-},
-    {
-  category: "Settings",
-  items: [
-    { id: "business-settings", label: "Business Settings", icon: "Building2", path: "/settings/business", moduleNumber: 20 },
-    { id: "warehouses", label: "Warehouses", icon: "Warehouse", path: "/settings/warehouses", moduleNumber: 21 },
-    { id: "invoice-settings", label: "Invoice Settings", icon: "FileText", path: "/settings/invoices", moduleNumber: 22 },
-    { id: "barcode-settings", label: "Barcode Settings", icon: "Barcode", path: "/settings/barcodes", moduleNumber: 23 },
-    { id: "receipt-printers", label: "Receipt Printers", icon: "Printer", path: "/settings/printers", moduleNumber: 24 },
-    { id: "tax-rates", label: "Tax Rates", icon: "Percent", path: "/settings/taxes", moduleNumber: 25 },
-  ],
-}
-  ],
-},
- distributor: {
-  name: "Distributor",
-  modules: [
-    {
-      category: "Main",
-      items: [
-        { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/dashboard", moduleNumber: 1 },
-        { id: "orders", label: "Orders", icon: "Package", path: "/orders", moduleNumber: 2 },
-        { id: "drivers", label: "Drivers", icon: "Truck", path: "/drivers", moduleNumber: 3 },
-        { id: "tracking", label: "Live Tracking", icon: "MapPin", path: "/tracking", moduleNumber: 4 },
-        { id: "customers", label: "Customers", icon: "Users", path: "/customers", moduleNumber: 5 },
-      ],
-    },
-    {
-      category: "Reports",
-      items: [
-        { id: "reports", label: "Reports", icon: "FileText", path: "/reports", moduleNumber: 6 },
-      ],
-    },
-  ],
-},
-   dispatcher: {
-  name: "Dispatcher",
-  modules: [
-    {
-      category: "Operations",
-      items: [
-        { id: "dashboard", label: "Dashboard", icon: "LayoutDashboard", path: "/dashboard", moduleNumber: 1 },
-        { id: "orders", label: "Orders", icon: "Package", path: "/orders", moduleNumber: 2 },
-        { id: "drivers", label: "Drivers", icon: "Truck", path: "/drivers", moduleNumber: 3 },
-        { id: "tracking", label: "Live Tracking", icon: "MapPin", path: "/tracking", moduleNumber: 4 },
-        { id: "notifications", label: "Notifications", icon: "Bell", path: "/notifications", moduleNumber: 5 },
-      ],
-    },
-  ],
-},
-driver: {
-  name: "Driver",
-  modules: [
-    {
-      category: "My Work",
-      items: [
-        { id: "driver-dashboard", label: "My Dashboard", icon: "LayoutDashboard", path: "/driver-dashboard", moduleNumber: 1 },
-        { id: "my-orders", label: "My Orders", icon: "Package", path: "/my-orders", moduleNumber: 2 },
-        { id: "navigation", label: "Navigate", icon: "Navigation", path: "/navigate", moduleNumber: 3 },
-        { id: "proof-delivery", label: "Proof of Delivery", icon: "Camera", path: "/proof-delivery", moduleNumber: 4 },
-      ],
-    },
-    {
-      category: "Earnings",
-      items: [
-        { id: "earnings", label: "My Earnings", icon: "DollarSign", path: "/earnings", moduleNumber: 5 },
-      ],
-    },
-  ],
-},
-customer: {
-  name: "Customer",
-  modules: [
-    {
-      category: "Delivery",
-      items: [
-        { id: "track-order", label: "Track Order", icon: "MapPin", path: "/track-order", moduleNumber: 1 },
-        { id: "my-deliveries", label: "My Deliveries", icon: "Package", path: "/my-deliveries", moduleNumber: 2 },
-      ],
-    },
-    {
-      category: "Support",
-      items: [
-        { id: "support", label: "Support", icon: "HelpCircle", path: "/support", moduleNumber: 3 },
-      ],
-    },
-  ],
-},
+const ROLE_LABELS = {
+  SuperAdmin: "Super Admin",
+  Company: "Admin",
+  StoreManager: "Dispatcher",
+  Driver: "Driver",
+  Distributor: "Distributor",
 };
 
- 
+const initials = (name) =>
+  (name ?? "?")
+    .split(" ")
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
 
 const AppLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Mock auth - replace with your actual auth store
-  const [user] = useState({
-    id: "1",
-    name: "John Kamau",
-    email: "john.kamau@deliver.com",
-    role: localStorage.getItem("role") || "company",
-    avatar: "JK",
-  });
+  const { user, clearUser } = useAuthStore();
+  const { categories, loading: menuLoading, fetchMenus, refreshMenus } = useMenuStore();
+
+  useEffect(() => {
+    if (user) fetchMenus();
+  }, [user, fetchMenus]);
 
   const logout = () => {
-    localStorage.removeItem("role");
+    clearUser();
     toast.success("Logged out successfully");
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   // State
@@ -538,9 +109,8 @@ const AppLayout = () => {
   const sidebarRef = useRef(null);
   const notificationsRef = useRef(null);
 
-  // Get current role's menu
-  const currentMenu = roleMenus[user.role] || roleMenus.customer;
-  const modules = currentMenu.modules;
+  // Dynamic menus from API; fall back to empty while loading
+  const modules = categories;
 
   // Filter modules based on search
   const filteredModules = useMemo(() => {
@@ -656,13 +226,14 @@ const AppLayout = () => {
     }
   };
 
-  // Handle refresh
-  const handleRefresh = () => {
+  const handleRefresh = async () => {
     setRefreshing(true);
-    setTimeout(() => {
-      toast.success("Menu refreshed successfully");
+    try {
+      await refreshMenus();
+      toast.success("Menu refreshed");
+    } finally {
       setRefreshing(false);
-    }, 1000);
+    }
   };
 
   // Mark notification as read
@@ -707,6 +278,16 @@ const AppLayout = () => {
 
   // Render modules
   const renderModules = () => {
+    if (menuLoading) {
+      return (
+        <div className="px-4 space-y-3 animate-pulse">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="h-9 bg-gray-200 dark:bg-gray-700 rounded-lg" />
+          ))}
+        </div>
+      );
+    }
+
     if (filteredModules.length === 0 && menuSearch) {
       return (
         <div className="text-center py-8 px-4">
@@ -927,7 +508,7 @@ const AppLayout = () => {
                       DeliverTrack
                     </div>
                     <div className="text-xs text-brand-600 dark:text-brand-400 font-medium uppercase">
-                      {currentMenu.name} PORTAL
+                      {ROLE_LABELS[user?.role] ?? user?.role ?? "User"} PORTAL
                     </div>
                   </div>
                 </div>
@@ -982,14 +563,14 @@ const AppLayout = () => {
               <>
                 <div className="flex items-center space-x-3 min-w-0">
                   <div className="w-10 h-10 bg-gradient-to-br from-brand-600 to-brand-500 rounded-full flex items-center justify-center text-white font-bold shadow-md flex-shrink-0">
-                    {user.avatar}
+                    {initials(user?.fullName)}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold text-gray-900 dark:text-white truncate">
-                      {user.name}
+                      {user?.fullName ?? user?.email}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400 truncate capitalize">
-                      {user.role}
+                      {ROLE_LABELS[user?.role] ?? user?.role}
                     </div>
                   </div>
                 </div>

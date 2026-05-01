@@ -50,6 +50,8 @@ import StoresManagement from "../features/distributor/fleet/pages/StoresManageme
 import AddStore from "../features/distributor/fleet/pages/AddStore";
 import RolesManagement from "../features/distributor/staff/pages/RolesManagement";
 import StaffManagement from "../features/distributor/staff/pages/StaffManagement";
+import MenuAssignment from "@/pages/superadmin/MenuAssignment";
+import MenuAccessAssignment from "@/pages/admin/MenuAccessAssignment";
 
 function App() {
   return (
@@ -73,14 +75,67 @@ function App() {
           <Route path="/unauthenticated" element={<UnauthenticatedPage />} />
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-          {/* Authenticated — any valid user */}
+          {/* ── SuperAdmin routes (/superadmin/*) ── */}
+          <Route element={<ProtectedRoute requiredRoles={[ROLES.SUPER_ADMIN]} />}>
+            <Route element={<AppLayout />}>
+              <Route path="/superadmin/dashboard" element={<Dashboard />} />
+              <Route path="/superadmin/menu-assignment" element={<MenuAssignment />} />
+            </Route>
+          </Route>
+
+          {/* Authenticated — any valid user (legacy /dashboard kept for compatibility) */}
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
             </Route>
           </Route>
 
-          {/* Authenticated — Company or Distributor */}
+          {/* ── Company admin routes (/admin/*) ── */}
+          <Route element={<ProtectedRoute requiredRoles={[ROLES.COMPANY]} />}>
+            <Route element={<AppLayout />}>
+              <Route path="/admin/dashboard" element={<Dashboard />} />
+              <Route path="/admin/drivers-management" element={<DriversManagement />} />
+              <Route path="/admin/drivers-management/onboard" element={<DriverOnboardPage />} />
+              <Route path="/admin/fleet-management" element={<FleetManagement />} />
+              <Route path="/admin/fleet-management/add" element={<AddFleet />} />
+              <Route path="/admin/fleet/fuel-management" element={<FuelManagement />} />
+              <Route path="/admin/fleet/vehicle-details/:id" element={<VehicleDetails />} />
+              <Route path="/admin/fleet/routes-management" element={<RoutesManagement />} />
+              <Route path="/admin/fleet/routes-management/add" element={<AddRoute />} />
+              <Route path="/admin/live-tracking" element={<LiveTracking />} />
+              <Route path="/admin/inventory/warehouses" element={<WarehousesManagement />} />
+              <Route path="/admin/inventory/warehouses/create" element={<CreateWareHouse />} />
+              <Route path="/admin/inventory/warehouses/view/:id" element={<WareHouseView />} />
+              <Route path="/admin/inventory/stock" element={<StockManagement />} />
+              <Route path="/admin/products" element={<ProductsManagement />} />
+              <Route path="/admin/products/create" element={<CreateProduct />} />
+              <Route path="/admin/products/categories" element={<CategoriesManagement />} />
+              <Route path="/admin/customers-management" element={<CustomersManagement />} />
+              <Route path="/admin/suppliers-management" element={<SuppliersManagement />} />
+              <Route path="/admin/settings/business" element={<BusinessSettings />} />
+              <Route path="/admin/staff-management" element={<StaffManagement />} />
+              <Route path="/admin/roles-management" element={<RolesManagement />} />
+              <Route path="/admin/menu-access" element={<MenuAccessAssignment />} />
+            </Route>
+          </Route>
+
+          {/* ── Distributor routes (/distributor/*) ── */}
+          <Route element={<ProtectedRoute requiredRoles={[ROLES.DISTRIBUTOR]} />}>
+            <Route element={<AppLayout />}>
+              <Route path="/distributor/dashboard" element={<Dashboard />} />
+              <Route path="/distributor/fleet-management" element={<FleetManagement />} />
+              <Route path="/distributor/fleet/fuel-management" element={<FuelManagement />} />
+              <Route path="/distributor/fleet/routes-management" element={<RoutesManagement />} />
+              <Route path="/distributor/live-tracking" element={<LiveTracking />} />
+              <Route path="/distributor/inventory/warehouses" element={<WarehousesManagement />} />
+              <Route path="/distributor/inventory/stock" element={<StockManagement />} />
+              <Route path="/distributor/products" element={<ProductsManagement />} />
+              <Route path="/distributor/customers-management" element={<CustomersManagement />} />
+              <Route path="/distributor/staff-management" element={<StaffManagement />} />
+            </Route>
+          </Route>
+
+          {/* Authenticated — Company or Distributor (legacy unprefixed routes kept for compatibility) */}
           <Route element={<ProtectedRoute requiredRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
             <Route element={<AppLayout />}>
 
