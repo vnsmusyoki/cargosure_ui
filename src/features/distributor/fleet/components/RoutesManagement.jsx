@@ -10,6 +10,7 @@ import {
   Fuel
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Mock routes data
 const mockRoutes = [
@@ -179,10 +180,10 @@ const RoutesManagement = () => {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [optimizingRouteId, setOptimizingRouteId] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showCreateRoute, setShowCreateRoute] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1); 
   const [showOptimizationModal, setShowOptimizationModal] = useState(false);
   const itemsPerPage = 10;
+  const navigate = useNavigate();
 
   // Filter routes
   const filteredRoutes = mockRoutes.filter(route => {
@@ -303,7 +304,7 @@ const RoutesManagement = () => {
             <RefreshCw className={`w-4 h-4 text-gray-500 ${isRefreshing ? 'animate-spin' : ''}`} />
           </button>
           <button 
-            onClick={() => setShowCreateRoute(true)}
+            onClick={() => navigate('/fleet/routes-management/add')}
             className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition"
           >
             <Plus className="w-4 h-4" />
@@ -887,72 +888,7 @@ const RoutesManagement = () => {
         </div>
       )}
 
-      {/* Create Route Modal */}
-      {showCreateRoute && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowCreateRoute(false)}>
-          <div className="bg-white dark:bg-gray-800 rounded-xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-xl" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 bg-white dark:bg-gray-800 p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-              <h3 className="font-semibold text-lg text-gray-900 dark:text-white">Create New Route</h3>
-              <button onClick={() => setShowCreateRoute(false)} className="text-gray-400 hover:text-gray-600">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-5 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Route Name</label>
-                <input type="text" placeholder="e.g., Westlands Delivery Route" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Start Point</label>
-                  <input type="text" placeholder="Starting location" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">End Point</label>
-                  <input type="text" placeholder="Ending location" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Waypoints (comma separated)</label>
-                <input type="text" placeholder="Location1, Location2, Location3" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500" />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Vehicle Type</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
-                    <option>Motorcycle</option>
-                    <option>Van</option>
-                    <option>Tuk Tuk</option>
-                    <option>Bicycle</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Priority</label>
-                  <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div className="p-5 border-t border-gray-100 dark:border-gray-700 flex gap-3">
-              <button
-                onClick={() => {
-                  toast.success('Route created successfully');
-                  setShowCreateRoute(false);
-                }}
-                className="flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg text-sm font-medium transition"
-              >
-                Create Route
-              </button>
-              <button onClick={() => setShowCreateRoute(false)} className="flex-1 border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+     
 
       {/* Optimization Modal */}
       {showOptimizationModal && (

@@ -203,6 +203,28 @@ const roleMenus = {
       ],
     },
   {
+  category: "Stores",
+  items: [
+    { id: "stores-dashboard", label: "Stores Management", icon: "LayoutDashboard", path: "/stores-management", moduleNumber: 4 },
+
+    { id: "items", label: "Items / Products", icon: "Package", path: "/stores/items", moduleNumber: 5 },
+
+    { id: "inventory", label: "Inventory", icon: "Boxes", path: "/stores/inventory", moduleNumber: 6 },
+
+    { id: "stock-movement", label: "Stock Movements", icon: "ArrowRightLeft", path: "/stores/stock-movements", moduleNumber: 7 },
+
+    { id: "suppliers", label: "Suppliers", icon: "Truck", path: "/stores/suppliers", moduleNumber: 8 },
+
+    { id: "purchase-orders", label: "Purchase Orders", icon: "FileText", path: "/stores/purchase-orders", moduleNumber: 9 },
+
+    { id: "transfers", label: "Stock Transfers", icon: "Repeat", path: "/stores/transfers", moduleNumber: 10 },
+
+    { id: "adjustments", label: "Stock Adjustments", icon: "SlidersHorizontal", path: "/stores/adjustments", moduleNumber: 11 },
+
+    { id: "reports", label: "Reports", icon: "BarChart3", path: "/stores/reports", moduleNumber: 12 },
+  ],
+},
+  {
   category: "Fleet",
   items: [
     { id: "fleet", label: "Fleet Management", icon: "Truck", path: "/fleet-management", moduleNumber: 4 },  
@@ -368,6 +390,26 @@ const roleMenus = {
     { id: "driver-report", label: "Driver Reports", icon: "UserCheck", path: "/reports/drivers", moduleNumber: 69 },
 
     { id: "tax-report", label: "Tax Reports", icon: "Percent", path: "/reports/tax", moduleNumber: 70 },
+  ],
+},
+{
+  category: "Staff Management",
+  items: [
+    { id: "employees", label: "Employees", icon: "Users", path: "/staff-management", moduleNumber: 30 },
+
+    { id: "roles", label: "Roles & Permissions", icon: "ShieldCheck", path: "/roles-management", moduleNumber: 31 },
+
+    { id: "departments", label: "Departments", icon: "Network", path: "/staff/departments", moduleNumber: 32 },
+
+    { id: "attendance", label: "Attendance", icon: "Clock", path: "/staff/attendance", moduleNumber: 33 },
+
+    { id: "payroll", label: "Payroll", icon: "Wallet", path: "/staff/payroll", moduleNumber: 34 },
+
+    { id: "payments", label: "Payments", icon: "CreditCard", path: "/staff/payments", moduleNumber: 35 },
+
+    { id: "leave", label: "Leave Management", icon: "CalendarDays", path: "/staff/leave", moduleNumber: 36 },
+
+    { id: "activity-logs", label: "Activity Logs", icon: "Activity", path: "/staff/activity-logs", moduleNumber: 37 },
   ],
 },
     {

@@ -15,7 +15,7 @@ export default function AuthLayout() {
     navBg: isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white/80 border-slate-200',
     bgSecondary: isDark ? 'bg-slate-900' : 'bg-slate-50',
     border: isDark ? 'border-slate-800' : 'border-slate-200',
-    button: isDark ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white',
+    button: isDark ? 'bg-brand-600 hover:bg-brand-700 text-white' : 'bg-brand-600 hover:bg-brand-700 text-white',
   };
 
   return (
@@ -25,7 +25,7 @@ export default function AuthLayout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-2" onClick={()=> navigate('/')}>
-              <div className={`${isDark ? 'bg-blue-600' : 'bg-blue-500'} rounded-lg p-1.5 transform hover:scale-110 transition-transform`}>
+              <div className="bg-brand-600 rounded-lg p-1.5 transform hover:scale-110 transition-transform">
                 <MapPin className="w-5 h-5 text-white" />
               </div>
               <span className={`font-bold text-xl ${theme.text}`}>

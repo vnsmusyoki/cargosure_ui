@@ -37,14 +37,19 @@ import BusinessSettings from "@/pages/company/settings/BusinessSettings";
 import FuelManagement from "../features/distributor/fleet/FuelManagement";
 import AddFleet from "../features/distributor/fleet/components/AddFleet";
 import FleetManagement from "../features/distributor/fleet/FleetManagement";
-import VehicleDetails from "../features/distributor/fleet/VehicleDetails";
-import RoutesManagement from "../features/distributor/fleet/RoutesManagement";
+import VehicleDetails from "../features/distributor/fleet/components/VehicleDetails";
+import RoutesManagement from "../features/distributor/fleet/components/RoutesManagement";
 
 
 
 import UnauthenticatedPage from "@/pages/errors/UnauthenticatedPage";
 import UnauthorizedPage from "@/pages/errors/UnauthorizedPage";
 import NotFoundPage from "@/pages/errors/NotFoundPage";
+import AddRoute from "../features/distributor/fleet/components/AddRoute";
+import StoresManagement from "../features/distributor/fleet/pages/StoresManagement";
+import AddStore from "../features/distributor/fleet/pages/AddStore";
+import RolesManagement from "../features/distributor/staff/pages/RolesManagement";
+import StaffManagement from "../features/distributor/staff/pages/StaffManagement";
 
 function App() {
   return (
@@ -90,7 +95,12 @@ function App() {
                 <Route path="/fleet/fuel-management" element={<FuelManagement />} />
                 <Route path="/fleet/vehicle-details/:id" element={<VehicleDetails />} />
                 <Route path="/fleet/routes-management" element={<RoutesManagement />} />
+                <Route path="/fleet/routes-management/add" element={<AddRoute />} />
                 <Route path="/live-tracking" element={<LiveTracking />} />
+
+
+                <Route path="/fleet/stores-management" element={<StoresManagement />} />
+                <Route path="/fleet/stores-management/add" element={<AddStore />} />
               </Route>
 
               {/* Inventory */}
@@ -117,6 +127,12 @@ function App() {
               {/* Settings — Company only */}
               <Route element={<RoleGuard allowedRoles={[ROLES.COMPANY]} />}>
                 <Route path="/settings/business" element={<BusinessSettings />} />
+              </Route>
+
+              {/* Settings — Company only */}
+              <Route element={<RoleGuard allowedRoles={[ROLES.COMPANY, ROLES.DISTRIBUTOR]} />}>
+                <Route path="/staff-management" element={<StaffManagement />} />
+                <Route path="/roles-management" element={<RolesManagement />} />
               </Route>
 
             </Route>

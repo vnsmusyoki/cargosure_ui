@@ -17,12 +17,12 @@ const HeroDashboard = ({ isDark }) => (
   <svg viewBox="0 0 560 420" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="heroGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.12" />
-        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.04" />
+        <stop offset="0%" stopColor="#ff5a00" stopOpacity="0.12" />
+        <stop offset="100%" stopColor="#ff8442" stopOpacity="0.04" />
       </linearGradient>
       <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="#3b82f6" />
-        <stop offset="100%" stopColor="#2563eb" />
+        <stop offset="0%" stopColor="#ff5a00" />
+        <stop offset="100%" stopColor="#d64b00" />
       </linearGradient>
       <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur in="SourceAlpha" stdDeviation="8" />
@@ -39,15 +39,15 @@ const HeroDashboard = ({ isDark }) => (
     <circle cx="62" cy="46" r="7" fill="#f59e0b" />
     <circle cx="80" cy="46" r="7" fill="#10b981" />
     <text x="220" y="51" fontSize="13" fill={isDark ? "#94a3b8" : "#64748b"} fontFamily="monospace" fontWeight="500">track.delivertrack.ke/live</text>
-    <rect x="460" y="38" width="56" height="16" rx="8" fill="#3b82f6" opacity="0.15" />
-    <circle cx="484" cy="46" r="4" fill="#3b82f6">
+    <rect x="460" y="38" width="56" height="16" rx="8" fill="#ff5a00" opacity="0.15" />
+    <circle cx="484" cy="46" r="4" fill="#ff5a00">
       <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
     </circle>
     
     {/* Side menu */}
     <rect x="20" y="72" width="100" height="328" fill={isDark ? "#0f172a" : "#ffffff"} />
     {[0, 1, 2, 3, 4].map((i) => (
-      <rect key={i} x="36" y={88 + i * 44} width="68" height="32" rx="8" fill={i === 0 ? (isDark ? "#1e293b" : "#f1f5f9") : (isDark ? "#0f172a" : "transparent")} stroke={i === 0 ? "#3b82f6" : "none"} strokeWidth="1.5" />
+      <rect key={i} x="36" y={88 + i * 44} width="68" height="32" rx="8" fill={i === 0 ? (isDark ? "#1e293b" : "#f1f5f9") : (isDark ? "#0f172a" : "transparent")} stroke={i === 0 ? "#ff5a00" : "none"} strokeWidth="1.5" />
     ))}
     
     {/* Main content area */}
@@ -59,8 +59,8 @@ const HeroDashboard = ({ isDark }) => (
     <path d="M280 140 L280 260" stroke={isDark ? "#334155" : "#cbd5e1"} strokeWidth="1.5" strokeDasharray="6,4" />
     
     {/* Delivery points */}
-    <circle cx="210" cy="200" r="10" fill="#3b82f6" opacity="0.2" />
-    <circle cx="210" cy="200" r="6" fill="#3b82f6" />
+    <circle cx="210" cy="200" r="10" fill="#ff5a00" opacity="0.2" />
+    <circle cx="210" cy="200" r="6" fill="#ff5a00" />
     <text x="225" y="204" fontSize="10" fill={isDark ? "#94a3b8" : "#64748b"}>Pickup</text>
     
     <circle cx="380" cy="230" r="10" fill="#10b981" opacity="0.2" />
@@ -71,19 +71,19 @@ const HeroDashboard = ({ isDark }) => (
     <circle cx="300" cy="170" r="5" fill="#f59e0b" />
     
     {/* Route line with animation */}
-    <path d="M210 200 Q260 180 300 170 Q340 190 380 230" stroke="#3b82f6" strokeWidth="2.5" fill="none" strokeDasharray="6,4" opacity="0.8" />
+    <path d="M210 200 Q260 180 300 170 Q340 190 380 230" stroke="#ff5a00" strokeWidth="2.5" fill="none" strokeDasharray="6,4" opacity="0.8" />
     
     {/* Animated truck */}
     <g>
       <animateMotion dur="6s" repeatCount="indefinite" path="M210 200 Q260 180 300 170 Q340 190 380 230" />
-      <rect x="-12" y="-8" width="20" height="14" rx="3" fill="#3b82f6" />
+      <rect x="-12" y="-8" width="20" height="14" rx="3" fill="#ff5a00" />
       <circle cx="-4" cy="8" r="5" fill="#1e293b" />
       <circle cx="8" cy="8" r="5" fill="#1e293b" />
     </g>
     
     {/* Bottom stats */}
     <rect x="136" y="292" width="120" height="56" rx="10" fill={isDark ? "#1e293b" : "#ffffff"} stroke={isDark ? "#334155" : "#e2e8f0"} strokeWidth="1" />
-    <text x="156" y="318" fontSize="22" fontWeight="bold" fill="#3b82f6">98.5%</text>
+    <text x="156" y="318" fontSize="22" fontWeight="bold" fill="#ff5a00">98.5%</text>
     <text x="156" y="336" fontSize="10" fill={isDark ? "#94a3b8" : "#64748b"}>On-time rate</text>
     
     <rect x="270" y="292" width="120" height="56" rx="10" fill={isDark ? "#1e293b" : "#ffffff"} stroke={isDark ? "#334155" : "#e2e8f0"} strokeWidth="1" />
@@ -139,15 +139,15 @@ const HomePage = () => {
     glass: isDark ? 'bg-slate-900/70 backdrop-blur-xl border-slate-800' : 'bg-white/70 backdrop-blur-xl border-slate-200',
     card: isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200',
     cardHover: isDark ? 'hover:bg-slate-800/80 hover:border-slate-700' : 'hover:bg-slate-50 hover:border-slate-300',
-    accent: 'text-blue-500',
-    accentBg: isDark ? 'bg-blue-500/10' : 'bg-blue-50',
-    accentBorder: isDark ? 'border-blue-500/20' : 'border-blue-200',
-    buttonPrimary: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg shadow-blue-600/25 hover:shadow-xl transition-all duration-300',
+    accent: 'text-brand-500',
+    accentBg: isDark ? 'bg-brand-500/10' : 'bg-brand-50',
+    accentBorder: isDark ? 'border-brand-500/20' : 'border-brand-200',
+    buttonPrimary: 'bg-brand-600 hover:bg-brand-700 text-white shadow-lg shadow-brand-600/25 hover:shadow-xl transition-all duration-300',
     buttonSecondary: `border ${isDark ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100'} transition-all duration-300`,
   };
 
   const features = [
-    { icon: MapPin, title: "Live GPS Tracking", description: "5-second updates with driver location, ETA, and route visualization on an interactive map.", badge: "Real-time", color: "blue" },
+    { icon: MapPin, title: "Live GPS Tracking", description: "5-second updates with driver location, ETA, and route visualization on an interactive map.", badge: "Real-time", color: "brand" },
     { icon: Smartphone, title: "Customer Portal", description: "WhatsApp & SMS tracking links — customers track deliveries without any app install.", badge: "Frictionless", color: "green" },
     { icon: Camera, title: "Proof of Delivery", description: "Geotagged photos, e-signatures, and timestamps for every delivery stop.", badge: "Secure", color: "purple" },
     { icon: Bell, title: "Smart Notifications", description: "Automated alerts at pickup, in-transit, approaching, and delivered status.", badge: "Automated", color: "amber" },
@@ -237,7 +237,7 @@ const HomePage = () => {
       <section id="hero" className={`relative pt-12 lg:pt-16 pb-20 lg:pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden ${theme.bg}`}>
         {/* Background decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute -top-40 -right-20 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-40 -left-20 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-transparent via-transparent to-transparent" />
         </div>
@@ -247,15 +247,15 @@ const HomePage = () => {
             {/* Left Content */}
             <div className="space-y-8">
               {/* Trust Badge */}
-              <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-1.5">
-                <Sparkles className="w-4 h-4 text-blue-500" />
-                <span className="text-sm font-medium text-blue-500">Trusted by 1,200+ Kenyan distributors</span>
+              <div className="inline-flex items-center gap-2 bg-brand-500/10 border border-brand-500/20 rounded-full px-4 py-1.5">
+                <Sparkles className="w-4 h-4 text-brand-500" />
+                <span className="text-sm font-medium text-brand-500">Trusted by 1,200+ Kenyan distributors</span>
               </div>
 
               {/* Headline */}
               <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.2] tracking-tight ${theme.text}`}>
                 Track every delivery,
-                <span className="block bg-gradient-to-r from-blue-600 via-brand-500 to-purple-600 bg-clip-text text-transparent mt-2">
+                <span className="block text-brand-500 mt-2">
                   eliminate uncertainty
                 </span>
               </h1>
@@ -297,7 +297,7 @@ const HomePage = () => {
 
             {/* Right Dashboard Preview */}
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/30 to-brand-600/30 rounded-3xl blur-2xl" />
+              <div className="absolute -inset-4 bg-brand-600/20 rounded-3xl blur-2xl" />
               <div className="relative transform hover:scale-[1.02] transition-all duration-500">
                 <HeroDashboard isDark={isDark} />
               </div>
@@ -311,8 +311,8 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className={`inline-flex items-center gap-2 ${theme.accentBg} border ${theme.accentBorder} rounded-full px-4 py-1.5 mb-6`}>
-              <Zap className="w-4 h-4 text-blue-500" />
-              <span className="text-sm font-medium text-blue-500">Complete Feature Set</span>
+              <Zap className="w-4 h-4 text-brand-500" />
+              <span className="text-sm font-medium text-brand-500">Complete Feature Set</span>
             </div>
             <h2 className={`text-4xl lg:text-5xl font-bold mb-5 ${theme.text}`}>
               Everything you need to master logistics
@@ -329,13 +329,13 @@ const HomePage = () => {
                 className={`group ${theme.card} rounded-2xl p-6 transition-all duration-300 ${theme.cardHover} card-hover-effect`}
               >
                 <div className="mb-5">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-brand-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    <feature.icon className="w-6 h-6 text-blue-500" />
+                  <div className={`w-12 h-12 rounded-xl bg-brand-500/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <feature.icon className="w-6 h-6 text-brand-500" />
                   </div>
                 </div>
                 <h3 className={`text-lg font-bold mb-2 ${theme.text}`}>{feature.title}</h3>
                 <p className={`${theme.textSecondary} text-sm leading-relaxed`}>{feature.description}</p>
-                <span className={`inline-block mt-4 text-xs font-medium px-2 py-1 rounded-full ${theme.accentBg} text-blue-500`}>
+                <span className={`inline-block mt-4 text-xs font-medium px-2 py-1 rounded-full ${theme.accentBg} text-brand-500`}>
                   {feature.badge}
                 </span>
               </div>
@@ -382,14 +382,14 @@ const HomePage = () => {
           
           <div className="grid md:grid-cols-4 gap-6">
             {[
-              { step: "01", title: "Add Order", description: "Create orders manually or import via CSV/API", icon: FileText, color: "blue" },
+              { step: "01", title: "Add Order", description: "Create orders manually or import via CSV/API", icon: FileText, color: "brand" },
               { step: "02", title: "Assign Driver", description: "Route automatically optimized and sent to driver's app", icon: Send, color: "green" },
               { step: "03", title: "Customer Notified", description: "WhatsApp/SMS tracking link sent automatically", icon: MessageSquare, color: "amber" },
               { step: "04", title: "Proof of Delivery", description: "Photo, signature, and timestamp captured", icon: CheckCircle, color: "purple" }
             ].map((item, idx) => (
               <div key={idx} className="relative">
                 <div className={`${theme.card} rounded-2xl p-6 text-center transition-all hover:scale-105 duration-300`}>
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br from-${item.color}-500 to-${item.color}-600 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
+                  <div className={`w-14 h-14 rounded-2xl bg-${item.color}-600 mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
                     {idx + 1}
                   </div>
                   <h3 className={`font-bold text-lg mb-2 ${theme.text}`}>{item.title}</h3>
@@ -397,7 +397,7 @@ const HomePage = () => {
                 </div>
                 {idx < 3 && (
                   <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2">
-                    <ArrowRight className="w-5 h-5 text-blue-500" />
+                    <ArrowRight className="w-5 h-5 text-brand-500" />
                   </div>
                 )}
               </div>
@@ -422,12 +422,12 @@ const HomePage = () => {
                 key={idx}
                 className={`relative rounded-2xl transition-all duration-300 ${
                   plan.highlighted 
-                    ? `border-2 border-blue-500 shadow-2xl shadow-blue-500/20 scale-105 ${isDark ? 'bg-slate-900' : 'bg-white'}` 
+                    ? `border-2 border-brand-500 shadow-2xl shadow-brand-500/20 scale-105 ${isDark ? 'bg-slate-900' : 'bg-white'}`
                     : `${theme.card} border ${theme.border}`
                 } p-8 ${plan.highlighted ? 'lg:scale-105' : ''}`}
               >
                 {plan.highlighted && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-brand-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-600 text-white px-4 py-1.5 rounded-full text-sm font-bold shadow-lg whitespace-nowrap">
                     🌟 Most Popular
                   </div>
                 )}
@@ -508,13 +508,13 @@ const HomePage = () => {
                 </div>
                 <p className={`${theme.textSecondary} italic leading-relaxed mb-8`}>“{testimonial.quote}”</p>
                 <div className={`flex items-center gap-4 pt-6 border-t ${theme.border}`}>
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                  <div className="w-12 h-12 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                     {testimonial.imageInitial}
                   </div>
                   <div>
                     <div className={`font-bold ${theme.text}`}>{testimonial.name}</div>
                     <div className={`text-sm ${theme.textMuted}`}>{testimonial.role}, {testimonial.company}</div>
-                    <div className="text-xs text-blue-500 mt-1">{testimonial.region}</div>
+                    <div className="text-xs text-brand-500 mt-1">{testimonial.region}</div>
                   </div>
                 </div>
               </div>
@@ -527,24 +527,24 @@ const HomePage = () => {
       <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="relative rounded-3xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-brand-600 to-purple-600" />
+            <div className="absolute inset-0 bg-brand-600" />
             <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.05%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
             <div className="relative p-12 lg:p-16 text-center">
               <h2 className="text-3xl lg:text-5xl font-bold text-white mb-4">
                 Ready to transform your delivery operations?
               </h2>
-              <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+              <p className="text-brand-100 text-lg mb-8 max-w-2xl mx-auto">
                 Join over 1,200 businesses across Kenya already saving time and money with DeliverTrack.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
-                <button className="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:shadow-xl transition-all hover:scale-105">
+                <button className="bg-white text-brand-600 px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:shadow-xl transition-all hover:scale-105">
                   Start 14-day free trial <ArrowRight className="w-5 h-5" />
                 </button>
                 <button className="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-all hover:scale-105">
                   Schedule a demo
                 </button>
               </div>
-              <p className="text-blue-100 text-sm mt-8">
+              <p className="text-brand-100 text-sm mt-8">
                 ✓ No credit card required • ✓ Cancel anytime • ✓ Support in Swahili & English
               </p>
             </div>
@@ -558,7 +558,7 @@ const HomePage = () => {
           <div className="grid md:grid-cols-5 gap-8 mb-12">
             <div className="md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-xl p-1.5">
+                <div className="bg-brand-600 rounded-xl p-1.5">
                   <Navigation className="w-5 h-5 text-white" />
                 </div>
                 <span className={`font-bold text-xl ${theme.text}`}>DeliverTrack</span>
@@ -568,7 +568,7 @@ const HomePage = () => {
               </p>
               <div className="flex gap-3">
                 {["X", "LinkedIn", "Facebook", "Instagram"].map((social) => (
-                  <a key={social} href="#" className={`w-9 h-9 rounded-xl ${theme.bgSecondary} border ${theme.border} flex items-center justify-center ${theme.textSecondary} hover:text-blue-500 hover:border-blue-500 transition`}>
+                  <a key={social} href="#" className={`w-9 h-9 rounded-xl ${theme.bgSecondary} border ${theme.border} flex items-center justify-center ${theme.textSecondary} hover:text-brand-500 hover:border-brand-500 transition`}>
                     <span className="text-xs">{social[0]}</span>
                   </a>
                 ))}
@@ -584,7 +584,7 @@ const HomePage = () => {
                 <ul className="space-y-2">
                   {col.links.map((link) => (
                     <li key={link}>
-                      <a href="#" className={`text-sm ${theme.textSecondary} hover:text-blue-500 transition-colors`}>{link}</a>
+                      <a href="#" className={`text-sm ${theme.textSecondary} hover:text-brand-500 transition-colors`}>{link}</a>
                     </li>
                   ))}
                 </ul>
@@ -595,9 +595,9 @@ const HomePage = () => {
           <div className={`pt-8 border-t ${theme.border} flex flex-col md:flex-row justify-between items-center gap-4`}>
             <p className={`text-sm ${theme.textMuted}`}>© 2024 DeliverTrack. All rights reserved. Built for Kenyan distributors.</p>
             <div className="flex gap-6 text-sm">
-              <a href="#" className={`${theme.textMuted} hover:text-blue-500 transition`}>Privacy Policy</a>
-              <a href="#" className={`${theme.textMuted} hover:text-blue-500 transition`}>Terms of Service</a>
-              <a href="#" className={`${theme.textMuted} hover:text-blue-500 transition`}>Security</a>
+              <a href="#" className={`${theme.textMuted} hover:text-brand-500 transition`}>Privacy Policy</a>
+              <a href="#" className={`${theme.textMuted} hover:text-brand-500 transition`}>Terms of Service</a>
+              <a href="#" className={`${theme.textMuted} hover:text-brand-500 transition`}>Security</a>
             </div>
           </div>
         </div>
